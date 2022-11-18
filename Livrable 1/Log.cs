@@ -35,13 +35,15 @@ namespace Livrable_1
 
         public Dictionary<string, object> GetAll() //Get all element of the class and place in a dictonary 
         {
-            Dictionary<string, object> log = new Dictionary<string, object>();
-            log.Add("Name", this.Name);
-            log.Add("FileSource", this.FileSource);
-            log.Add("FileDestination", this.FileDestination);
-            log.Add("FileSize", this.FileSize);
-            log.Add("FileTransfertTime", this.FileTransfertTime);
-            log.Add("Time", this.Time);
+            Dictionary<string, object> log = new Dictionary<string, object>
+            {
+                { "Name", this.Name },
+                { "FileSource", this.FileSource },
+                { "FileDestination", this.FileDestination },
+                { "FileSize", this.FileSize },
+                { "FileTransfertTime", this.FileTransfertTime },
+                { "Time", this.Time }
+            };
             return log;
         }
 

@@ -17,13 +17,13 @@ namespace Livrable_1
         
         public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression)
         {
-            this.Name = name;
-            this.FileSource = fileSource;
-            this.FileDestination = fileDestination;
-            this.StateType = stateType;
-            this.TotalFileToTransfer = totalFileToTransfer;
-            this.FileLeftToTransfer = fileLeftToTransfer;
-            this.Progression = progression;
+            Name = name;
+            FileSource = fileSource;
+            FileDestination = fileDestination;
+            StateType = stateType;
+            TotalFileToTransfer = totalFileToTransfer;
+            FileLeftToTransfer = fileLeftToTransfer;
+            Progression = progression;
         }
         
         public void SaveState(){
@@ -35,14 +35,16 @@ namespace Livrable_1
 
         public Dictionary<string, object> GetAll() //Get all element of the class and place in a dictonary 
         {
-            Dictionary<string, object> state = new Dictionary<string, object>();
-            state.Add("Name", this.Name);
-            state.Add("FileSource", this.FileSource);
-            state.Add("FileDestination", this.FileDestination);
-            state.Add("StateType", this.StateType);
-            state.Add("TotalFileToTransfer", this.TotalFileToTransfer);
-            state.Add("FileLeftToTransfer", this.FileLeftToTransfer);
-            state.Add("Progression", this.Progression);
+            Dictionary<string, object> state = new Dictionary<string, object>
+            {
+                { "Name", this.Name },
+                { "FileSource", this.FileSource },
+                { "FileDestination", this.FileDestination },
+                { "StateType", this.StateType },
+                { "TotalFileToTransfer", this.TotalFileToTransfer },
+                { "FileLeftToTransfer", this.FileLeftToTransfer },
+                { "Progression", this.Progression }
+            };
             return state;
         }
 

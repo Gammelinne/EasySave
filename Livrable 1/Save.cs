@@ -13,10 +13,10 @@ namespace Livrable_1
 
         public Save(string name, string fileSource, string fileDestination, string fileType)
         {
-            this.Name = name;
-            this.FileSource = fileSource;
-            this.FileDestination = fileDestination;
-            this.FileType = fileType;
+            Name = name;
+            FileSource = fileSource;
+            FileDestination = fileDestination;
+            FileType = fileType;
         }
 
         public void SaveSave()
