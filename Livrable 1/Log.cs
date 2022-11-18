@@ -15,14 +15,14 @@ namespace Livrable_1
         public double FileTransfertTime; // in ms.
         public DateTime Time;
 
-        public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime Time)
+        public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime time)
         {
-            this.Name = name;
-            this.FileSource = fileSource;
-            this.FileDestination = fileDestination;
-            this.FileSize = fileSize;
-            this.FileTransfertTime = fileTransfertTime;
-            this.Time = Time;
+            Name = name;
+            FileSource = fileSource;
+            FileDestination = fileDestination;
+            FileSize = fileSize;
+            FileTransfertTime = fileTransfertTime;
+            Time = time;
         }
         
         public void SaveLog()
