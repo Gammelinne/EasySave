@@ -24,10 +24,6 @@ namespace Livrable_1
             FileTransfertTime = fileTransfertTime;
             Time = time;
         }
-        //test merge
-        //test 2
-        //test 3
-        //test 4
         
         public void SaveLog()
         {
