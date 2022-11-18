@@ -25,6 +25,7 @@ namespace Livrable_1
             Time = time;
         }
         //test merge
+        //test 2
         
         public void SaveLog()
         {
