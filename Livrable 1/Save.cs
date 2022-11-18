@@ -26,7 +26,6 @@ namespace Livrable_1
             
 
             //créer un state durant le transfert
-            
 
             //créer un log quand le tranfert est terminé
 

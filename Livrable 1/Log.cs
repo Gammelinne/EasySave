@@ -51,7 +51,6 @@ namespace Livrable_1
         {
             string PathLog = "C:\\ProjetCsFT\\Log\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
             if (System.IO.File.Exists(PathLog))
-
             {
                 string[] lines = System.IO.File.ReadAllLines(PathLog);
                 foreach (string line in lines)
