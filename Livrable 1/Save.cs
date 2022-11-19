@@ -68,7 +68,7 @@ namespace Livrable_1
             }
             //create log
             Log log = new Log(Name, FileSource, FileDestination, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, timer.Interval, DateTime.Now);
-            log.SaveLog();
+            log.SaveLog(); //save log
 
             Console.WriteLine("Do you want to do another save ? / Voulez vous faire une autre sauvegarde ? (y)");
             string answer = Console.ReadLine();
