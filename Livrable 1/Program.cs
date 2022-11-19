@@ -2,11 +2,18 @@
 
 namespace Livrable_1
 {
-    internal class Program
+    public class Program
     {
+
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, Welcome to the File Transfer Program / Bonjour, Bienvenue dans le programme de transfert de fichier");
+            SaveData();
+        }
+
+        
+        public static void SaveData()
+        {
             Console.WriteLine("Please enter what you want to do / Veuillez entrer ce que vous voulez faire");
             Console.WriteLine("1. Transfer a folder / 1. Transférer un folder");
             Console.WriteLine("2. get log of the day / 2. obtenir le log du jour");
@@ -27,9 +34,14 @@ namespace Livrable_1
                     Console.WriteLine("Please enter the destination of the file / Veuillez entrer la destination du fichier");
                     string fileDestination = Console.ReadLine();
                     Console.WriteLine("Please enter the type of the file / Veuillez entrer le type du fichier");
+                    Console.WriteLine("1. Complete / 1. Complet");
+                    Console.WriteLine("2. Differentiel / 2. Differentiel");
                     string fileType = Console.ReadLine();
-                    Save save = new Save(name, fileSource, fileDestination, fileType);
-                    save.SaveSave();
+                    if (fileType == "1" || fileType == "2")
+                    {
+                        Save save = new Save(name, fileSource, fileDestination, fileType);
+                        save.SaveSave();
+                    }
                     break;
                 case "2":
                     Log.ReadLogOfTheDay();
