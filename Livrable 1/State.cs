@@ -50,8 +50,8 @@ namespace Livrable_1
                 { "FileDestination", this.FileDestination },
                 { "StateType", this.StateType },
                 { "TotalFileToTransfer", this.TotalFileToTransfer },
-                { "FileLeftToTransfer", this.FileLeftToTransfer },
-                { "Progression", this.Progression }
+                { "FileLeftToTransfer", this.Progression },
+                { "Progression", this.FileLeftToTransfer }
             };
             return state;
         }
