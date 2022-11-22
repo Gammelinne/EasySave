@@ -7,14 +7,22 @@ namespace Livrable_1
 {
     internal class State
     {
-        public string Name;
-        public string FileSource;
-        public string FileDestination;
-        public string StateType;
-        public int TotalFileToTransfer;
-        public int FileLeftToTransfer;
-        public int Progression;
-        
+        private string name;
+        private string fileSource;
+        private string fileDestination;
+        private string stateType;
+        private int totalFileToTransfer;
+        private int fileLeftToTransfer;
+        private int progression;
+
+        public string Name { get => name; set => name = value; }
+        public string FileSource { get => fileSource; set => fileSource = value; }
+        public string FileDestination { get => fileDestination; set => fileDestination = value; }
+        public string StateType { get => stateType; set => stateType = value; }
+        public int TotalFileToTransfer { get => totalFileToTransfer; set => totalFileToTransfer = value; }
+        public int FileLeftToTransfer { get => fileLeftToTransfer; set => fileLeftToTransfer = value; }
+        public int Progression { get => progression; set => progression = value; }
+
         public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression)
         {
             Name = name;

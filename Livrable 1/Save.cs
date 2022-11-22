@@ -8,10 +8,15 @@ namespace Livrable_1
 {
     internal class Save
     {
-        public string Name;
-        public string FileSource;
-        public string FileDestination;
-        public string FileType;
+        private string name;
+        private string fileSource;
+        private string fileDestination;
+        private string fileType;
+
+        public string Name { get => name; set => name = value; }
+        public string FileSource { get => fileSource; set => fileSource = value; }
+        public string FileDestination { get => fileDestination; set => fileDestination = value; }
+        public string FileType { get => fileType; set => fileType = value; }
 
         public Save(string name, string fileSource, string fileDestination, string fileType)
         {
