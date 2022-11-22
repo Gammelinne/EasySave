@@ -8,12 +8,19 @@ namespace Livrable_1
 {
     internal class Log
     {
-        public string Name;
-        public string FileSource;
-        public string FileDestination;
-        public int FileSize; // in bytes
-        public double FileTransfertTime; // in ms.
-        public DateTime Time;
+        private string name;
+        private string fileSource;
+        private string fileDestination;
+        private int fileSize; // in bytes
+        private double fileTransfertTime; // in ms.
+        private DateTime time;
+
+        public string Name { get => name; set => name = value; }
+        public string FileSource { get => fileSource; set => fileSource = value; }
+        public string FileDestination { get => fileDestination; set => fileDestination = value; }
+        public int FileSize { get => fileSize; set => fileSize = value; }
+        public double FileTransfertTime { get => fileTransfertTime; set => fileTransfertTime = value; }
+        public DateTime Time { get => time; set => time = value; }
 
         public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime time)
         {
