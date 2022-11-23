@@ -9,6 +9,10 @@ namespace Livrable_1
 {
     internal class Save
     {
+        //Timer class
+        public static int secondsCount = 0;
+        public static Timer timer = new Timer(1000);
+
         private string name;
         private string fileSource;
         private string fileDestination;
@@ -29,11 +33,15 @@ namespace Livrable_1
 
         public void SaveSave()
         {
-            //start timer
-            Timer timer = new Timer();
-            timer.Interval = 1000;
             int count = 0;
             string[] directory = { };
+
+            //start timer
+            timer.Elapsed += Timer_Elapsed;
+            timer.Enabled = true;
+            timer.AutoReset = true;
+            timer.Start();
+            secondsCount++;
 
             try
             {
@@ -87,19 +95,26 @@ namespace Livrable_1
                 }
             }
             //create log
-            Log log = new Log(Name, FileSource, FileDestination, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, timer.Interval, DateTime.Now);
+            Log log = new Log(Name, FileSource, FileDestination, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, secondsCount, DateTime.Now);
             log.SaveLog(); //save log
 
-            Console.WriteLine("Do you want to do another save ? / Voulez vous faire une autre sauvegarde ? (y)");
+            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y)");
             string answer = Console.ReadLine();
             if (answer == "y")
             {
+                Console.Clear();
                 Program.SaveData();
             }
             else
             {
                 Environment.Exit(0);
             }
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            secondsCount++;
+            // throw new NotImplementedException();
         }
     }
 }
