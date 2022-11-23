@@ -59,6 +59,28 @@ namespace Livrable_1
         public static void ReadStateOfTheDay()
         {
             string PathState = "C:\\ProjetCsFT\\State\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string[] lines = System.IO.File.ReadAllLines(PathState);
+            foreach (string line in lines)
+            {
+                Console.WriteLine(line);
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y)");
+            string answer = Console.ReadLine();
+            if (answer == "y")
+            {
+                Program.SaveData();
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        /*
+        public static void ReadStateOfTheDay()
+        {
+            string PathState = "C:\\ProjetCsFT\\State\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
             if (System.IO.File.Exists(PathState))
             {
                 string[] lines = System.IO.File.ReadAllLines(PathState);
@@ -72,5 +94,6 @@ namespace Livrable_1
                 Console.WriteLine("No state file found for today");
             }
         }
+        */
     }
 }
