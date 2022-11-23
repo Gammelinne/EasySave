@@ -45,13 +45,13 @@ namespace Livrable_1
         {
             Dictionary<string, object> state = new Dictionary<string, object>
             {
-                { "Name", this.Name },
-                { "FileSource", this.FileSource },
-                { "FileDestination", this.FileDestination },
-                { "StateType", this.StateType },
-                { "TotalFileToTransfer", this.TotalFileToTransfer },
-                { "FileLeftToTransfer", this.Progression },
-                { "Progression", this.FileLeftToTransfer }
+                { "Name", Name },
+                { "FileSource", FileSource },
+                { "FileDestination", FileDestination },
+                { "StateType", StateType },
+                { "TotalFileToTransfer", TotalFileToTransfer },
+                { "FileLeftToTransfer", FileLeftToTransfer },
+                { "Progression", Progression }
             };
             return state;
         }
