@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Livrable_1
 {
@@ -12,11 +10,16 @@ namespace Livrable_1
         public string Name;
         public string FileSource;
         public string FileDestination;
-        public int FileSize; // in bytes
+        public int FileSize;
         public double FileTransfertTime; // in ms.
         public DateTime Time;
 
-        public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime time)
+        public Log(string name, 
+            string fileSource, 
+            string fileDestination, 
+            int fileSize, 
+            double fileTransfertTime, 
+            DateTime time)
         {
             Name = name;
             FileSource = fileSource;
@@ -25,39 +28,48 @@ namespace Livrable_1
             FileTransfertTime = fileTransfertTime;
             Time = time;
         }
-        //test merge
-        //test 2
         
         public void SaveLog()
         {
-            string PathLog = "C:\\ProjetCsFT\\Log\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            System.IO.StreamWriter file = new System.IO.StreamWriter(PathLog, true); // true = append file for multiple logs in the same day        
-            file.WriteLine(JsonSerializer.Serialize(this.GetAll()) + ","); // add a comma to separate each log
+            string PathLog = @"C:\ProjetCsFT\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+           
+            if (!File.Exists(PathLog))
+            {
+                StreamWriter newFile = new StreamWriter(PathLog, true);
+                newFile.WriteLine("[]");
+                newFile.Close();
+            }
+
+            string data = File.ReadAllText(PathLog);
+            data = data.Remove(data.Length - 3, 1);
+            File.WriteAllText(PathLog, string.Empty);
+            StreamWriter file = new StreamWriter(PathLog, true);
+            file.WriteLine(data + JsonSerializer.Serialize(GetAll()) + ",\n]");
             file.Close();
         }
 
-        public Dictionary<string, object> GetAll() //Get all element of the class and place in a dictonary 
+        //Get all element of the class and place in a dictonary 
+        public Dictionary<string, object> GetAll()
         {
             Dictionary<string, object> log = new Dictionary<string, object>
             {
-                { "Name", this.Name },
-                { "FileSource", this.FileSource },
-                { "FileDestination", this.FileDestination },
-                { "FileSize", this.FileSize },
-                { "FileTransfertTime", this.FileTransfertTime },
-                { "Time", this.Time }
+                { "Name", Name },
+                { "FileSource", FileSource },
+                { "FileDestination", FileDestination },
+                { "FileSize", FileSize },
+                { "FileTransfertTime", FileTransfertTime },
+                { "Time", Time }
             };
             return log;
         }
 
-        //open the file and read the content
-        
+        //Open log file and read the content
         public static void ReadLogOfTheDay()
         {
-            string PathLog = "C:\\ProjetCsFT\\Log\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            if (System.IO.File.Exists(PathLog))
+            string PathLog = @"C:\ProjetCsFT\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            if (File.Exists(PathLog))
             {
-                string[] lines = System.IO.File.ReadAllLines(PathLog);
+                string[] lines = File.ReadAllLines(PathLog);
                 foreach (string line in lines)
                 {
                     Console.WriteLine(line);
