@@ -32,7 +32,16 @@ namespace Livrable_1
             Timer timer = new Timer();
             timer.Interval = 1000;
             int count = 0;
-            foreach (string newPath in Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories)) // on récupère les fichiers du dossier source
+            string[] directory = { };
+            try
+            {
+                directory = Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Program.SaveData();
+            }
+                foreach (string newPath in directory) // on récupère les fichiers du dossier source
             {
                 
                 if (!Directory.Exists(Path.GetDirectoryName(newPath.Replace(FileSource, FileDestination + "\\" + Name)))) //Si le dossier n'existe pas
@@ -44,7 +53,7 @@ namespace Livrable_1
                 {
                     File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true); //on copie
                     count++; //on incrémente le compteur
-                    Console.WriteLine(count + " out of " + Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length + " files copied"); //on affiche le nombre de fichier sauvegarder en plus
+                    Console.WriteLine(count + " out of " + directory.Length + " files copied"); //on affiche le nombre de fichier sauvegarder en plus
                 }
                 
                 else if(File.Exists(newPath.Replace(FileSource, FileDestination + "\\" + Name)) && FileType == "2") //si il existe et qu'on est en sauvegarde differenti
@@ -57,19 +66,21 @@ namespace Livrable_1
                     {
                         File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true); //on copie
                         count++; //on incrémente le compteur
-                        Console.WriteLine(count + " out of " + Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length + " files copied"); //on affiche le nombre de fichier sauvegarder en plus
+                        Console.WriteLine(count + " out of " + directory.Length + " files copied"); //on affiche le nombre de fichier sauvegarder en plus
                     }
                 }
                 else if (FileType == "1") //si on est en sauvegarde complète
                 {
                     File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true); //on copie
                     count++; //on incrémente le compteur
-                    Console.WriteLine(count + " out of " + Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length + " files copied"); //on affiche le nombre de fichier sauvegarder en plus
+                    Console.WriteLine(count + " out of " + directory.Length + " files copied"); //on affiche le nombre de fichier sauvegarder en plus
                 }
                 //create object state
-                State state = new State(Name, FileSource, FileDestination, FileType, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, count, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count); //reste à sauvegarder
-                //save state
-                state.SaveState();
+                State state = new State(Name, FileSource, FileDestination, FileType, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count); //reste à sauvegarder
+                if(state.Progression % 10 == 0)
+                {
+                    state.SaveState();
+                }
             }
             //create log
             Log log = new Log(Name, FileSource, FileDestination, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, timer.Interval, DateTime.Now);
