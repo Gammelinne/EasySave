@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Livrable_1
 {
@@ -7,7 +8,9 @@ namespace Livrable_1
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, Welcome to the File Transfer Program / Bonjour, Bienvenue dans le programme de transfert de fichier");
+            Console.WriteLine("Hello, welcome to the File Transfer Program / Bonjour, bienvenue dans le programme de transfert de fichier");
+            Thread.Sleep(1500); //The Thread.Sleep() method suspends the current thread for the specified amount of time.;
+            Console.Clear();
             SaveData();
         }
 
@@ -15,14 +18,20 @@ namespace Livrable_1
         public static void SaveData()
         {
             Console.WriteLine("Please enter what you want to do / Veuillez entrer ce que vous voulez faire");
+            Console.WriteLine("");
             Console.WriteLine("1. Transfer a folder / 1. Transférer un folder");
             Console.WriteLine("2. get log of the day / 2. obtenir le log du jour");
             Console.WriteLine("3. get state of the day / 3. obtenir l'etat des sauvegardes du jour");
+            Console.WriteLine("4. exit / 4. quitter");
+            Console.WriteLine("");
 
+            /*
             Log log = new Log("test", "test", "test", 12, 14, DateTime.Now);
             log.SaveLog();
+            */
 
             string choice = Console.ReadLine();
+            Console.Clear();
 
             switch (choice)
             {
@@ -44,13 +53,38 @@ namespace Livrable_1
                     }
                     break;
                 case "2":
-                    Log.ReadLogOfTheDay();
+                    try
+                    {
+                        Log.ReadLogOfTheDay();
+                    } catch
+                    {
+                        Console.WriteLine("No log file found for today");
+                        Thread.Sleep(2000);
+                        Console.Clear();
+                        SaveData();
+                    }
                     break;
                 case "3":
-                    State.ReadStateOfTheDay();
+                    try
+                    {
+                        State.ReadStateOfTheDay();
+                    } catch
+                    {
+                        Console.WriteLine("No state file found for today");
+                        Thread.Sleep(2000);
+                        Console.Clear();
+                        SaveData();
+                    }
+                    break;
+                case "4":
+                    Environment.Exit(0);
                     break;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Please enter a valid choice / Veuillez entrer un choix valide");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    SaveData();
                     break;
             }
         }

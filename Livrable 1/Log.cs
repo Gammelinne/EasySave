@@ -1,8 +1,9 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 
 namespace Livrable_1
 {
@@ -54,6 +55,30 @@ namespace Livrable_1
             return log;
         }
 
+
+        //Read log of the day ;
+        public static void ReadLogOfTheDay()
+        {
+            string PathLog = "C:\\ProjetCsFT\\Log\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string[] lines = System.IO.File.ReadAllLines(PathLog);
+            foreach (string line in lines)
+            {
+                Console.WriteLine(line);
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y)");
+            string answer = Console.ReadLine();
+            if (answer == "y")
+            {
+                Program.SaveData();
+            } else
+            {
+                Environment.Exit(0);
+            }
+        }
+
+
+        /*
         //open the file and read the content
         
         public static void ReadLogOfTheDay()
@@ -69,8 +94,10 @@ namespace Livrable_1
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("No log for today");
+                Thread.Sleep(2000);
             }
-        }
+        }*/
     }
 }
