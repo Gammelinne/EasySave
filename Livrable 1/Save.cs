@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace Livrable_1
             int count = 0;
             string[] directory = { };
 
-            //start timer
+            //Start timer
             timer.Elapsed += Timer_Elapsed;
             timer.Enabled = true;
             timer.AutoReset = true;
@@ -53,7 +54,10 @@ namespace Livrable_1
                 Console.WriteLine("------------------------------------------------------------------------------------------");
                 Program.SaveData();
             }
-                foreach (string newPath in directory) // We get the files from the source folder
+
+            long size = GetDirectorySize(FileSource);
+
+            foreach (string newPath in directory) // We get the files from the source folder
             {
                 
                 if (!Directory.Exists(Path.GetDirectoryName(newPath.Replace(FileSource, FileDestination + "\\" + Name)))) //If the file does not exist
@@ -87,16 +91,44 @@ namespace Livrable_1
                     count++; //we increment the counter
                     Console.WriteLine(count + " out of " + directory.Length + " files copied"); //
                 }
-                //create object state
-                State state = new State(Name, FileSource, FileDestination, FileType, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count); //reste à sauvegarder
-                if(state.Progression % 10 == 0)
+
+                //Create a state
+                string Status = "ACTIVES";
+                State state = new State(Name, FileSource, FileDestination, FileType,
+                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
+                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count,
+                    count,
+                    Status,
+                    (int)size);
+
+                //Save state and change status
+                if (state.FileLeftToTransfer > 30 && state.FileLeftToTransfer % 10 == 0)
                 {
                     state.SaveState();
                 }
+
+                if (state.FileLeftToTransfer < 30 && state.FileLeftToTransfer % 10 != 0)
+                {
+                    state.SaveState();
+                }
+
+                if (state.FileLeftToTransfer == 0)
+                {
+                    Status = "END";
+                    State endState = new State(Name, FileSource, FileDestination, FileType,
+                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
+                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count,
+                    count,
+                    Status,
+                    (int)size);
+
+                    endState.SaveState();
+                }
             }
-            //create log
-            Log log = new Log(Name, FileSource, FileDestination, Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length, secondsCount, DateTime.Now);
-            log.SaveLog(); //save log
+            
+            //Create a log
+            Log log = new Log(Name, FileSource, FileDestination, (int)size, secondsCount, DateTime.Now);
+            log.SaveLog(); //Save log
 
             Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y)");
             string answer = Console.ReadLine();
@@ -111,6 +143,22 @@ namespace Livrable_1
             }
         }
 
+        static long GetDirectorySize(string path) // Get Directory Size
+        {
+            // Get array of all file names.
+            string[] a = Directory.GetFiles(path, "*.*");
+
+            // Calculate total bytes of all files in a loop.
+            long b = 0;
+            foreach (string name in a)
+            {
+                // Use FileInfo to get length of each file.
+                FileInfo info = new FileInfo(name);
+                b += info.Length;
+            }
+            // Return total size
+            return b;
+        }
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             secondsCount++;

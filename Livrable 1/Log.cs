@@ -1,5 +1,6 @@
 ﻿ using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -76,28 +77,25 @@ namespace Livrable_1
                 Environment.Exit(0);
             }
         }
-
-
-        /*
-        //open the file and read the content
-        
-        public static void ReadLogOfTheDay()
-        {
-            string PathLog = "C:\\ProjetCsFT\\Log\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            if (System.IO.File.Exists(PathLog))
-            {
-                string[] lines = System.IO.File.ReadAllLines(PathLog);
-                foreach (string line in lines)
-                {
-                    Console.WriteLine(line);
-                }
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("No log for today");
-                Thread.Sleep(2000);
-            }
-        }*/
     }
 }
+
+/*
+         public static long GetDirectorySize(string path)
+        {
+            //Get array of all file names.
+            string[] a = Directory.GetFiles(path, "*.*");
+
+            // Calculate total bytes of all files in a loop.
+            long b = 0;
+            foreach (string name in a)
+            {
+                //Use FileInfo to get length of each file.
+                FileInfo info = new FileInfo(name);
+                b += info.Length;
+            }
+            //return total size
+            return b;
+
+        }
+ */

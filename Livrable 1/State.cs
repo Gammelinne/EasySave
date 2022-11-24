@@ -14,6 +14,8 @@ namespace Livrable_1
         private int totalFileToTransfer;
         private int fileLeftToTransfer;
         private int progression;
+        private string status;
+        private int totalFilesSize;
 
         public string Name { get => name; set => name = value; }
         public string FileSource { get => fileSource; set => fileSource = value; }
@@ -22,8 +24,10 @@ namespace Livrable_1
         public int TotalFileToTransfer { get => totalFileToTransfer; set => totalFileToTransfer = value; }
         public int FileLeftToTransfer { get => fileLeftToTransfer; set => fileLeftToTransfer = value; }
         public int Progression { get => progression; set => progression = value; }
+        public string Status { get=> status; set => status = value; }
+        public int TotalFilesSize { get => totalFilesSize; set => totalFilesSize = value; }
 
-        public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression)
+        public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression, string status, int totalFilesSize)
         {
             Name = name;
             FileSource = fileSource;
@@ -32,6 +36,8 @@ namespace Livrable_1
             TotalFileToTransfer = totalFileToTransfer;
             FileLeftToTransfer = fileLeftToTransfer;
             Progression = progression;
+            Status = status;
+            TotalFilesSize = totalFilesSize;
         }
         
         public void SaveState(){
@@ -51,7 +57,9 @@ namespace Livrable_1
                 { "StateType", StateType },
                 { "TotalFileToTransfer", TotalFileToTransfer },
                 { "FileLeftToTransfer", FileLeftToTransfer },
-                { "Progression", Progression }
+                { "Progression", Progression },
+                { "Status", Status },
+                { "TotalFilesSize", TotalFilesSize }
             };
             return state;
         }
@@ -76,24 +84,5 @@ namespace Livrable_1
                 Environment.Exit(0);
             }
         }
-
-        /*
-        public static void ReadStateOfTheDay()
-        {
-            string PathState = "C:\\ProjetCsFT\\State\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            if (System.IO.File.Exists(PathState))
-            {
-                string[] lines = System.IO.File.ReadAllLines(PathState);
-                foreach (string line in lines)
-                {
-                    Console.WriteLine(line);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No state file found for today");
-            }
-        }
-        */
     }
 }
