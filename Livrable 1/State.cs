@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Text.Json;
 
 namespace Livrable_1
@@ -24,7 +24,7 @@ namespace Livrable_1
         public int TotalFileToTransfer { get => totalFileToTransfer; set => totalFileToTransfer = value; }
         public int FileLeftToTransfer { get => fileLeftToTransfer; set => fileLeftToTransfer = value; }
         public int Progression { get => progression; set => progression = value; }
-        public string Status { get=> status; set => status = value; }
+        public string Status { get => status; set => status = value; }
         public int TotalFilesSize { get => totalFilesSize; set => totalFilesSize = value; }
 
         public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression, string status, int totalFilesSize)
@@ -39,15 +39,35 @@ namespace Livrable_1
             Status = status;
             TotalFilesSize = totalFilesSize;
         }
-        
-        public void SaveState(){
-            string PathState = "C:\\ProjetCsFT\\State\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            System.IO.StreamWriter file = new System.IO.StreamWriter(PathState, true); // true = append file for multiple logs in the same day
-            file.WriteLine(JsonSerializer.Serialize(this.GetAll()) + ","); // add a comma to separate each log
-            file.Close();
+
+        public void SaveState()
+        {
+            string PathState = Directory.GetCurrentDirectory() + @"\State\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            if (!Directory.Exists(Directory.GetCurrentDirectory() + @"\State\"))
+            {
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\State\");
+            }
+
+            //Create a valid Json
+            #region
+            if (!File.Exists(PathState))
+            {
+                File.WriteAllText(PathState, "[]");
+            }
+            string data = File.ReadAllText(PathState);
+            data = data.Remove(data.LastIndexOf("]"), 1);
+            if (data.LastIndexOf("}") != -1)
+            {
+                data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
+                File.WriteAllText(PathState, string.Empty);
+                File.WriteAllText(PathState, data);
+            }
+            File.WriteAllText(PathState, data + JsonSerializer.Serialize(GetAll()) + "]");
+            #endregion
         }
 
-        public Dictionary<string, object> GetAll() //Get all element of the class and place in a dictonary 
+        //Get all element of the class and place in a dictonary
+        public Dictionary<string, object> GetAll()
         {
             Dictionary<string, object> state = new Dictionary<string, object>
             {
@@ -66,20 +86,28 @@ namespace Livrable_1
 
         public static void ReadStateOfTheDay()
         {
-            string PathState = "C:\\ProjetCsFT\\State\\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            string[] lines = System.IO.File.ReadAllLines(PathState);
-            foreach (string line in lines)
+            string PathState = Directory.GetCurrentDirectory() + @"\State\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            if (File.Exists(PathState))
             {
-                Console.WriteLine(line);
-            }
-            Console.WriteLine("");
-            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y)");
-            string answer = Console.ReadLine();
-            if (answer == "y")
-            {
-                Program.SaveData();
+                string[] lines = File.ReadAllLines(PathState);
+                foreach (string line in lines)
+                {
+                    Console.WriteLine(line);
+                }
             }
             else
+            {
+                Console.WriteLine("No state for today");
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y/n)");
+            string answer = Console.ReadLine();
+            if (answer == "y" || answer == "Y")
+            {
+                Console.Clear();
+                Program.SaveData();
+            }
+            else if (answer == "n" || answer == "N")
             {
                 Environment.Exit(0);
             }

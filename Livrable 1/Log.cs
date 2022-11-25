@@ -27,14 +27,10 @@ namespace Livrable_1
         public void SaveLog()
         {
             //Check if all directory exist
-            string PathLog = @"C:\EasySave\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            if (!Directory.Exists(@"C:\EasySave"))
+            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            if (!Directory.Exists(Directory.GetCurrentDirectory() + @"\Log\"))
             {
-                Directory.CreateDirectory(@"C:\EasySave");
-            }
-            if (!Directory.Exists(@"C:\EasySave\Log\"))
-            {
-                Directory.CreateDirectory(@"C:\EasySave\Log\");
+                Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Log\");
             }
 
             //Create a valid Json
@@ -73,7 +69,7 @@ namespace Livrable_1
         //Open log file and read the content
         public static void ReadLogOfTheDay()
         {
-            string PathLog = @"C:\EasySave\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
             if (File.Exists(PathLog))
             {
                 string[] lines = File.ReadAllLines(PathLog);
@@ -85,6 +81,18 @@ namespace Livrable_1
             else
             {
                 Console.WriteLine("No log for today");
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y/n)");
+            string answer = Console.ReadLine();
+            if (answer == "y" || answer == "Y")
+            {
+                Console.Clear();
+                Program.SaveData();
+            }
+            else if (answer == "n" || answer == "N")
+            {
+                Environment.Exit(0);
             }
         }
     }

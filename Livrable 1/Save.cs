@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace Livrable_1
@@ -47,7 +43,8 @@ namespace Livrable_1
             try
             {
                 directory = Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.Clear();
                 Console.WriteLine(e.Message);
@@ -57,49 +54,50 @@ namespace Livrable_1
 
             long size = GetDirectorySize(FileSource);
 
-            foreach (string newPath in directory) // We get the files from the source folder
+            // We get the files from the source folder
+            foreach (string newPath in directory)
             {
-                
-                if (!Directory.Exists(Path.GetDirectoryName(newPath.Replace(FileSource, FileDestination + "\\" + Name)))) //If the file does not exist
+                //Check if the file exist
+                if (!Directory.Exists(Path.GetDirectoryName(newPath.Replace(FileSource, FileDestination + @"\" + Name))))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(newPath.Replace(FileSource, FileDestination + "\\" + Name))); //we create it
+                    Directory.CreateDirectory(Path.GetDirectoryName(newPath.Replace(FileSource, FileDestination + @"\" + Name)));
                 }
-                
-                if (!File.Exists(newPath.Replace(FileSource, FileDestination + "\\" + Name)) && FileType == "2") //if we are in differential backup and the file does not exist
+
+                //If we are in differential backup and the file does not exist, we copy the files
+                if (!File.Exists(newPath.Replace(FileSource, FileDestination + @"\" + Name)) && FileType == "2")
                 {
-                    File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true); //we copy
-                    count++; //on incrémente le compteur
-                    Console.WriteLine(count + " out of " + directory.Length + " files copied"); //the number of files saved in addition is displayed
+                    File.Copy(newPath, newPath.Replace(FileSource, FileDestination + @"\" + Name), true);
+                    count++;
+                    Console.WriteLine(count + " out of " + directory.Length + " files copied");
                 }
-                
-                else if(File.Exists(newPath.Replace(FileSource, FileDestination + "\\" + Name)) && FileType == "2") //if it exists and we are in differential backup
+
+                //If we are in differential backup and the file exist, we check if the size of the source file is different from the size of the destination file
+                else if (File.Exists(newPath.Replace(FileSource, FileDestination + @"\" + Name)) && FileType == "2")
                 {
-                    FileInfo file1 = new FileInfo(newPath); //we get the information from the source file
+                    FileInfo file1 = new FileInfo(newPath);
+                    FileInfo file2 = new FileInfo(newPath.Replace(FileSource, FileDestination + @"\" + Name)); //we get the information from the destination file
 
-                    FileInfo file2 = new FileInfo(newPath.Replace(FileSource, FileDestination + "\\" + Name)); //we get the information from the destination file
-
-                    if (file1.Length != file2.Length) //if the size of the source file is different from the size of the destination file
+                    if (file1.Length != file2.Length)
                     {
-                        File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true); //We copy
-                        count++; //we increment the counter
-                        Console.WriteLine(count + " out of " + directory.Length + " files copied"); //the number of files saved in addition is displayed
+                        File.Copy(newPath, newPath.Replace(FileSource, FileDestination + @"\" + Name), true);
+                        count++;
+                        Console.WriteLine(count + " out of " + directory.Length + " files copied");
                     }
                 }
-                else if (FileType == "1") //if you are in full backup
+
+                //If we are in full backup,we copy all files
+                else if (FileType == "1")
                 {
-                    File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true); //We copy
-                    count++; //we increment the counter
-                    Console.WriteLine(count + " out of " + directory.Length + " files copied"); //
+                    File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true);
+                    count++;
+                    Console.WriteLine(count + " out of " + directory.Length + " files copied");
                 }
 
                 //Create a state
                 string Status = "ACTIVES";
                 State state = new State(Name, FileSource, FileDestination, FileType,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
-                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count,
-                    count,
-                    Status,
-                    (int)size);
+                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
 
                 //Save state and change status
                 if (state.FileLeftToTransfer > 30 && state.FileLeftToTransfer % 10 == 0)
@@ -117,52 +115,47 @@ namespace Livrable_1
                     Status = "END";
                     State endState = new State(Name, FileSource, FileDestination, FileType,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
-                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count,
-                    count,
-                    Status,
-                    (int)size);
-
+                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
                     endState.SaveState();
                 }
             }
-            
+
             //Create a log
             Log log = new Log(Name, FileSource, FileDestination, (int)size, secondsCount, DateTime.Now);
-            log.SaveLog(); //Save log
+            log.SaveLog();
 
             Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y)");
             string answer = Console.ReadLine();
-            if (answer == "y")
+            if (answer == "y" || answer == "Y")
             {
                 Console.Clear();
                 Program.SaveData();
             }
-            else
+            else if (answer == "n" || answer == "N")
             {
                 Environment.Exit(0);
             }
         }
 
-        static long GetDirectorySize(string path) // Get Directory Size
+        // Get directory size
+        static long GetDirectorySize(string path)
         {
             // Get array of all file names.
-            string[] a = Directory.GetFiles(path, "*.*");
+            string[] filesName = Directory.GetFiles(path, "*.*");
 
-            // Calculate total bytes of all files in a loop.
-            long b = 0;
-            foreach (string name in a)
+            // Calculate total bytes of all files
+            long countByte = 0;
+            foreach (string name in filesName)
             {
-                // Use FileInfo to get length of each file.
                 FileInfo info = new FileInfo(name);
-                b += info.Length;
+                countByte += info.Length;
             }
-            // Return total size
-            return b;
+            return countByte;
         }
+
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             secondsCount++;
-            // throw new NotImplementedException();
         }
     }
 }
