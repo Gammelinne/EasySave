@@ -14,7 +14,7 @@ namespace Livrable_1
         public double FileTransfertTime;
         public DateTime Time;
 
-        public Log(string name, string fileSource, string fileDestination, int fileSize,  double fileTransfertTime, DateTime time)
+        public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime time)
         {
             Name = name;
             FileSource = fileSource;
@@ -23,7 +23,7 @@ namespace Livrable_1
             FileTransfertTime = fileTransfertTime;
             Time = time;
         }
-        
+
         public void SaveLog()
         {
             //Check if all directory exist
