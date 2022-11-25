@@ -11,15 +11,10 @@ namespace Livrable_1
         public string FileSource;
         public string FileDestination;
         public int FileSize;
-        public double FileTransfertTime; // in ms.
+        public double FileTransfertTime;
         public DateTime Time;
 
-        public Log(string name, 
-            string fileSource, 
-            string fileDestination, 
-            int fileSize, 
-            double fileTransfertTime, 
-            DateTime time)
+        public Log(string name, string fileSource, string fileDestination, int fileSize,  double fileTransfertTime, DateTime time)
         {
             Name = name;
             FileSource = fileSource;
@@ -31,21 +26,33 @@ namespace Livrable_1
         
         public void SaveLog()
         {
-            string PathLog = @"C:\ProjetCsFT\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-           
-            if (!File.Exists(PathLog))
+            //Check if all directory exist
+            string PathLog = @"C:\EasySave\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            if (!Directory.Exists(@"C:\EasySave"))
             {
-                StreamWriter newFile = new StreamWriter(PathLog, true);
-                newFile.WriteLine("[]");
-                newFile.Close();
+                Directory.CreateDirectory(@"C:\EasySave");
+            }
+            if (!Directory.Exists(@"C:\EasySave\Log\"))
+            {
+                Directory.CreateDirectory(@"C:\EasySave\Log\");
             }
 
+            //Create a valid Json
+            #region
+            if (!File.Exists(PathLog))
+            {
+                File.WriteAllText(PathLog, "[]");
+            }
             string data = File.ReadAllText(PathLog);
-            data = data.Remove(data.Length - 3, 1);
-            File.WriteAllText(PathLog, string.Empty);
-            StreamWriter file = new StreamWriter(PathLog, true);
-            file.WriteLine(data + JsonSerializer.Serialize(GetAll()) + ",\n]");
-            file.Close();
+            data = data.Remove(data.LastIndexOf("]"), 1);
+            if (data.LastIndexOf("}") != -1)
+            {
+                data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
+                File.WriteAllText(PathLog, string.Empty);
+                File.WriteAllText(PathLog, data);
+            }
+            File.WriteAllText(PathLog, data + JsonSerializer.Serialize(GetAll()) + "]");
+            #endregion
         }
 
         //Get all element of the class and place in a dictonary 
@@ -66,7 +73,7 @@ namespace Livrable_1
         //Open log file and read the content
         public static void ReadLogOfTheDay()
         {
-            string PathLog = @"C:\ProjetCsFT\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string PathLog = @"C:\EasySave\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
             if (File.Exists(PathLog))
             {
                 string[] lines = File.ReadAllLines(PathLog);
