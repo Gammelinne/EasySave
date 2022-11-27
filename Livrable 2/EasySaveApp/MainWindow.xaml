@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:EasySaveApp.MVVM.ViewModel"
         xmlns:local="clr-namespace:EasySaveApp"
         mc:Ignorable="d"
         Height="600" Width="920"
@@ -10,6 +11,10 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
 
     <!-- Border -->
     <Border Background="#17202A"
@@ -43,13 +48,16 @@
                              Height="50"
                              Foreground="White"
                              FontSize="20"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             IsChecked="True"
+                             Command="{Binding HomeViewCommand}"/>
 
                 <RadioButton Content="Save"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding ChangeViewCommand}"/>
 
                 <RadioButton Content="Recovery"
                              Height="50"
@@ -68,10 +76,12 @@
                      Margin="10"
                      Grid.Column="1"
                      Style="{StaticResource ModernTextBox}"/>
-
+            
+            <!-- HomeView -->
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
-                            Margin="10"/>
+                            Margin="10"
+                            Content="{Binding CurrentView}"/>
         </Grid>
 
     </Border>
