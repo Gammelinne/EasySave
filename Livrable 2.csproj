@@ -13,4 +13,9 @@
     <Page Remove="Fonts\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove=".gitattributes" />
+    <None Remove=".gitignore" />
+  </ItemGroup>
+
 </Project>
