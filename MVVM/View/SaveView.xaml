@@ -1,0 +1,177 @@
+﻿<UserControl x:Class="EasySaveApp.MVVM.View.SaveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EasySaveApp.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <StackPanel>
+        <!-- Title -->
+        <TextBlock Text="Create a BackUp"
+                       Foreground="AliceBlue"
+                       FontSize="28"
+                       HorizontalAlignment="Left"
+                       Margin="20 10 0 0"/>
+        <!-- Name -->
+        <TextBlock Text="Name"
+                       Foreground="AliceBlue"
+                       FontSize="14"
+                       HorizontalAlignment="Left"
+                       Margin="20 10 0 0"/>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="500"
+                     Height="40"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="10"
+                     Style="{StaticResource ModernTextBox}"
+                     x:Name="saveName"/>
+        </StackPanel>
+        
+        <!-- Source -->
+        <TextBlock Text="Source"
+                       Foreground="AliceBlue"
+                       FontSize="14"
+                       HorizontalAlignment="Left"
+                       Margin="20 10 0 0"/>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="500"
+                     Height="40"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="10"
+                     Style="{StaticResource ModernTextBox}"
+                     x:Name="saveSourceTextBox"/>
+
+            <Button Content="Browse"
+                    Foreground="AliceBlue"
+                    FontSize="14"
+                    FontWeight="Medium">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#353340"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4C70"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100"
+                                Height="40"
+                                CornerRadius="10"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+
+        <!-- Destination -->
+        <TextBlock Text="Destination"
+                       Foreground="AliceBlue"
+                       FontSize="14"
+                       HorizontalAlignment="Left"
+                       Margin="20 10 0 0"/>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="500"
+                     Height="40"
+                     VerticalContentAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="10"
+                     Style="{StaticResource ModernTextBox}"
+                     x:Name="saveDestinationTextBox"/>
+
+            <Button Content="Browse"
+                    Foreground="AliceBlue"
+                    FontSize="14"
+                    FontWeight="Medium">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#353340"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4C70"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100"
+                                Height="40"
+                                CornerRadius="10"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+        
+        <!-- Type of BackUp -->
+        <TextBlock Text="Type of BackUp"
+                       Foreground="AliceBlue"
+                       FontSize="14"
+                       HorizontalAlignment="Left"
+                       Margin="20 10 0 0"/>
+
+        <ComboBox Width="500"
+                  Height="20"
+                  HorizontalAlignment="Left"
+                  Margin="20"
+                  Background="#353340"
+                  Foreground="#353340"/>
+        
+
+        <Button Content="Next"
+                    Foreground="AliceBlue"
+                    FontSize="14"
+                    FontWeight="Medium">
+
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#353340"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF4C70"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="100"
+                                Height="40"
+                                CornerRadius="10"
+                                Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+    </StackPanel>
+
+</UserControl>

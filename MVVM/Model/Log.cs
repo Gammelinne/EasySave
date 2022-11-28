@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 
-namespace Livrable_1
+namespace EasySaveApp.MVVM.Model
 {
-    internal class Log
+    class Log
     {
+        //Attributes
+
         public string Name;
         public string FileSource;
         public string FileDestination;
@@ -14,6 +17,7 @@ namespace Livrable_1
         public double FileTransfertTime;
         public DateTime Time;
 
+        //Constructor
         public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime time)
         {
             Name = name;
@@ -24,6 +28,7 @@ namespace Livrable_1
             Time = time;
         }
 
+        // Method
         public void SaveLog()
         {
             //Check if all directory exist
@@ -51,7 +56,7 @@ namespace Livrable_1
             #endregion
         }
 
-        //Get all element of the class and place in a dictonary 
+        // Get all element of the class and place in a dictonary
         public Dictionary<string, object> GetAll()
         {
             Dictionary<string, object> log = new Dictionary<string, object>
@@ -66,7 +71,7 @@ namespace Livrable_1
             return log;
         }
 
-        //Open log file and read the content
+        //  log file and read the content
         public static void ReadLogOfTheDay()
         {
             string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
@@ -88,7 +93,7 @@ namespace Livrable_1
             if (answer == "y" || answer == "Y")
             {
                 Console.Clear();
-                Program.SaveData();
+                //Program.SaveData();
             }
             else if (answer == "n" || answer == "N")
             {

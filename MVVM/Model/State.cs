@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 
-namespace Livrable_1
+namespace EasySaveApp.MVVM.Model
 {
-    internal class State
+    class State
     {
+        // Attributes
         private string name;
         private string fileSource;
         private string fileDestination;
@@ -17,6 +19,7 @@ namespace Livrable_1
         private string status;
         private int totalFilesSize;
 
+        // Public Attributes
         public string Name { get => name; set => name = value; }
         public string FileSource { get => fileSource; set => fileSource = value; }
         public string FileDestination { get => fileDestination; set => fileDestination = value; }
@@ -27,6 +30,7 @@ namespace Livrable_1
         public string Status { get => status; set => status = value; }
         public int TotalFilesSize { get => totalFilesSize; set => totalFilesSize = value; }
 
+        // Constructor
         public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression, string status, int totalFilesSize)
         {
             Name = name;
@@ -39,6 +43,8 @@ namespace Livrable_1
             Status = status;
             TotalFilesSize = totalFilesSize;
         }
+
+        // Methods
 
         public void SaveState()
         {
@@ -66,7 +72,7 @@ namespace Livrable_1
             #endregion
         }
 
-        //Get all element of the class and place in a dictonary
+        // Get all element of the class and place in a dictonary
         public Dictionary<string, object> GetAll()
         {
             Dictionary<string, object> state = new Dictionary<string, object>
@@ -83,6 +89,8 @@ namespace Livrable_1
             };
             return state;
         }
+
+        // Read State 
 
         public static void ReadStateOfTheDay()
         {
@@ -105,7 +113,7 @@ namespace Livrable_1
             if (answer == "y" || answer == "Y")
             {
                 Console.Clear();
-                Program.SaveData();
+                //Program.SaveData();
             }
             else if (answer == "n" || answer == "N")
             {
