@@ -1,7 +1,4 @@
 ﻿using EasySaveApp.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
@@ -35,15 +32,10 @@ namespace EasySaveApp.MVVM.ViewModel
 
             CurrentView = HomeVM;
 
-			HomeViewCommand = new RelayCommand(o => 
-			{
-				CurrentView= HomeVM;
-			});
+			HomeViewCommand = new RelayCommand(o => { CurrentView= HomeVM; });
 
             ChangeViewCommand = new RelayCommand(o =>
-            {
-                CurrentView = ChangeVM;
-            });
+            { CurrentView = ChangeVM; });
         }
     }
 }

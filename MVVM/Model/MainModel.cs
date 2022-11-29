@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EasySaveApp.MVVM.Model
+﻿namespace EasySaveApp.MVVM.Model
 {
     // Main Menu Items
     class MenuItems
@@ -39,6 +35,4 @@ namespace EasySaveApp.MVVM.Model
         public string DocumentName { get; set; }
         public string DocumentImages { get; set; }
     }
-
-    
 }

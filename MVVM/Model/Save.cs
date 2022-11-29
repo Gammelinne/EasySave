@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EasySaveApp.MVVM.Model
+﻿namespace EasySaveApp.MVVM.Model
 {
     class Save
     {
