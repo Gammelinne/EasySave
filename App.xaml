@@ -18,6 +18,12 @@
             <DataTemplate DataType="{x:Type viewModel:ChangeViewModelTest}">
                 <view:ChangeViewTest/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SaveHomeViewModel}">
+                <view:SaveHomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SaveViewModel}">
+                <view:SaveView/>
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application> 
