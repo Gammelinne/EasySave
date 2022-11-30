@@ -22,5 +22,9 @@ namespace EasySaveApp.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void Browse_Click(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }

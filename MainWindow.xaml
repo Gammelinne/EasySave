@@ -76,7 +76,43 @@
                      Margin="10"
                      Grid.Column="1"
                      Style="{StaticResource ModernTextBox}"/>
-            
+
+            <!-- X Button -->
+            <Button Content="×"
+                    Foreground="AliceBlue"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 10 0"
+                    Grid.Column="1"
+                    Command="{Binding ShutdownWindowCommand}">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#FE6583"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4C70"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="25"
+                                Height="25"
+                                CornerRadius="2"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
             <!-- HomeView -->
             <ContentControl Grid.Row="1"
                             Grid.Column="1"

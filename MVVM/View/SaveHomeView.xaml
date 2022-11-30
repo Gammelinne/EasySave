@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EasySaveApp.MVVM.View"
+             xmlns:local="clr-namespace:EasySaveApp.MVVM.View" xmlns:viewmodel="clr-namespace:EasySaveApp.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <!-- Background="#181735" -->
     <Grid>
         <Grid.ColumnDefinitions>
@@ -63,11 +64,13 @@
 
             <!-- Button -->
             <Button Content="Start"
+                    x:Name="StartButton"
                     Foreground="AliceBlue"
                     FontSize="14"
                     FontWeight="Medium"
                     HorizontalAlignment="Left"
-                    Margin="0 20 0 0">
+                    Margin="0 20 0 0"
+                    Click="StartButton_Click">
 
                 <Button.Style>
                     <Style TargetType="Button">
@@ -94,6 +97,7 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+
         </StackPanel>
 
         <!-- Line -->

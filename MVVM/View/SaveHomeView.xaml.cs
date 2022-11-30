@@ -22,5 +22,10 @@ namespace EasySaveApp.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
