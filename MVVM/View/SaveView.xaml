@@ -8,19 +8,21 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel>
-        <!-- Title -->
+        <!-- Title Text -->
         <TextBlock Text="Create a BackUp"
                        Foreground="AliceBlue"
                        FontSize="28"
                        HorizontalAlignment="Left"
                        Margin="20 10 0 0"/>
-        <!-- Name -->
+        
+        <!-- Name Text -->
         <TextBlock Text="Name"
                        Foreground="AliceBlue"
                        FontSize="14"
                        HorizontalAlignment="Left"
                        Margin="20 10 0 0"/>
 
+        <!-- Name Input-->
         <StackPanel Orientation="Horizontal">
             <TextBox Width="500"
                      Height="40"
@@ -30,14 +32,15 @@
                      Style="{StaticResource ModernTextBox}"
                      x:Name="saveName"/>
         </StackPanel>
-        
-        <!-- Source -->
+
+        <!-- Source Text -->
         <TextBlock Text="Source"
                        Foreground="AliceBlue"
                        FontSize="14"
                        HorizontalAlignment="Left"
                        Margin="20 10 0 0"/>
 
+        <!-- Source Input -->
         <StackPanel Orientation="Horizontal">
             <TextBox Width="500"
                      Height="40"
@@ -81,13 +84,14 @@
             </Button>
         </StackPanel>
 
-        <!-- Destination -->
+        <!-- Destination Text -->
         <TextBlock Text="Destination"
                        Foreground="AliceBlue"
                        FontSize="14"
                        HorizontalAlignment="Left"
                        Margin="20 10 0 0"/>
 
+        <!-- Destination Input -->
         <StackPanel Orientation="Horizontal">
             <TextBox Width="500"
                      Height="40"
@@ -129,14 +133,15 @@
                 </Button.Template>
             </Button>
         </StackPanel>
-        
-        <!-- Type of BackUp -->
+
+        <!-- Type of Backup Text -->
         <TextBlock Text="Type of BackUp"
                        Foreground="AliceBlue"
                        FontSize="14"
                        HorizontalAlignment="Left"
                        Margin="20 10 0 0"/>
 
+        <!-- Type of Backup Inpu -->
         <ComboBox Width="500"
                   Height="20"
                   HorizontalAlignment="Left"
@@ -144,11 +149,12 @@
                   Background="#353340"
                   Foreground="#353340"/>
         
-
+        <!-- Next Button -->
         <Button Content="Next"
-                    Foreground="AliceBlue"
-                    FontSize="14"
-                    FontWeight="Medium">
+                Foreground="AliceBlue"
+                FontSize="14"
+                FontWeight="Medium"
+                Click="NextButton_Click">
 
             <Button.Style>
                 <Style TargetType="Button">

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using EasySaveApp.MVVM.Model;
+using System.Windows;
 using System.Windows.Controls;
 
 
@@ -32,6 +33,11 @@ namespace EasySaveApp.MVVM.View
             {
                 saveDestinationTextBox.Text = dialog.SelectedPath;
             }
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            var save = Save.SaveSave();
         }
     }
 }
