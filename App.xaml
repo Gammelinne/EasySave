@@ -5,6 +5,7 @@
              xmlns:viewModel="clr-namespace:EasySaveApp.MVVM.ViewModel"
              xmlns:view="clr-namespace:EasySaveApp.MVVM.View"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,8 +16,14 @@
             <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
                 <view:HomeView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModel:ChangeViewModelTest}">
-                <view:ChangeViewTest/>
+            <DataTemplate DataType="{x:Type viewModel:SaveHomeViewModel}">
+                <view:SaveHomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SaveViewModel}">
+                <view:SaveView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:SettingViewModel}">
+                <view:SettingView/>
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace EasySaveApp.MVVM.View
 {
     /// <summary>
-    /// Logique d'interaction pour ChangeViewTest.xaml
+    /// Logique d'interaction pour SettingView.xaml
     /// </summary>
-    public partial class ChangeViewTest : UserControl
+    public partial class SettingView : UserControl
     {
-        public ChangeViewTest()
+        public SettingView()
         {
             InitializeComponent();
         }

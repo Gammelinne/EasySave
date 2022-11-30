@@ -14,17 +14,18 @@ using System.Windows.Shapes;
 namespace EasySaveApp.MVVM.View
 {
     /// <summary>
-    /// Logique d'interaction pour SaveView.xaml
+    /// Logique d'interaction pour SaveHomeView.xaml
     /// </summary>
-    public partial class SaveView : UserControl
+    public partial class SaveHomeView : UserControl
     {
-        public SaveView()
+        public SaveHomeView()
         {
             InitializeComponent();
         }
 
-        private void Browse_Click(object sender, RoutedEventArgs e)
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
+
         }
     }
 }

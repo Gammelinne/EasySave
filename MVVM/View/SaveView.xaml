@@ -48,9 +48,11 @@
                      x:Name="saveSourceTextBox"/>
 
             <Button Content="Browse"
+                    x:Name="Browse"
                     Foreground="AliceBlue"
                     FontSize="14"
-                    FontWeight="Medium">
+                    FontWeight="Medium"
+                    Click="Browse_Click">
 
                 <Button.Style>
                     <Style TargetType="Button">
@@ -98,7 +100,8 @@
             <Button Content="Browse"
                     Foreground="AliceBlue"
                     FontSize="14"
-                    FontWeight="Medium">
+                    FontWeight="Medium"
+                    Click="Browse_Click">
 
                 <Button.Style>
                     <Style TargetType="Button">
