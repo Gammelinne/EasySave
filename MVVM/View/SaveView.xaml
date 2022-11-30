@@ -52,7 +52,7 @@
                     Foreground="AliceBlue"
                     FontSize="14"
                     FontWeight="Medium"
-                    Click="Browse_Click">
+                    Click="SourceBrowseButton_Click">
 
                 <Button.Style>
                     <Style TargetType="Button">
@@ -101,7 +101,7 @@
                     Foreground="AliceBlue"
                     FontSize="14"
                     FontWeight="Medium"
-                    Click="Browse_Click">
+                    Click="DestinationBrowseButton_Click">
 
                 <Button.Style>
                     <Style TargetType="Button">

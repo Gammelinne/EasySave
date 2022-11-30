@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace EasySaveApp.MVVM.View
 {
@@ -23,8 +14,24 @@ namespace EasySaveApp.MVVM.View
             InitializeComponent();
         }
 
-        private void Browse_Click(object sender, RoutedEventArgs e)
+        private void SourceBrowseButton_Click(object sender, RoutedEventArgs e)
         {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            var result = dialog.ShowDialog();
+            if (result.ToString() != string.Empty)
+            {
+                saveSourceTextBox.Text = dialog.SelectedPath;
+            }
+        }
+
+        private void DestinationBrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            var result = dialog.ShowDialog();
+            if (result.ToString() != string.Empty)
+            {
+                saveDestinationTextBox.Text = dialog.SelectedPath;
+            }
         }
     }
 }
