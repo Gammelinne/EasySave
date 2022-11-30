@@ -28,7 +28,7 @@ namespace Livrable_1
             FileType = fileType;
         }
 
-        public void SaveSave()
+        public void SaveSave(string extension)
         {
             int count = 0;
             string[] directory = { };
@@ -102,12 +102,12 @@ namespace Livrable_1
                 //Save state and change status
                 if (state.FileLeftToTransfer > 30 && state.FileLeftToTransfer % 10 == 0)
                 {
-                    state.SaveState();
+                    state.SaveState(extension);
                 }
 
                 if (state.FileLeftToTransfer < 30 && state.FileLeftToTransfer % 10 != 0)
                 {
-                    state.SaveState();
+                    state.SaveState(extension);
                 }
 
                 if (state.FileLeftToTransfer == 0)
@@ -116,13 +116,13 @@ namespace Livrable_1
                     State endState = new State(Name, FileSource, FileDestination, FileType,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
-                    endState.SaveState();
+                    endState.SaveState(extension);
                 }
             }
 
             //Create a log
             Log log = new Log(Name, FileSource, FileDestination, (int)size, secondsCount, DateTime.Now);
-            log.SaveLog();
+            log.SaveLog(extension);
 
             Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y)");
             string answer = Console.ReadLine();

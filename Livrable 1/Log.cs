@@ -24,10 +24,20 @@ namespace Livrable_1
             Time = time;
         }
 
-        public void SaveLog()
+        public void SaveLog(string extension)
         {
+            Console.WriteLine(extension);
+            if (extension == "1")
+            {
+                extension = "json";
+            }
+            else if (extension == "2")
+            {
+                extension = "xml";
+            }
+            Console.WriteLine(extension);
             //Check if all directory exist
-            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + "." + extension;
             if (!Directory.Exists(Directory.GetCurrentDirectory() + @"\Log\"))
             {
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Log\");
@@ -35,19 +45,40 @@ namespace Livrable_1
 
             //Create a valid Json
             #region
-            if (!File.Exists(PathLog))
+            if (extension == "json")
             {
-                File.WriteAllText(PathLog, "[]");
+                if (!File.Exists(PathLog))
+                {
+                    File.WriteAllText(PathLog, "[]");
+                }
+
+                string data = File.ReadAllText(PathLog);
+                data = data.Remove(data.LastIndexOf("]"), 1);
+                if (data.LastIndexOf("}") != -1)
+                {
+                    data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
+                    File.WriteAllText(PathLog, string.Empty);
+                    File.WriteAllText(PathLog, data);
+                }
+                File.WriteAllText(PathLog, data + JsonSerializer.Serialize(GetAll()) + "]");
+
             }
-            string data = File.ReadAllText(PathLog);
-            data = data.Remove(data.LastIndexOf("]"), 1);
-            if (data.LastIndexOf("}") != -1)
+            else if (extension == "xml")
             {
-                data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
-                File.WriteAllText(PathLog, string.Empty);
-                File.WriteAllText(PathLog, data);
+                if (!File.Exists(PathLog))
+                {
+                    File.WriteAllText(PathLog, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<State>\n</State>");
+                }
+                string data = File.ReadAllText(PathLog);
+                data = data.Remove(data.LastIndexOf("</Log>"), 1);
+                if (data.LastIndexOf("</Log>") != -1)
+                {
+                    data = data.Insert(data.LastIndexOf("</Log>") + 1, ",\n");
+                    File.WriteAllText(PathLog, string.Empty);
+                    File.WriteAllText(PathLog, data);
+                }
+                File.WriteAllText(PathLog, data + GetAll() + "</Log>");
             }
-            File.WriteAllText(PathLog, data + JsonSerializer.Serialize(GetAll()) + "]");
             #endregion
         }
 
