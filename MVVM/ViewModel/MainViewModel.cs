@@ -42,25 +42,13 @@ namespace EasySaveApp.MVVM.ViewModel
 
             CurrentView = SaveHomeVM;
 
-			HomeViewCommand = new RelayCommand(o => 
-			{
-				CurrentView= HomeVM;
-			});
+			HomeViewCommand = new RelayCommand(o => { CurrentView= HomeVM; });
 
-            SaveHomeViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SaveHomeVM;
-            });
+            SaveHomeViewModelCommand = new RelayCommand(o => { CurrentView = SaveHomeVM; });
 
-            SaveViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SaveVM;
-            });
+            SaveViewModelCommand = new RelayCommand(o => { CurrentView = SaveVM; });
 
-            SettingModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SettingVM;
-            });
+            SettingModelCommand = new RelayCommand(o => {CurrentView = SettingVM; });
         }
     }
 }
