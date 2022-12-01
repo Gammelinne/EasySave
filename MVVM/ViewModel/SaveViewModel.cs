@@ -1,62 +1,96 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Text;
-using System.Windows;
+using System.Runtime.CompilerServices;
+using EasySaveApp.Core;
 using EasySaveApp.MVVM.Model;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
-    class SaveViewModel
+    internal class SaveViewModel : INotifyPropertyChanged
     {
+        private Save _save;
 
-        private string name;
-        private string fileSource;
-        private string fileDestination;
-        private string saveType;
-
-        public string Name { get => name; set => name = value; }
-        public string FileSource { get => fileSource; set => fileSource = value; }
-        public string FileDestination { get => fileDestination; set => fileDestination = value; }
-        public string SaveType { get => saveType; set => saveType = value; }
-
-        public SaveViewModel(string name, string fileSource, string fileDestination, string saveType)
+        public SaveViewModel()
         {
-            Name = name;
-            FileSource = fileSource;
-            FileDestination = fileDestination;
-            SaveType = saveType;
+            _save = new Save();
         }
-
-        public bool CheckInputFill()
+        public string FileName
         {
-            if (Name == string.Empty || FileSource == string.Empty || FileDestination == string.Empty || SaveType == string.Empty)
+            get { return _save.Name; }
+            set
             {
-                return false;
-            } 
-            else
-            {
-                return true;
+                {
+                    _save.Name = value;
+                    OnPropertyChanged("FileName");
+                }
             }
         }
 
-        public bool CheckPathExist()
+        public string FileSource
         {
-            if (Directory.Exists(FileSource) && Directory.Exists(FileDestination))
+            get { return _save.FileSource; }
+            set
             {
-                return true;
+                _save.FileSource = value;
+                OnPropertyChanged("FileSource");
             }
-            else
+
+        }
+
+        public string FileDestination
+        {
+            get { return _save.FileDestination; }
+            set
             {
-                return false;
+                _save.FileDestination = value;
+                OnPropertyChanged("FileDestination");
             }
         }
-        
-        public void Save()
-        {
 
-            Save save = new Save(name, fileSource, fileDestination, saveType);
-            save.SaveSave();
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private RelayCommand _browseSourceCommand;
+
+        public RelayCommand BrowseSourceCommand
+        {
+            get
+            {
+                return _browseSourceCommand ?? (_browseSourceCommand = new RelayCommand(
+                    o =>
+                    {
+                        var dialog = new System.Windows.Forms.FolderBrowserDialog();
+                        System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                        if (result == System.Windows.Forms.DialogResult.OK)
+                        {
+                            _save.FileSource = dialog.SelectedPath;
+                            OnPropertyChanged("FileSource");
+                        }
+                    }));
+            }
+        }
+
+        private RelayCommand _browseDestinationCommand;
+
+        public RelayCommand BrowseDestinationCommand
+        {
+            get
+            {
+                return _browseDestinationCommand ??= new RelayCommand(
+                    o =>
+                    {
+                        var dialog = new System.Windows.Forms.FolderBrowserDialog();
+                        System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                        if (result == System.Windows.Forms.DialogResult.OK)
+                        {
+                            _save.FileDestination = dialog.SelectedPath;
+                            OnPropertyChanged("FileDestination");
+                        }
+                    });
+            }
         }
     }
 }

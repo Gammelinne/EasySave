@@ -29,6 +29,7 @@
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
+                     Text="{Binding FileName, Mode=TwoWay}"
                      Margin="10"/>
             <!-- Style="{StaticResource ModernTextBox}"-->
         </StackPanel>
@@ -47,28 +48,26 @@
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="10"
-                     />
-                     <!-- Style="{StaticResource ModernTextBox}" -->
+                     Margin="10" 
+                     Text="{Binding FileSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
             <Button Content="Browse"
                     x:Name="Browse"
                     Foreground="AliceBlue"
                     FontSize="14"
                     FontWeight="Medium"
-                    Click="SourceBrowseButton_Click">
-
+                    Command="{Binding BrowseSourceCommand}" >
                 <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#353340"/>
-                        <Setter Property="Cursor" Value="Hand"/>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#353340"/>
+                    <Setter Property="Cursor" Value="Hand"/>
 
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF4C70"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF4C70"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
                 </Button.Style>
 
                 <Button.Template>
@@ -99,15 +98,16 @@
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
+                     Text="{Binding FileDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      Margin="10"/>
-                     <!-- Style="{StaticResource ModernTextBox}"-->
-                     
+            <!-- Style="{StaticResource ModernTextBox}"-->
+
 
             <Button Content="Browse"
                     Foreground="AliceBlue"
                     FontSize="14"
                     FontWeight="Medium"
-                    Click="DestinationBrowseButton_Click">
+                    Command="{Binding BrowseDestinationCommand}">
 
                 <Button.Style>
                     <Style TargetType="Button">
@@ -154,7 +154,7 @@
             <ComboBoxItem Content="Complete"/>
             <ComboBoxItem Content="Differential"/>
         </ComboBox>
-        
+
         <!-- Next Button -->
         <Button Content="Next"
                 Foreground="AliceBlue"

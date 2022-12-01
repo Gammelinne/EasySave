@@ -37,7 +37,7 @@ namespace EasySaveApp.MVVM.ViewModel
             ShutdownWindowCommand = new RelayCommand(o => { App.Current.Shutdown(); });
             HomeVM = new HomeViewModel();
             SaveHomeVM = new SaveHomeViewModel();
-            SaveVM = new SaveViewModel("","","","");
+            SaveVM = new SaveViewModel();
             SettingVM = new SettingViewModel();
 
             CurrentView = SaveHomeVM;
