@@ -14,7 +14,7 @@
                        FontSize="28"
                        HorizontalAlignment="Left"
                        Margin="20 10 0 0"/>
-        
+
         <!-- Name Text -->
         <TextBlock Text="Name"
                        Foreground="AliceBlue"
@@ -24,13 +24,13 @@
 
         <!-- Name Input-->
         <StackPanel Orientation="Horizontal">
-            <TextBox Width="500"
+            <TextBox x:Name="nameTextBox"
+                     Width="500"
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="10"
-                     Style="{StaticResource ModernTextBox}"
-                     x:Name="saveName"/>
+                     Margin="10"/>
+            <!-- Style="{StaticResource ModernTextBox}"-->
         </StackPanel>
 
         <!-- Source Text -->
@@ -42,13 +42,14 @@
 
         <!-- Source Input -->
         <StackPanel Orientation="Horizontal">
-            <TextBox Width="500"
+            <TextBox x:Name="sourceTextBox"
+                     Width="500"
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
                      Margin="10"
-                     Style="{StaticResource ModernTextBox}"
-                     x:Name="saveSourceTextBox"/>
+                     />
+                     <!-- Style="{StaticResource ModernTextBox}" -->
 
             <Button Content="Browse"
                     x:Name="Browse"
@@ -93,13 +94,14 @@
 
         <!-- Destination Input -->
         <StackPanel Orientation="Horizontal">
-            <TextBox Width="500"
+            <TextBox x:Name="destinationTextBox"
+                     Width="500"
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Margin="10"
-                     Style="{StaticResource ModernTextBox}"
-                     x:Name="saveDestinationTextBox"/>
+                     Margin="10"/>
+                     <!-- Style="{StaticResource ModernTextBox}"-->
+                     
 
             <Button Content="Browse"
                     Foreground="AliceBlue"
@@ -141,21 +143,24 @@
                        HorizontalAlignment="Left"
                        Margin="20 10 0 0"/>
 
-        <!-- Type of Backup Inpu -->
+        <!-- Type of Backup Input -->
         <ComboBox Width="500"
                   Height="20"
                   HorizontalAlignment="Left"
                   Margin="20"
                   Background="#353340"
-                  Foreground="#353340"/>
+                  Foreground="#353340"
+                  SelectedIndex="0">
+            <ComboBoxItem Content="Complete"/>
+            <ComboBoxItem Content="Differential"/>
+        </ComboBox>
         
         <!-- Next Button -->
         <Button Content="Next"
                 Foreground="AliceBlue"
                 FontSize="14"
                 FontWeight="Medium"
-                Click="NextButton_Click">
-
+                Command="{Binding Save}">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#353340"/>

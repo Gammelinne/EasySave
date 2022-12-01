@@ -1,7 +1,10 @@
-﻿using EasySaveApp.MVVM.Model;
+﻿using EasySaveApp.MVVM.ViewModel;
+using EasySaveApp.MVVM.Model;
+using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Xml.Linq;
 
 namespace EasySaveApp.MVVM.View
 {
@@ -21,7 +24,7 @@ namespace EasySaveApp.MVVM.View
             var result = dialog.ShowDialog();
             if (result.ToString() != string.Empty)
             {
-                saveSourceTextBox.Text = dialog.SelectedPath;
+                sourceTextBox.Text = dialog.SelectedPath;
             }
         }
 
@@ -31,13 +34,42 @@ namespace EasySaveApp.MVVM.View
             var result = dialog.ShowDialog();
             if (result.ToString() != string.Empty)
             {
-                saveDestinationTextBox.Text = dialog.SelectedPath;
+                destinationTextBox.Text = dialog.SelectedPath;
             }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            var save = Save.SaveSave();
+            string name = nameTextBox.Text.ToString();
+            string fileSource = sourceTextBox.Text.ToString();
+            string fileDestination = destinationTextBox.Text.ToString();
+            string saveType = "Complete";
+
+            SaveViewModel save = new SaveViewModel(name, fileSource, fileDestination, saveType);
+            
+            if (!save.CheckInputFill())
+            {
+                MessageBox.Show("Please fill all data",
+                    "Data error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error,
+                    MessageBoxResult.Yes);
+            }
+            else if (!save.CheckPathExist())
+            {
+                MessageBox.Show("Source or Destination path does not exist",
+                    "Path error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error,
+                    MessageBoxResult.Yes);
+            }
+            else
+            {
+                save.Save();
+            }
+
+
+
         }
     }
 }

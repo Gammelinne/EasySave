@@ -5,7 +5,7 @@ using System.Timers;
 
 namespace EasySaveApp.MVVM.Model
 {
-    internal class Save
+    class Save
     {
         //Timer class
         public static int secondsCount = 0;
@@ -19,14 +19,14 @@ namespace EasySaveApp.MVVM.Model
         public string Name { get => name; set => name = value; }
         public string FileSource { get => fileSource; set => fileSource = value; }
         public string FileDestination { get => fileDestination; set => fileDestination = value; }
-        public string FileType { get => fileType; set => fileType = value; }
+        public string SaveType { get => fileType; set => fileType = value; }
 
-        public Save(string name, string fileSource, string fileDestination, string fileType)
+        public Save(string name, string fileSource, string fileDestination, string saveType)
         {
             Name = name;
             FileSource = fileSource;
             FileDestination = fileDestination;
-            FileType = fileType;
+            SaveType = saveType;
         }
 
         public void SaveSave()
@@ -62,7 +62,7 @@ namespace EasySaveApp.MVVM.Model
                 }
 
                 //If we are in differential backup and the file does not exist, we copy the files
-                if (!File.Exists(newPath.Replace(FileSource, FileDestination + @"\" + Name)) && FileType == "2")
+                if (!File.Exists(newPath.Replace(FileSource, FileDestination + @"\" + Name)) && SaveType == "Differential")
                 {
                     File.Copy(newPath, newPath.Replace(FileSource, FileDestination + @"\" + Name), true);
                     count++;
@@ -70,7 +70,7 @@ namespace EasySaveApp.MVVM.Model
                 }
 
                 //If we are in differential backup and the file exist, we check if the size of the source file is different from the size of the destination file
-                else if (File.Exists(newPath.Replace(FileSource, FileDestination + @"\" + Name)) && FileType == "2")
+                else if (File.Exists(newPath.Replace(FileSource, FileDestination + @"\" + Name)) && SaveType == "Complete")
                 {
                     FileInfo file1 = new FileInfo(newPath);
                     //we get the information from the destination file
@@ -85,16 +85,16 @@ namespace EasySaveApp.MVVM.Model
                 }
 
                 //If we are in full backup,we copy all files
-                else if (FileType == "1")
+                else if (SaveType == "1")
                 {
-                    File.Copy(newPath, newPath.Replace(FileSource, FileDestination + "\\" + Name), true);
+                    File.Copy(newPath, newPath.Replace(FileSource, FileDestination + @"\" + Name), true);
                     count++;
                     Console.WriteLine(count + " out of " + directory.Length + " files copied");
                 }
 
                 //Create a state
                 string Status = "ACTIVES";
-                State state = new State(Name, FileSource, FileDestination, FileType,
+                State state = new State(Name, FileSource, FileDestination, SaveType,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
 
@@ -112,7 +112,7 @@ namespace EasySaveApp.MVVM.Model
                 if (state.FileLeftToTransfer == 0)
                 {
                     Status = "END";
-                    State endState = new State(Name, FileSource, FileDestination, FileType,
+                    State endState = new State(Name, FileSource, FileDestination, SaveType,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
                     endState.SaveState();
