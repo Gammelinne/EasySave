@@ -1,4 +1,5 @@
 ﻿using EasySaveApp.Core;
+using EasySaveApp.MVVM.View;
 using EasySaveApp.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,14 @@ namespace EasySaveApp.MVVM.ViewModel
         public RelayCommand HomeViewCommand { get; set; }
 		public RelayCommand SaveHomeViewModelCommand { get; set; }
 		public RelayCommand SaveViewModelCommand { get; set; }
-		public RelayCommand SettingModelCommand { get; set; }
+		public RelayCommand SettingViewModelCommand { get; set; }
+		public RelayCommand LogViewModelCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
         public SaveViewModel SaveVM { get; set; }
 		public SaveHomeViewModel SaveHomeVM { get; set; }
         public SettingViewModel SettingVM { get; set; }
+        public LogViewModel LogVM { get; set; }
 
         private object _currentView;
 
@@ -39,6 +42,7 @@ namespace EasySaveApp.MVVM.ViewModel
             SaveHomeVM = new SaveHomeViewModel();
             SaveVM = new SaveViewModel();
             SettingVM = new SettingViewModel();
+            LogVM = new LogViewModel();
 
             CurrentView = SaveHomeVM;
 
@@ -57,9 +61,14 @@ namespace EasySaveApp.MVVM.ViewModel
                 CurrentView = SaveVM;
             });
 
-            SettingModelCommand = new RelayCommand(o =>
+            SettingViewModelCommand = new RelayCommand(o =>
             {
                 CurrentView = SettingVM;
+            });
+
+            LogViewModelCommand = new RelayCommand(o =>
+            {
+                CurrentView = LogVM;
             });
         }
     }

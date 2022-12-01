@@ -9,6 +9,8 @@ namespace EasySaveApp.MVVM.View
     /// </summary>
     public partial class SaveView : UserControl
     {
+        System.Timers.Timer timer;
+        int h, m, s;
         public SaveView()
         {
             InitializeComponent();

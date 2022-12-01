@@ -4,7 +4,8 @@ using System.Text;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
-    internal class ChangeViewModelTest
+    internal class LogViewModel
     {
+        public LogViewModel() { }
     }
 }

@@ -59,12 +59,12 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding SaveViewModelCommand}"/>
 
-                <RadioButton Content="Recovery"
+                <RadioButton Content="Logs"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
                              Style="{StaticResource MenuButtonTheme}"
-                             Checked="RadioButton_Checked"/>
+                             Command="{Binding LogViewModelCommand}"/>
 
             </StackPanel>
             
