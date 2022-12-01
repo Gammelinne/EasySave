@@ -7,7 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <!-- Background="#181735" -->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -15,47 +14,34 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!-- Title & Image -->
         <StackPanel Grid.Row="0"
                     VerticalAlignment="Center"
-                    Orientation="Horizontal">
-
-            <Image Width="50" Height="50"/>
-            <TextBlock Text="Welcome to EasySave"
-                           FontSize="24"
+                    Orientation="Horizontal" Height="180">
+            <TextBlock
+                           FontSize="50"
                            Foreground="AliceBlue"
                            FontWeight="Medium"
-                           VerticalAlignment="Center"
-                           Margin="20 0 0 0"/>
+                           Width="286" Height="134" TextWrapping="WrapWithOverflow" Margin="50,0,0,0"><Run Text="Welcome to"/><LineBreak/><Run Text=" EasySave"/></TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Row="1"
                     VerticalAlignment="Center"
                     Margin="30 0 0 0">
-            <!-- SLOGAN -->
-            <TextBlock Text="SLOGAN"
-                       FontSize="20"
-                       Foreground="AliceBlue"
-                       FontWeight="Medium"
-                       VerticalAlignment="Center"/>
-            <TextBlock Text="SLOGAN"
-                       FontSize="20"
-                       Foreground="AliceBlue"
-                       FontWeight="Medium"
-                       VerticalAlignment="Center"/>
-            <TextBlock Text="SLOGAN"
-                       FontSize="20"
+            <!-- Slogan -->
+            <TextBlock Text="Easiest backup application"
+                       FontSize="30"
                        Foreground="AliceBlue"
                        FontWeight="Medium"
                        VerticalAlignment="Center"/>
 
             <!-- Lorum Ispum -->
-            <TextBlock Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A iaculis at erat pellentesque adipiscing. Sagittis id consectetur purus ut faucibus pulvinar. Eget gravida cum sociis natoque penatibus."
-                       FontSize="12"
+            <TextBlock Text="Welcome to EasySave, the easiest to use backup application. To save data, simply go to the Save section, fill in the different boxes and select Save. If you have any problems, please contact us at easysupport@lahyra.com"
+                       FontSize="15"
                        Foreground="AliceBlue"
                        FontWeight="Medium"
                        VerticalAlignment="Center"
@@ -70,7 +56,7 @@
                     FontWeight="Medium"
                     HorizontalAlignment="Left"
                     Margin="0 20 0 0"
-                    Click="StartButton_Click">
+                    Command="{Binding SaveViewModelCommand}">
 
                 <Button.Style>
                     <Style TargetType="Button">
