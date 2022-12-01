@@ -73,33 +73,31 @@ namespace Livrable_1
                         File.WriteAllText(PathState, string.Empty);
                         File.WriteAllText(PathState, data);
                     }
-                    File.WriteAllText(PathState, data + JsonSerializer.Serialize(GetAll()) + "]");
+                    File.WriteAllText(PathState, data + JsonSerializer.Serialize(GetAllJson()) + "]");
                 }
             }
             else if (extension == "xml")
             {
-
                 if (!File.Exists(PathState))
                 {
                     File.WriteAllText(PathState, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<State>\n</State>");
                 }
 
                 string data = File.ReadAllText(PathState);
-                data = data.Remove(data.LastIndexOf("</State>"), 1);
+                data = data.Remove(data.LastIndexOf("</State>"), 6);
                 if (data.LastIndexOf("</State>") != -1)
                 {
-                    data = data.Insert(data.LastIndexOf("</State>") + 1, ",\n");
+                    data = data.Insert(data.LastIndexOf("</State>") + 6, "\n");
                     File.WriteAllText(PathState, string.Empty);
                     File.WriteAllText(PathState, data);
                 }
-                File.WriteAllText(PathState, data + GetAll() + "</State>");
-
+                File.WriteAllText(PathState, data + GetAllXML() + "\n</State>");
             }
             #endregion
         }
 
         //Get all element of the class and place in a dictonary
-        public Dictionary<string, object> GetAll()
+        public Dictionary<string, object> GetAllJson()
         {
             Dictionary<string, object> state = new Dictionary<string, object>
             {
@@ -113,6 +111,21 @@ namespace Livrable_1
                 { "Status", Status },
                 { "TotalFilesSize", TotalFilesSize }
             };
+            return state;
+        }
+        public string GetAllXML()
+        {
+            string state = "<State>\n";
+            state += "\t<Name>" + Name + "</Name>\n";
+            state += "\t<FileSource>" + FileSource + "</FileSource>\n";
+            state += "\t<FileDestination>" + FileDestination + "</FileDestination>\n";
+            state += "\t<StateType>" + StateType + "</StateType>\n";
+            state += "\t<TotalFileToTransfer>" + TotalFileToTransfer + "</TotalFileToTransfer>\n";
+            state += "\t<FileLeftToTransfer>" + FileLeftToTransfer + "</FileLeftToTransfer>\n";
+            state += "\t<Progression>" + Progression + "</Progression>\n";
+            state += "\t<Status>" + Status + "</Status>\n";
+            state += "\t<TotalFilesSize>" + TotalFilesSize + "</TotalFilesSize>\n";
+            state += "</State>\n";
             return state;
         }
 

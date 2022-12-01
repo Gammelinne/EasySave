@@ -48,18 +48,18 @@ namespace Livrable_1
                         Console.WriteLine("Please enter a valid choice for extension / Veuillez entrer un choix valide pour l'extension: ");
                         extension = Console.ReadLine();
                     }
-                    try
-                    {
+                    //try
+                    //{
                         Save save = new Save(name, fileSource, fileDestination, fileType);
                         save.SaveSave(extension);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.Clear();
-                        Console.WriteLine(e.Message);
-                        Console.WriteLine("\n------------------------------------------------------------------------------------------\n");
-                        SaveData();
-                    }
+                    //}
+                    //catch (Exception e)
+                    //{
+                        //Console.Clear();
+                        //Console.WriteLine(e.Message);
+                        //Console.WriteLine("\n------------------------------------------------------------------------------------------\n");
+                        //SaveData();
+                    //}
                     break;
 
                 case "2":
