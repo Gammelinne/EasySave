@@ -29,7 +29,7 @@
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Text="{Binding FileName, Mode=TwoWay}"
+                     Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Margin="10"/>
             <!-- Style="{StaticResource ModernTextBox}"-->
         </StackPanel>
@@ -150,7 +150,9 @@
                   Margin="20"
                   Background="#353340"
                   Foreground="#353340"
-                  SelectedIndex="0">
+				  SelectedValue="{Binding SaveType}"
+                  SelectedItem="{Binding SaveType}"
+				  >
             <ComboBoxItem Content="Complete"/>
             <ComboBoxItem Content="Differential"/>
         </ComboBox>
@@ -160,7 +162,7 @@
                 Foreground="AliceBlue"
                 FontSize="14"
                 FontWeight="Medium"
-                Command="{Binding Save}">
+                Command="{Binding SaveCommand}">
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#353340"/>

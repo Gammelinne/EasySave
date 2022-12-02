@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Timers;
+using System.Windows;
 
 namespace EasySaveApp.MVVM.Model
 {
@@ -25,7 +26,7 @@ namespace EasySaveApp.MVVM.Model
             Name = "Save";
             FileSource = "C:\\";
             FileDestination = "E:\\";
-            SaveType = "1";
+            SaveType = null;
         }
 
         public Save(string name, string fileSource, string fileDestination, string saveType)
@@ -38,6 +39,7 @@ namespace EasySaveApp.MVVM.Model
 
         public void SaveSave()
         {
+            MessageBox.Show(this.fileType);
             int count = 0;
             string[] directory = { };
 
@@ -54,7 +56,7 @@ namespace EasySaveApp.MVVM.Model
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                global::System.Windows.MessageBox.Show(e.Message);
             }
 
             long size = GetDirectorySize(FileSource);
@@ -73,7 +75,6 @@ namespace EasySaveApp.MVVM.Model
                 {
                     File.Copy(newPath, newPath.Replace(FileSource, FileDestination + @"\" + Name), true);
                     count++;
-                    Console.WriteLine(count + " out of " + directory.Length + " files copied");
                 }
 
                 //If we are in differential backup and the file exist, we check if the size of the source file is different from the size of the destination file
@@ -87,16 +88,14 @@ namespace EasySaveApp.MVVM.Model
                     {
                         File.Copy(newPath, newPath.Replace(FileSource, FileDestination + @"\" + Name), true);
                         count++;
-                        Console.WriteLine(count + " out of " + directory.Length + " files copied");
                     }
                 }
 
                 //If we are in full backup,we copy all files
-                else if (SaveType == "1")
+                else if (SaveType == "Complete")
                 {
                     File.Copy(newPath, newPath.Replace(FileSource, FileDestination + @"\" + Name), true);
                     count++;
-                    Console.WriteLine(count + " out of " + directory.Length + " files copied");
                 }
 
                 //Create a state
@@ -108,12 +107,12 @@ namespace EasySaveApp.MVVM.Model
                 //Save state and change status
                 if (state.FileLeftToTransfer > 30 && state.FileLeftToTransfer % 10 == 0)
                 {
-                    state.SaveState();
+                    state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
                 }
 
                 if (state.FileLeftToTransfer < 30 && state.FileLeftToTransfer % 10 != 0)
                 {
-                    state.SaveState();
+                    state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
                 }
 
                 if (state.FileLeftToTransfer == 0)
@@ -122,13 +121,13 @@ namespace EasySaveApp.MVVM.Model
                     State endState = new State(Name, FileSource, FileDestination, SaveType,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
-                    endState.SaveState();
+                    endState.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
                 }
             }
 
             //Create a log
             Log log = new Log(Name, FileSource, FileDestination, (int)size, secondsCount, DateTime.Now);
-            log.SaveLog();
+            log.SaveLog(Application.Current.Properties["TypeOfLog"].ToString());
 
             // Get directory size
             static long GetDirectorySize(string path)

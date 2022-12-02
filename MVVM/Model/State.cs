@@ -5,9 +5,8 @@ using System.Text.Json;
 
 namespace EasySaveApp.MVVM.Model
 {
-    class State
+    internal class State
     {
-        // Attributes
         private string name;
         private string fileSource;
         private string fileDestination;
@@ -18,7 +17,6 @@ namespace EasySaveApp.MVVM.Model
         private string status;
         private int totalFilesSize;
 
-        // Public Attributes
         public string Name { get => name; set => name = value; }
         public string FileSource { get => fileSource; set => fileSource = value; }
         public string FileDestination { get => fileDestination; set => fileDestination = value; }
@@ -29,7 +27,6 @@ namespace EasySaveApp.MVVM.Model
         public string Status { get => status; set => status = value; }
         public int TotalFilesSize { get => totalFilesSize; set => totalFilesSize = value; }
 
-        // Constructor
         public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression, string status, int totalFilesSize)
         {
             Name = name;
@@ -43,11 +40,9 @@ namespace EasySaveApp.MVVM.Model
             TotalFilesSize = totalFilesSize;
         }
 
-        // Methods
-
-        public void SaveState()
+        public void SaveState(string extension)
         {
-            string PathState = Directory.GetCurrentDirectory() + @"\State\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string PathState = Directory.GetCurrentDirectory() + @"\State\" + DateTime.Now.ToString("dd-MM-yyyy") + "." + extension;
             if (!Directory.Exists(Directory.GetCurrentDirectory() + @"\State\"))
             {
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\State\");
@@ -55,24 +50,46 @@ namespace EasySaveApp.MVVM.Model
 
             //Create a valid Json
             #region
-            if (!File.Exists(PathState))
+            if (extension == "json")
             {
-                File.WriteAllText(PathState, "[]");
+                if (!File.Exists(PathState))
+                {
+                    File.WriteAllText(PathState, "[]");
+                }
+                {
+                    string data = File.ReadAllText(PathState);
+                    data = data.Remove(data.LastIndexOf("]"), 1);
+                    if (data.LastIndexOf("}") != -1)
+                    {
+                        data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
+                        File.WriteAllText(PathState, string.Empty);
+                        File.WriteAllText(PathState, data);
+                    }
+                    File.WriteAllText(PathState, data + JsonSerializer.Serialize(GetAllJson()) + "]");
+                }
             }
-            string data = File.ReadAllText(PathState);
-            data = data.Remove(data.LastIndexOf("]"), 1);
-            if (data.LastIndexOf("}") != -1)
+            else if (extension == "xml")
             {
-                data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
-                File.WriteAllText(PathState, string.Empty);
-                File.WriteAllText(PathState, data);
+                if (!File.Exists(PathState))
+                {
+                    File.WriteAllText(PathState, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<State>\n</State>");
+                }
+
+                string data = File.ReadAllText(PathState);
+                data = data.Remove(data.LastIndexOf("</State>"), 6);
+                if (data.LastIndexOf("</State>") != -1)
+                {
+                    data = data.Insert(data.LastIndexOf("</State>") + 6, "\n");
+                    File.WriteAllText(PathState, string.Empty);
+                    File.WriteAllText(PathState, data);
+                }
+                File.WriteAllText(PathState, data + GetAllXML() + "\n</State>");
             }
-            File.WriteAllText(PathState, data + JsonSerializer.Serialize(GetAll()) + "]");
             #endregion
         }
 
-        // Get all element of the class and place in a dictonary
-        public Dictionary<string, object> GetAll()
+        //Get all element of the class and place in a dictonary
+        public Dictionary<string, object> GetAllJson()
         {
             Dictionary<string, object> state = new Dictionary<string, object>
             {
@@ -88,36 +105,20 @@ namespace EasySaveApp.MVVM.Model
             };
             return state;
         }
-
-        // Read State 
-
-        public static void ReadStateOfTheDay()
+        public string GetAllXML()
         {
-            string PathState = Directory.GetCurrentDirectory() + @"\State\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            if (File.Exists(PathState))
-            {
-                string[] lines = File.ReadAllLines(PathState);
-                foreach (string line in lines)
-                {
-                    Console.WriteLine(line);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No state for today");
-            }
-            Console.WriteLine("");
-            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y/n)");
-            string answer = Console.ReadLine();
-            if (answer == "y" || answer == "Y")
-            {
-                Console.Clear();
-                //Program.SaveData();
-            }
-            else if (answer == "n" || answer == "N")
-            {
-                Environment.Exit(0);
-            }
+            string state = "<State>\n";
+            state += "\t<Name>" + Name + "</Name>\n";
+            state += "\t<FileSource>" + FileSource + "</FileSource>\n";
+            state += "\t<FileDestination>" + FileDestination + "</FileDestination>\n";
+            state += "\t<StateType>" + StateType + "</StateType>\n";
+            state += "\t<TotalFileToTransfer>" + TotalFileToTransfer + "</TotalFileToTransfer>\n";
+            state += "\t<FileLeftToTransfer>" + FileLeftToTransfer + "</FileLeftToTransfer>\n";
+            state += "\t<Progression>" + Progression + "</Progression>\n";
+            state += "\t<Status>" + Status + "</Status>\n";
+            state += "\t<TotalFilesSize>" + TotalFilesSize + "</TotalFilesSize>\n";
+            state += "</State>\n";
+            return state;
         }
     }
 }

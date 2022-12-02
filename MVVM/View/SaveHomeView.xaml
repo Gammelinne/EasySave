@@ -70,7 +70,7 @@
                     FontWeight="Medium"
                     HorizontalAlignment="Left"
                     Margin="0 20 0 0"
-                    Click="StartButton_Click">
+                    >
 
                 <Button.Style>
                     <Style TargetType="Button">
