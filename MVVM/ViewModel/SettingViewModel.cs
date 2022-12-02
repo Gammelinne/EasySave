@@ -20,8 +20,6 @@ namespace EasySaveApp.MVVM.ViewModel
                 Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
                 setting["TypeOfLog"] = newValue;
                 File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
-
-
             }
         }
     }
