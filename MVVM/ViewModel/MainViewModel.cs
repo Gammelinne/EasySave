@@ -12,7 +12,7 @@ namespace EasySaveApp.MVVM.ViewModel
         public RelayCommand HomeViewCommand { get; set; }
 		public RelayCommand SaveHomeViewModelCommand { get; set; }
 		public RelayCommand SaveViewModelCommand { get; set; }
-		public RelayCommand SettingModelCommand { get; set; }
+        public RelayCommand SettingViewModelCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
         public SaveViewModel SaveVM { get; set; }
@@ -57,7 +57,7 @@ namespace EasySaveApp.MVVM.ViewModel
                 CurrentView = SaveVM;
             });
 
-            SettingModelCommand = new RelayCommand(o =>
+            SettingViewModelCommand = new RelayCommand(o =>
             {
                 CurrentView = SettingVM;
             });

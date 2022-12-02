@@ -9,7 +9,6 @@ namespace EasySaveApp.MVVM.ViewModel
 {
     internal class SaveViewModel : INotifyPropertyChanged
     {
-        private readonly string[] _typeofbackup = { "Differential", "Incremental" };
         private Save _save;
 
         public SaveViewModel()
@@ -72,7 +71,7 @@ namespace EasySaveApp.MVVM.ViewModel
         {
             get
             {
-                return _browseSourceCommand ?? (_browseSourceCommand = new RelayCommand(
+                return _browseSourceCommand ??= new RelayCommand(
                     o =>
                     {
                         var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -82,7 +81,7 @@ namespace EasySaveApp.MVVM.ViewModel
                             _save.FileSource = dialog.SelectedPath;
                             OnPropertyChanged("FileSource");
                         }
-                    }));
+                    });
             }
         }
 
