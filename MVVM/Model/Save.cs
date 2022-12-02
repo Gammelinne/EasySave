@@ -22,7 +22,8 @@ namespace EasySaveApp.MVVM.Model
         public string FileDestination { get => fileDestination; set => fileDestination = value; }
         public string SaveType { get => fileType; set => fileType = value; }
 
-        public Save(){
+        public Save()
+        {
             Name = "Save";
             FileSource = "C:\\";
             FileDestination = "E:\\";
@@ -105,29 +106,43 @@ namespace EasySaveApp.MVVM.Model
                     Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
 
                 //Save state and change status
-                if (state.FileLeftToTransfer > 30 && state.FileLeftToTransfer % 10 == 0)
+                try
                 {
-                    state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
-                }
+                    if (state.FileLeftToTransfer > 30 && state.FileLeftToTransfer % 10 == 0)
+                    {
+                        state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
+                    }
 
-                if (state.FileLeftToTransfer < 30 && state.FileLeftToTransfer % 10 != 0)
-                {
-                    state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
-                }
+                    if (state.FileLeftToTransfer < 30 && state.FileLeftToTransfer % 10 != 0)
+                    {
+                        state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
+                    }
 
-                if (state.FileLeftToTransfer == 0)
+                    if (state.FileLeftToTransfer == 0)
+                    {
+                        Status = "END";
+                        State endState = new State(Name, FileSource, FileDestination, SaveType,
+                        Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
+                        Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
+                        endState.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
+                    }
+                }
+                catch (Exception e)
                 {
-                    Status = "END";
-                    State endState = new State(Name, FileSource, FileDestination, SaveType,
-                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length,
-                    Directory.GetFiles(FileSource, "*.*", SearchOption.AllDirectories).Length - count, count, Status, (int)size);
-                    endState.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
+                    global::System.Windows.MessageBox.Show(e.Message);
                 }
             }
 
             //Create a log
             Log log = new Log(Name, FileSource, FileDestination, (int)size, secondsCount, DateTime.Now);
-            log.SaveLog(Application.Current.Properties["TypeOfLog"].ToString());
+            try
+            {
+                log.SaveLog(Application.Current.Properties["TypeOfLog"].ToString());
+            }
+            catch (Exception e)
+            {
+                global::System.Windows.MessageBox.Show(e.Message);
+            }
 
             // Get directory size
             static long GetDirectorySize(string path)
