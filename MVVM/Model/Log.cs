@@ -34,7 +34,6 @@ namespace EasySaveApp.MVVM.Model
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Log\");
             }
 
-            //Create a valid Json
             #region
             if (extension == "json")
             {
@@ -89,7 +88,6 @@ namespace EasySaveApp.MVVM.Model
             return log;
         }
 
-        //getallxml 
         public string GetAllXML()
         {
             string log = "\t<Log>\n";

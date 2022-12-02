@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using EasySaveApp.Core;
@@ -11,21 +10,17 @@ namespace EasySaveApp.MVVM.ViewModel
     {
         private Save _save;
 
-        public SaveViewModel()
-        {
-            _save = new Save();
-        }
+        public SaveViewModel(){ _save = new Save(); }
         public string FileName
         {
             get { return _save.Name; }
-            set
-            {
-                {
-                    _save.Name = value;
-                    OnPropertyChanged("FileName");
-                }
+            set 
+            { 
+                _save.Name = value;
+                OnPropertyChanged("FileName");
             }
         }
+
         public string SaveType
         {
             get { return _save.SaveType; }

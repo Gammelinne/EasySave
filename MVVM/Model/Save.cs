@@ -1,5 +1,4 @@
-﻿using EasySaveApp.MVVM.Model;
-using System;
+﻿using System;
 using System.IO;
 using System.Timers;
 using System.Windows;
@@ -25,8 +24,8 @@ namespace EasySaveApp.MVVM.Model
         public Save()
         {
             Name = "Save";
-            FileSource = "C:\\";
-            FileDestination = "E:\\";
+            FileSource = @"C:\";
+            FileDestination = @"E:\";
             SaveType = "Complete";
         }
 
@@ -40,7 +39,6 @@ namespace EasySaveApp.MVVM.Model
 
         public void SaveSave()
         {
-            MessageBox.Show(Application.Current.Properties["TypeOfLog"].ToString());
             int count = 0;
             string[] directory = { };
 
@@ -57,7 +55,7 @@ namespace EasySaveApp.MVVM.Model
             }
             catch (Exception e)
             {
-                global::System.Windows.MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message);
             }
 
             long size = GetDirectorySize(FileSource);
@@ -129,7 +127,7 @@ namespace EasySaveApp.MVVM.Model
                 }
                 catch (Exception e)
                 {
-                    global::System.Windows.MessageBox.Show(e.Message);
+                    MessageBox.Show(e.Message);
                 }
             }
 
@@ -141,7 +139,7 @@ namespace EasySaveApp.MVVM.Model
             }
             catch (Exception e)
             {
-                global::System.Windows.MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message);
             }
 
             // Get directory size

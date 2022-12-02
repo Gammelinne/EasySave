@@ -3,24 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EasySaveApp.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel>
         <!-- Title Text -->
         <TextBlock Text="Create a BackUp"
-                       Foreground="AliceBlue"
-                       FontSize="28"
-                       HorizontalAlignment="Left"
-                       Margin="20 10 0 0"/>
+                   Foreground="AliceBlue"
+                   FontSize="28"
+                   HorizontalAlignment="Left"
+                   Margin="20 10 0 0"/>
 
         <!-- Name Text -->
         <TextBlock Text="Name"
-                       Foreground="AliceBlue"
-                       FontSize="14"
-                       HorizontalAlignment="Left"
-                       Margin="20 10 0 0"/>
+                   Foreground="AliceBlue"
+                   FontSize="14"
+                   HorizontalAlignment="Left"
+                   Margin="20 10 0 0"/>
 
         <!-- Name Input-->
         <StackPanel Orientation="Horizontal">
@@ -30,16 +29,15 @@
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="10"
-             />
+                     Margin="10"/>
         </StackPanel>
 
         <!-- Source Text -->
         <TextBlock Text="Source"
-                       Foreground="AliceBlue"
-                       FontSize="14"
-                       HorizontalAlignment="Left"
-                       Margin="20 10 0 0"/>
+                   Foreground="AliceBlue"
+                   FontSize="14"
+                   HorizontalAlignment="Left"
+                   Margin="20 10 0 0"/>
 
         <!-- Source Input -->
         <StackPanel Orientation="Horizontal">
@@ -49,8 +47,7 @@
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
                      Margin="10" 
-                     Text="{Binding FileSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     />
+                     Text="{Binding FileSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
             <Button Content="Browse"
                     x:Name="Browse"
@@ -62,7 +59,6 @@
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="#353340"/>
                         <Setter Property="Cursor" Value="Hand"/>
-
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="#FF4C70"/>
@@ -100,8 +96,7 @@
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
                      Text="{Binding FileDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     Margin="10"
-                       />
+                     Margin="10"/>
 
             <Button Content="Browse"
                     Foreground="AliceBlue"
@@ -189,5 +184,4 @@
             </Button.Template>
         </Button>
     </StackPanel>
-
 </UserControl>

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EasySaveApp.MVVM.View" xmlns:viewmodel="clr-namespace:EasySaveApp.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -21,12 +20,13 @@
         <!-- Title & Image -->
         <StackPanel Grid.Row="0"
                     VerticalAlignment="Center"
-                    Orientation="Horizontal" Height="180">
-            <TextBlock
-                           FontSize="50"
-                           Foreground="AliceBlue"
-                           FontWeight="Medium"
-                           Width="286" Height="134" TextWrapping="WrapWithOverflow" Margin="50,0,0,0"><Run Text="Welcome to"/><LineBreak/><Run Text=" EasySave"/></TextBlock>
+                    Orientation="Horizontal" 
+                    Height="180">
+            
+            <TextBlock FontSize="50"
+                       Foreground="AliceBlue"
+                       FontWeight="Medium"
+                       Width="286" Height="134" TextWrapping="WrapWithOverflow" Margin="50,0,0,0"><Run Text="Welcome to"/><LineBreak/><Run Text=" EasySave"/></TextBlock>
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -141,9 +141,7 @@
                             Margin="25 15 0 0"
                             CornerRadius="20"/>
                     </StackPanel>
-
                 </StackPanel>
-
             </StackPanel>
         </Grid>
     </Grid>

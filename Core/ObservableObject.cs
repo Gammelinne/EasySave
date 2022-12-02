@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-
 namespace EasySaveApp.Core
 {
     internal class ObservableObject : INotifyPropertyChanged

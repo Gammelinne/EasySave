@@ -16,16 +16,13 @@
     <!-- Border -->
     <Border Background="#17202A"
             CornerRadius="10">
-
         <Grid>
 
-            <!-- Column -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <!-- Row -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="75"/>
                 <RowDefinition/>
@@ -37,7 +34,7 @@
                    Foreground="White"
                    FontSize="25"
                    Margin="20 0 0 0"/>
-            
+
             <!-- Menu -->
             <StackPanel Grid.Row="1">
 
@@ -62,9 +59,7 @@
                              FontSize="20"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding SettingViewModelCommand}"/>
-
             </StackPanel>
-
 
             <!-- HomeView -->
             <ContentControl Grid.Row="1"
@@ -72,6 +67,5 @@
                             Margin="10"
                             Content="{Binding CurrentView}"/>
         </Grid>
-
     </Border>
 </Window>
