@@ -19,10 +19,11 @@ namespace EasySaveApp
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            
             string json = File.ReadAllText(@"C:\Users\lefra\OneDrive - Association Cesi Viacesi mail\CESI\3eme Année\Programmation Système\Projet\EasySave\Livrable 2\Settings\Settings.json");
             Dictionary<string, string> settings = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-            MessageBox.Show(settings["TypeOfLog"]);
+            Current.Properties["TypeOfLog"] = settings["TypeOfLog"];
+            //MessageBox.Show(Current.Properties["TypeOfLog"].ToString());
         }
     }
 }

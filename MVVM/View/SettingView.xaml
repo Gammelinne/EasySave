@@ -6,7 +6,41 @@
              xmlns:local="clr-namespace:EasySaveApp.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+
+    <UserControl.Resources>
+        <Style TargetType="RadioButton">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Foreground" Value="AliceBlue"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Margin="30">
+        <Grid>
+            <StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Choose a language"
+                               FontSize="20"
+                               Foreground="AliceBlue"
+                               Margin="10"/>
+                    <RadioButton Content="Français"/>
+                    <RadioButton Content="English"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Choose a type of log"
+                               FontSize="20"
+                               Foreground="AliceBlue"
+                               Margin="10"/>
+                    <RadioButton Content="JSON"/>
+                    <RadioButton Content="XML"/>
+                </StackPanel>
+                <Button Content="Save" 
+                        Height="36" 
+                        Width="132" 
+                        Command="{Binding SaveSetting}"/>
+
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

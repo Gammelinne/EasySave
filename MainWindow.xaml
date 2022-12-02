@@ -60,7 +60,9 @@
                              Height="50"
                              Foreground="White"
                              FontSize="20"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding SettingViewModelCommand}"/>
+                    
 
             </StackPanel>
 
