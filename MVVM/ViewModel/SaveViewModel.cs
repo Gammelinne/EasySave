@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using EasySaveApp.Core;
 using EasySaveApp.MVVM.Model;
 
@@ -8,6 +9,7 @@ namespace EasySaveApp.MVVM.ViewModel
 {
     internal class SaveViewModel : INotifyPropertyChanged
     {
+        private readonly string[] _typeofbackup = { "Differential", "Incremental" };
         private Save _save;
 
         public SaveViewModel()
@@ -23,6 +25,17 @@ namespace EasySaveApp.MVVM.ViewModel
                     _save.Name = value;
                     OnPropertyChanged("FileName");
                 }
+            }
+        }
+        public string SaveType
+        {
+            get { return _save.SaveType; }
+            set
+            {
+                string[] name = value.Split(':');
+                string[] type = name[1].Split(' ');
+                _save.SaveType = type[1];
+                OnPropertyChanged("SaveType");
             }
         }
 
@@ -89,6 +102,21 @@ namespace EasySaveApp.MVVM.ViewModel
                             _save.FileDestination = dialog.SelectedPath;
                             OnPropertyChanged("FileDestination");
                         }
+                    });
+            }
+        }
+
+        private RelayCommand _saveCommand;
+
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                return _saveCommand ??= new RelayCommand(
+                    o =>
+                    {
+                        _save.SaveSave();
+                        MessageBox.Show("Save saved");
                     });
             }
         }

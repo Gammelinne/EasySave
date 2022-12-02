@@ -5,10 +5,8 @@ using System.Text.Json;
 
 namespace EasySaveApp.MVVM.Model
 {
-    class Log
+    internal class Log
     {
-        //Attributes
-
         public string Name;
         public string FileSource;
         public string FileDestination;
@@ -16,7 +14,6 @@ namespace EasySaveApp.MVVM.Model
         public double FileTransfertTime;
         public DateTime Time;
 
-        //Constructor
         public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime time)
         {
             Name = name;
@@ -27,11 +24,11 @@ namespace EasySaveApp.MVVM.Model
             Time = time;
         }
 
-        // Method
-        public void SaveLog()
+        public void SaveLog(string extension)
         {
             //Check if all directory exist
-            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + "." + extension;
+            Console.WriteLine(PathLog);
             if (!Directory.Exists(Directory.GetCurrentDirectory() + @"\Log\"))
             {
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Log\");
@@ -39,24 +36,46 @@ namespace EasySaveApp.MVVM.Model
 
             //Create a valid Json
             #region
-            if (!File.Exists(PathLog))
+            if (extension == "json")
             {
-                File.WriteAllText(PathLog, "[]");
+                if (!File.Exists(PathLog))
+                {
+                    File.WriteAllText(PathLog, "[]");
+                }
+
+                string data = File.ReadAllText(PathLog);
+                data = data.Remove(data.LastIndexOf("]"), 1);
+                if (data.LastIndexOf("}") != -1)
+                {
+                    data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
+                    File.WriteAllText(PathLog, string.Empty);
+                    File.WriteAllText(PathLog, data);
+                }
+                File.WriteAllText(PathLog, data + JsonSerializer.Serialize(GetAllJson()) + "]");
+
             }
-            string data = File.ReadAllText(PathLog);
-            data = data.Remove(data.LastIndexOf("]"), 1);
-            if (data.LastIndexOf("}") != -1)
+            else if (extension == "xml")
             {
-                data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
-                File.WriteAllText(PathLog, string.Empty);
-                File.WriteAllText(PathLog, data);
+                if (!File.Exists(PathLog))
+                {
+                    File.WriteAllText(PathLog, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Log>\n</Log>");
+                }
+
+                string data = File.ReadAllText(PathLog);
+                data = data.Remove(data.LastIndexOf("</Log>"), 6);
+                if (data.LastIndexOf("</Log>") != -1)
+                {
+                    data = data.Insert(data.LastIndexOf("</Log>") + 6, "\n");
+                    File.WriteAllText(PathLog, string.Empty);
+                    File.WriteAllText(PathLog, data);
+                }
+                File.WriteAllText(PathLog, data + GetAllXML() + "\n</Log>");
             }
-            File.WriteAllText(PathLog, data + JsonSerializer.Serialize(GetAll()) + "]");
             #endregion
         }
 
-        // Get all element of the class and place in a dictonary
-        public Dictionary<string, object> GetAll()
+        //Get all element of the class and place in a dictonary 
+        public Dictionary<string, object> GetAllJson()
         {
             Dictionary<string, object> log = new Dictionary<string, object>
             {
@@ -70,34 +89,18 @@ namespace EasySaveApp.MVVM.Model
             return log;
         }
 
-        //  log file and read the content
-        public static void ReadLogOfTheDay()
+        //getallxml 
+        public string GetAllXML()
         {
-            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
-            if (File.Exists(PathLog))
-            {
-                string[] lines = File.ReadAllLines(PathLog);
-                foreach (string line in lines)
-                {
-                    Console.WriteLine(line);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No log for today");
-            }
-            Console.WriteLine("");
-            Console.WriteLine("Would you like to go back to the menu? / Voulez-vous revenir au menu ? (y/n)");
-            string answer = Console.ReadLine();
-            if (answer == "y" || answer == "Y")
-            {
-                Console.Clear();
-                //Program.SaveData();
-            }
-            else if (answer == "n" || answer == "N")
-            {
-                Environment.Exit(0);
-            }
+            string log = "\t<Log>\n";
+            log += "\t\t<Name>" + Name + "</Name>\n";
+            log += "\t\t<FileSource>" + FileSource + "</FileSource>\n";
+            log += "\t\t<FileDestination>" + FileDestination + "</FileDestination>\n";
+            log += "\t\t<FileSize>" + FileSize + "</FileSize>\n";
+            log += "\t\t<FileTransfertTime>" + FileTransfertTime + "</FileTransfertTime>\n";
+            log += "\t\t<Time>" + Time + "</Time>\n";
+            log += "\t</Log>";
+            return log;
         }
     }
 }
