@@ -19,8 +19,7 @@
                               Width="200"
                               Height="30"
                               Margin="10"
-                              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"    
-                              >
+                              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="French"/>
                     </ComboBox>
@@ -40,11 +39,6 @@
                         <ComboBoxItem Content="xml"/>
                     </ComboBox>
                 </StackPanel>
-                <Button Content="Save" 
-                        Height="36" 
-                        Width="132" 
-                        Command="{Binding SaveSetting}"/>
-
             </StackPanel>
         </Grid>
     </Border>
