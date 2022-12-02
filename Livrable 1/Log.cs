@@ -24,10 +24,20 @@ namespace Livrable_1
             Time = time;
         }
 
-        public void SaveLog()
+        public void SaveLog(string extension)
         {
+            Console.WriteLine(extension);
+            if (extension == "1")
+            {
+                extension = "json";
+            }
+            else if (extension == "2")
+            {
+                extension = "xml";
+            }
             //Check if all directory exist
-            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + ".json";
+            string PathLog = Directory.GetCurrentDirectory() + @"\Log\" + DateTime.Now.ToString("dd-MM-yyyy") + "." + extension;
+            Console.WriteLine(PathLog);
             if (!Directory.Exists(Directory.GetCurrentDirectory() + @"\Log\"))
             {
                 Directory.CreateDirectory(Directory.GetCurrentDirectory() + @"\Log\");
@@ -35,24 +45,46 @@ namespace Livrable_1
 
             //Create a valid Json
             #region
-            if (!File.Exists(PathLog))
+            if (extension == "json")
             {
-                File.WriteAllText(PathLog, "[]");
+                if (!File.Exists(PathLog))
+                {
+                    File.WriteAllText(PathLog, "[]");
+                }
+
+                string data = File.ReadAllText(PathLog);
+                data = data.Remove(data.LastIndexOf("]"), 1);
+                if (data.LastIndexOf("}") != -1)
+                {
+                    data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
+                    File.WriteAllText(PathLog, string.Empty);
+                    File.WriteAllText(PathLog, data);
+                }
+                File.WriteAllText(PathLog, data + JsonSerializer.Serialize(GetAllJson()) + "]");
+
             }
-            string data = File.ReadAllText(PathLog);
-            data = data.Remove(data.LastIndexOf("]"), 1);
-            if (data.LastIndexOf("}") != -1)
+            else if (extension == "xml")
             {
-                data = data.Insert(data.LastIndexOf("}") + 1, ",\n");
-                File.WriteAllText(PathLog, string.Empty);
-                File.WriteAllText(PathLog, data);
+                if (!File.Exists(PathLog))
+                {
+                    File.WriteAllText(PathLog, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<Log>\n</Log>");
+                }
+
+                string data = File.ReadAllText(PathLog);
+                data = data.Remove(data.LastIndexOf("</Log>"), 6);
+                if (data.LastIndexOf("</Log>") != -1)
+                {
+                    data = data.Insert(data.LastIndexOf("</Log>") + 6, "\n");
+                    File.WriteAllText(PathLog, string.Empty);
+                    File.WriteAllText(PathLog, data);
+                }
+                File.WriteAllText(PathLog, data + GetAllXML() + "\n</Log>");
             }
-            File.WriteAllText(PathLog, data + JsonSerializer.Serialize(GetAll()) + "]");
             #endregion
         }
 
         //Get all element of the class and place in a dictonary 
-        public Dictionary<string, object> GetAll()
+        public Dictionary<string, object> GetAllJson()
         {
             Dictionary<string, object> log = new Dictionary<string, object>
             {
@@ -63,6 +95,20 @@ namespace Livrable_1
                 { "FileTransfertTime", FileTransfertTime },
                 { "Time", Time }
             };
+            return log;
+        }
+
+        //getallxml 
+        public string GetAllXML()
+        {
+            string log = "\t<Log>\n";
+            log += "\t\t<Name>" + Name + "</Name>\n";
+            log += "\t\t<FileSource>" + FileSource + "</FileSource>\n";
+            log += "\t\t<FileDestination>" + FileDestination + "</FileDestination>\n";
+            log += "\t\t<FileSize>" + FileSize + "</FileSize>\n";
+            log += "\t\t<FileTransfertTime>" + FileTransfertTime + "</FileTransfertTime>\n";
+            log += "\t\t<Time>" + Time + "</Time>\n";
+            log += "\t</Log>";
             return log;
         }
 

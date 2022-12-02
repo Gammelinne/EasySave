@@ -37,23 +37,29 @@ namespace Livrable_1
                     Console.WriteLine("1. Complete / Complet");
                     Console.WriteLine("2. Differentiel / Differentiel");
                     string fileType = Console.ReadLine();
-                    while (fileType != "1" && fileType != "2")
+                    Console.WriteLine("which extension do you want for log file and state file / Quelle extension voulez-vous pour le fichier log et le fichier d'etat");
+                    Console.WriteLine("1. Json / Json");
+                    Console.WriteLine("2. Xml / Xml");
+                    string extension = Console.ReadLine();
+                    while (fileType != "1" && fileType != "2" && extension != "1" && extension != "2")
                     {
-                        Console.WriteLine("Please enter a valid choice / Veuillez entrer un choix valide : ");
+                        Console.WriteLine("Please enter a valid choice for type / Veuillez entrer un choix valide pour le type: ");
                         fileType = Console.ReadLine();
+                        Console.WriteLine("Please enter a valid choice for extension / Veuillez entrer un choix valide pour l'extension: ");
+                        extension = Console.ReadLine();
                     }
-                    try
-                    {
+                    //try
+                    //{
                         Save save = new Save(name, fileSource, fileDestination, fileType);
-                        save.SaveSave();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.Clear();
-                        Console.WriteLine(e.Message);
-                        Console.WriteLine("\n------------------------------------------------------------------------------------------\n");
-                        SaveData();
-                    }
+                        save.SaveSave(extension);
+                    //}
+                    //catch (Exception e)
+                    //{
+                        //Console.Clear();
+                        //Console.WriteLine(e.Message);
+                        //Console.WriteLine("\n------------------------------------------------------------------------------------------\n");
+                        //SaveData();
+                    //}
                     break;
 
                 case "2":
