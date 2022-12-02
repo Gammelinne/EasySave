@@ -27,7 +27,7 @@ namespace EasySaveApp.MVVM.Model
             Name = "Save";
             FileSource = "C:\\";
             FileDestination = "E:\\";
-            SaveType = null;
+            SaveType = "Complete";
         }
 
         public Save(string name, string fileSource, string fileDestination, string saveType)
@@ -40,7 +40,7 @@ namespace EasySaveApp.MVVM.Model
 
         public void SaveSave()
         {
-            MessageBox.Show(this.fileType);
+            MessageBox.Show(Application.Current.Properties["TypeOfLog"].ToString());
             int count = 0;
             string[] directory = { };
 

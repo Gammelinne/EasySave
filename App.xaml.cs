@@ -13,5 +13,6 @@ namespace EasySaveApp
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }
