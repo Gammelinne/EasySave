@@ -31,7 +31,7 @@
                      HorizontalAlignment="Left"
                      Text="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Margin="10"
-            Style="{StaticResource ModernTextBox}" />
+             />
         </StackPanel>
 
         <!-- Source Text -->
@@ -50,7 +50,7 @@
                      HorizontalAlignment="Left"
                      Margin="10" 
                      Text="{Binding FileSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                      Style="{StaticResource ModernTextBox}" />
+                     />
 
             <Button Content="Browse"
                     x:Name="Browse"
@@ -101,7 +101,7 @@
                      HorizontalAlignment="Left"
                      Text="{Binding FileDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      Margin="10"
-                      Style="{StaticResource ModernTextBox}" />
+                       />
 
             <Button Content="Browse"
                     Foreground="AliceBlue"

@@ -15,12 +15,12 @@ namespace EasySaveApp.MVVM.Model
         private string name;
         private string fileSource;
         private string fileDestination;
-        private string fileType;
+        private string saveType;
 
         public string Name { get => name; set => name = value; }
         public string FileSource { get => fileSource; set => fileSource = value; }
         public string FileDestination { get => fileDestination; set => fileDestination = value; }
-        public string SaveType { get => fileType; set => fileType = value; }
+        public string SaveType { get => saveType; set => saveType = value; }
 
         public Save()
         {
