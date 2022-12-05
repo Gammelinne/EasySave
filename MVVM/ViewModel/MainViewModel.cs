@@ -1,22 +1,15 @@
 ﻿using EasySaveApp.Core;
-using EasySaveApp.MVVM.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
-        public RelayCommand ShutdownWindowCommand { get; set; }
-        public RelayCommand HomeViewCommand { get; set; }
-		public RelayCommand SaveHomeViewModelCommand { get; set; }
+		public RelayCommand HomeViewModelCommand { get; set; }
 		public RelayCommand SaveViewModelCommand { get; set; }
         public RelayCommand SettingViewModelCommand { get; set; }
 
         public HomeViewModel HomeVM { get; set; }
         public SaveViewModel SaveVM { get; set; }
-		public SaveHomeViewModel SaveHomeVM { get; set; }
         public SettingViewModel SettingVM { get; set; }
 
         private object _currentView;
@@ -31,36 +24,17 @@ namespace EasySaveApp.MVVM.ViewModel
 			}
 		}
 
-
 		public MainViewModel()
 		{
-            ShutdownWindowCommand = new RelayCommand(o => { App.Current.Shutdown(); });
             HomeVM = new HomeViewModel();
-            SaveHomeVM = new SaveHomeViewModel();
             SaveVM = new SaveViewModel();
             SettingVM = new SettingViewModel();
 
-            CurrentView = SaveHomeVM;
+            CurrentView = HomeVM;
 
-			HomeViewCommand = new RelayCommand(o => 
-			{
-				CurrentView= HomeVM;
-			});
-
-            SaveHomeViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SaveHomeVM;
-            });
-
-            SaveViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SaveVM;
-            });
-
-            SettingViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SettingVM;
-            });
+            HomeViewModelCommand = new RelayCommand(o => { CurrentView = HomeVM; });
+            SaveViewModelCommand = new RelayCommand(o => { CurrentView = SaveVM; });
+            SettingViewModelCommand = new RelayCommand(o => { CurrentView = SettingVM; });
         }
     }
 }

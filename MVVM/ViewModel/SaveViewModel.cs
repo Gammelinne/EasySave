@@ -110,7 +110,7 @@ namespace EasySaveApp.MVVM.ViewModel
                     o =>
                     {
                         _save.SaveSave();
-                        MessageBox.Show("Save saved");
+                        MessageBox.Show("Save successfully saved");
                     });
             }
         }

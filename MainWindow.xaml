@@ -9,15 +9,11 @@
         Height="600" Width="920"
         Background="Transparent">
 
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
 
     <!-- Border -->
     <Border Background="#17202A"
             CornerRadius="10">
         <Grid>
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
@@ -44,7 +40,7 @@
                              FontSize="20"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
-                             Command="{Binding SaveHomeViewModelCommand}"/>
+                             Command="{Binding HomeViewModelCommand}"/>
 
                 <RadioButton Content="Save"
                              Height="50"
