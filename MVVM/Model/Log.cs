@@ -8,17 +8,17 @@ namespace EasySaveApp.MVVM.Model
     internal class Log
     {
         public string Name;
-        public string FileSource;
-        public string FileDestination;
+        public string PathSource;
+        public string PathDestination;
         public int FileSize;
         public double FileTransfertTime;
         public DateTime Time;
 
-        public Log(string name, string fileSource, string fileDestination, int fileSize, double fileTransfertTime, DateTime time)
+        public Log(string name, string pathSource, string pathDestination, int fileSize, double fileTransfertTime, DateTime time)
         {
             Name = name;
-            FileSource = fileSource;
-            FileDestination = fileDestination;
+            PathSource = pathSource;
+            PathDestination = pathDestination;
             FileSize = fileSize;
             FileTransfertTime = fileTransfertTime;
             Time = time;
@@ -79,8 +79,8 @@ namespace EasySaveApp.MVVM.Model
             Dictionary<string, object> log = new Dictionary<string, object>
             {
                 { "Name", Name },
-                { "FileSource", FileSource },
-                { "FileDestination", FileDestination },
+                { "PathSource", PathSource },
+                { "PathDestination", PathDestination },
                 { "FileSize", FileSize },
                 { "FileTransfertTime", FileTransfertTime },
                 { "Time", Time }
@@ -92,8 +92,8 @@ namespace EasySaveApp.MVVM.Model
         {
             string log = "\t<Log>\n";
             log += "\t\t<Name>" + Name + "</Name>\n";
-            log += "\t\t<FileSource>" + FileSource + "</FileSource>\n";
-            log += "\t\t<FileDestination>" + FileDestination + "</FileDestination>\n";
+            log += "\t\t<PathSource>" + PathSource + "</PathSource>\n";
+            log += "\t\t<PathDestination>" + PathDestination + "</PathDestination>\n";
             log += "\t\t<FileSize>" + FileSize + "</FileSize>\n";
             log += "\t\t<FileTransfertTime>" + FileTransfertTime + "</FileTransfertTime>\n";
             log += "\t\t<Time>" + Time + "</Time>\n";

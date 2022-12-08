@@ -33,24 +33,24 @@ namespace EasySaveApp.MVVM.ViewModel
             }
         }
 
-        public string FileSource
+        public string PathSource
         {
-            get { return _save.FileSource; }
+            get { return _save.PathSource; }
             set
             {
-                _save.FileSource = value;
-                OnPropertyChanged("FileSource");
+                _save.PathSource = value;
+                OnPropertyChanged("PathSource");
             }
 
         }
 
-        public string FileDestination
+        public string PathDestination
         {
-            get { return _save.FileDestination; }
+            get { return _save.PathDestination; }
             set
             {
-                _save.FileDestination = value;
-                OnPropertyChanged("FileDestination");
+                _save.PathDestination = value;
+                OnPropertyChanged("PathDestination");
             }
         }
 
@@ -73,8 +73,8 @@ namespace EasySaveApp.MVVM.ViewModel
                         System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                         if (result == System.Windows.Forms.DialogResult.OK)
                         {
-                            _save.FileSource = dialog.SelectedPath;
-                            OnPropertyChanged("FileSource");
+                            _save.PathSource = dialog.SelectedPath;
+                            OnPropertyChanged("PathSource");
                         }
                     });
             }
@@ -93,8 +93,8 @@ namespace EasySaveApp.MVVM.ViewModel
                         System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                         if (result == System.Windows.Forms.DialogResult.OK)
                         {
-                            _save.FileDestination = dialog.SelectedPath;
-                            OnPropertyChanged("FileDestination");
+                            _save.PathDestination = dialog.SelectedPath;
+                            OnPropertyChanged("PathDestination");
                         }
                     });
             }

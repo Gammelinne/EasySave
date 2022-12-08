@@ -47,7 +47,7 @@
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
                      Margin="10" 
-                     Text="{Binding FileSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                     Text="{Binding PathSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
             <Button Content="Browse"
                     x:Name="Browse"
@@ -95,7 +95,7 @@
                      Height="40"
                      VerticalContentAlignment="Center"
                      HorizontalAlignment="Left"
-                     Text="{Binding FileDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     Text="{Binding PathDestination, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                      Margin="10"/>
 
             <Button Content="Browse"

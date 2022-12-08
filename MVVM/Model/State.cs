@@ -8,8 +8,8 @@ namespace EasySaveApp.MVVM.Model
     internal class State
     {
         private string name;
-        private string fileSource;
-        private string fileDestination;
+        private string pathSource;
+        private string pathDestination;
         private string stateType;
         private int totalFileToTransfer;
         private int fileLeftToTransfer;
@@ -18,8 +18,8 @@ namespace EasySaveApp.MVVM.Model
         private int totalFilesSize;
 
         public string Name { get => name; set => name = value; }
-        public string FileSource { get => fileSource; set => fileSource = value; }
-        public string FileDestination { get => fileDestination; set => fileDestination = value; }
+        public string PathSource { get => pathSource; set => pathSource = value; }
+        public string PathDestination { get => pathDestination; set => pathDestination = value; }
         public string StateType { get => stateType; set => stateType = value; }
         public int TotalFileToTransfer { get => totalFileToTransfer; set => totalFileToTransfer = value; }
         public int FileLeftToTransfer { get => fileLeftToTransfer; set => fileLeftToTransfer = value; }
@@ -27,11 +27,11 @@ namespace EasySaveApp.MVVM.Model
         public string Status { get => status; set => status = value; }
         public int TotalFilesSize { get => totalFilesSize; set => totalFilesSize = value; }
 
-        public State(string name, string fileSource, string fileDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression, string status, int totalFilesSize)
+        public State(string name, string pathSource, string pathDestination, string stateType, int totalFileToTransfer, int fileLeftToTransfer, int progression, string status, int totalFilesSize)
         {
             Name = name;
-            FileSource = fileSource;
-            FileDestination = fileDestination;
+            PathSource = pathSource;
+            PathDestination = pathDestination;
             StateType = stateType;
             TotalFileToTransfer = totalFileToTransfer;
             FileLeftToTransfer = fileLeftToTransfer;
@@ -94,8 +94,8 @@ namespace EasySaveApp.MVVM.Model
             Dictionary<string, object> state = new Dictionary<string, object>
             {
                 { "Name", Name },
-                { "FileSource", FileSource },
-                { "FileDestination", FileDestination },
+                { "PathSource", PathSource },
+                { "PathDestination", PathDestination },
                 { "StateType", StateType },
                 { "TotalFileToTransfer", TotalFileToTransfer },
                 { "FileLeftToTransfer", FileLeftToTransfer },
@@ -109,8 +109,8 @@ namespace EasySaveApp.MVVM.Model
         {
             string state = "<State>\n";
             state += "\t<Name>" + Name + "</Name>\n";
-            state += "\t<FileSource>" + FileSource + "</FileSource>\n";
-            state += "\t<FileDestination>" + FileDestination + "</FileDestination>\n";
+            state += "\t<PathSource>" + PathSource + "</PathSource>\n";
+            state += "\t<PathDestination>" + PathDestination + "</PathDestination>\n";
             state += "\t<StateType>" + StateType + "</StateType>\n";
             state += "\t<TotalFileToTransfer>" + TotalFileToTransfer + "</TotalFileToTransfer>\n";
             state += "\t<FileLeftToTransfer>" + FileLeftToTransfer + "</FileLeftToTransfer>\n";
