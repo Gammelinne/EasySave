@@ -102,17 +102,11 @@ namespace EasySaveApp.MVVM.ViewModel
 
         private RelayCommand _saveCommand;
 
-        public RelayCommand SaveCommand
-        {
-            get
-            {
-                return _saveCommand ??= new RelayCommand(
+        public RelayCommand SaveCommand => _saveCommand ??= new RelayCommand(
                     o =>
                     {
                         _save.SaveSave();
-                        MessageBox.Show("Save saved");
+                        MainViewModel.ProgressionViewModelCommand.Execute(null);
                     });
-            }
-        }
     }
 }
