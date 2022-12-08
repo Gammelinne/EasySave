@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace EasySaveApp.MVVM.Model
@@ -35,7 +37,6 @@ namespace EasySaveApp.MVVM.Model
             SaveType = saveType;
         }
 
-        // Get directory size
         static int GetDirectorySize(string path)
         {
             string[] filesName = Directory.GetFiles(path, "*.*");
@@ -64,6 +65,9 @@ namespace EasySaveApp.MVVM.Model
                 #region
                 foreach (string oldPath in listOfPathFile)
                 {
+                    FileInfo fileInfo = new FileInfo(oldPath);
+                    string extension = fileInfo.Extension;
+                    string[] extensionToCrypt = Application.Current.Properties["ExtensionToCrypt"].ToString().Split(" ");
                     string newPath = oldPath.Replace(PathSource, PathDestination + @"\" + Name);
 
                     if (!Directory.Exists(Path.GetDirectoryName(newPath)))
@@ -73,7 +77,14 @@ namespace EasySaveApp.MVVM.Model
 
                     if (SaveType == "Complete")
                     {
-                        File.Copy(oldPath, newPath, true);
+                       if (extensionToCrypt.Contains(extension))
+                        {
+                            Crypt(oldPath, newPath);
+                        }
+                        else
+                        {
+                            File.Copy(oldPath, newPath, true);
+                        }
                     }
                     else if (SaveType == "Differential")
                     {
@@ -83,12 +94,26 @@ namespace EasySaveApp.MVVM.Model
                             FileInfo fileDestination = new FileInfo(newPath);
                             if (fileSource.GetHashCode() != fileDestination.GetHashCode())
                             {
-                                File.Copy(oldPath, newPath, true);
+                                if (extensionToCrypt.Contains(extension))
+                                {
+                                    Crypt(oldPath, newPath);
+                                }
+                                else
+                                {
+                                    File.Copy(oldPath, newPath, true);
+                                }
                             }
                         }
                         else
                         {
-                            File.Copy(oldPath, newPath, true);
+                            if (extensionToCrypt.Contains(extension))
+                            {
+                                Crypt(oldPath, newPath);
+                            }
+                            else
+                            {
+                                File.Copy(oldPath, newPath, true);
+                            }
                         }
                     }
 
@@ -135,5 +160,18 @@ namespace EasySaveApp.MVVM.Model
                 MessageBox.Show(e.Message);
             }
         }
+    
+        static void Crypt(string pathSource, string pathDestination)
+        {
+            string key = Application.Current.Properties["CryptKey"].ToString();
+            Process cryptosoft = new Process();
+            cryptosoft.StartInfo.FileName = @"../../../CryptoSoft/Cryptosoft.exe";
+            cryptosoft.StartInfo.Arguments = pathSource + " " + pathDestination + " " + key;
+            cryptosoft.StartInfo.CreateNoWindow = true;
+            cryptosoft.Start();
+            cryptosoft.WaitForExit();
+            cryptosoft.Kill();
+        }
+    
     }
 }

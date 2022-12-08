@@ -19,4 +19,8 @@
     <None Remove=".gitignore" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CryptoSoft\" />
+  </ItemGroup>
+
 </Project>
