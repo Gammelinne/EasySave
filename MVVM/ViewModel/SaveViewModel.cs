@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using EasySaveApp.Core;
@@ -105,8 +107,27 @@ namespace EasySaveApp.MVVM.ViewModel
         public RelayCommand SaveCommand => _saveCommand ??= new RelayCommand(
                     o =>
                     {
-                        _save.SaveSave();
-                        MainViewModel.ProgressionViewModelCommand.Execute(null);
+                        string[] sofwtwareList = Application.Current.Properties["Software"].ToString().Split(" ");
+                        bool softwareWorking = false;
+                        foreach (var sofwtware in sofwtwareList)
+                        {
+                            Process[] process = Process.GetProcessesByName(sofwtware);
+                            if (process.Length != 0)
+                            {
+                                softwareWorking = true;
+                                break;
+                            }
+                        }
+
+                        if (softwareWorking)
+                        {
+                            MessageBox.Show("Please close all software before save \n(Software can be set in Settings)");
+                        }
+                        else
+                        {
+                            _save.SaveSave();
+                            //MainViewModel.ProgressionViewModelCommand.Execute(null);
+                        }
                     });
     }
 }

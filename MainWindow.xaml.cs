@@ -18,7 +18,8 @@ namespace EasySaveApp
             Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
             Application.Current.Properties["TypeOfLog"] = setting["TypeOfLog"];
             Application.Current.Properties["ExtensionToCrypt"] = ".txt .exe";
-            Application.Current.Properties["CryptKey"] = 100;
+            Application.Current.Properties["CryptKey"] = "100";
+            Application.Current.Properties["Software"] = "vlc notepad";
         }
     }
 }
