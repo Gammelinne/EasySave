@@ -164,7 +164,8 @@ namespace EasySaveApp.MVVM.Model
         static void Crypt(string pathSource, string pathDestination)
         {
             string key = Application.Current.Properties["CryptKey"].ToString();
-            Process cryptosoft = new Process();
+            Process cryptosoft;
+            cryptosoft = new Process();
             cryptosoft.StartInfo.FileName = @"../../../CryptoSoft/Cryptosoft.exe";
             cryptosoft.StartInfo.Arguments = pathSource + " " + pathDestination + " " + key;
             cryptosoft.StartInfo.CreateNoWindow = true;
