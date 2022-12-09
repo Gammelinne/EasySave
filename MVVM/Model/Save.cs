@@ -7,6 +7,7 @@ namespace EasySaveApp.MVVM.Model
 {
     class Save
     {
+        public delegate void SaveChange(State state);  
         public static Stopwatch watch = new Stopwatch();
 
         private string name;
@@ -18,13 +19,18 @@ namespace EasySaveApp.MVVM.Model
         public string PathSource { get => pathSource; set => pathSource = value; }
         public string PathDestination { get => pathDestination; set => pathDestination = value; }
         public string SaveType { get => saveType; set => saveType = value; }
+        public State state { get; set; }
 
+        public SaveChange SaveChangeEvent;
+
+        
         public Save()
         {
             Name = "Save";
             PathSource = @"C:\";
             PathDestination = @"E:\";
             SaveType = "Complete";
+            state = new State();
         }
 
         public Save(string name, string pathSource, string pathDestination, string saveType)
@@ -33,7 +39,14 @@ namespace EasySaveApp.MVVM.Model
             PathSource = pathSource;
             PathDestination = pathDestination;
             SaveType = saveType;
+            state = new State(name, pathSource, pathDestination, saveType, 0,0,0,"END", 0);
         }
+
+        public void AddSaveChange(SaveChange listener)
+        {
+            SaveChangeEvent += listener;
+        }
+            
 
         // Get directory size
         static int GetDirectorySize(string path)
@@ -98,21 +111,18 @@ namespace EasySaveApp.MVVM.Model
                     {
                         status = "END";
                     }
-
-                    State state = new State(
-                        Name,
-                        PathSource,
-                        PathDestination,
-                        SaveType,
-                        listOfPathFile.Length,
-                        fileLeft,
-                        listOfPathFile.Length - fileLeft,
-                        status,
-                        size);
+                    state.PathSource = PathSource;
+                    state.PathDestination = PathDestination;
+                    state.StateType = SaveType;
+                    state.TotalFileToTransfer = listOfPathFile.Length;
+                    state.FileLeftToTransfer = fileLeft;
+                    state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
+                    state.Status = status;
+                    state.TotalFilesSize = size;
 
                     state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
-                    Application.Current.Properties["FileLeft"] = fileLeft;
-                    Application.Current.Properties["TotalFile"] = listOfPathFile.Length;
+                    SaveChangeEvent(state);
+                    
                 }
                 #endregion
 

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using EasySaveApp.Core;
 using EasySaveApp.MVVM.Model;
@@ -10,7 +11,11 @@ namespace EasySaveApp.MVVM.ViewModel
     {
         private Save _save;
 
-        public SaveViewModel(){ _save = new Save(); }
+        public SaveViewModel(){ 
+            _save = new Save();
+            _save.AddSaveChange(OnSaveChanged);
+
+        }
         public string FileName
         {
             get { return _save.Name; }
@@ -103,10 +108,15 @@ namespace EasySaveApp.MVVM.ViewModel
         private RelayCommand _saveCommand;
 
         public RelayCommand SaveCommand => _saveCommand ??= new RelayCommand(
-                    o =>
+                    async o =>
                     {
-                        _save.SaveSave();
                         MainViewModel.ProgressionViewModelCommand.Execute(null);
+                        await Task.Run(() => _save.SaveSave());
                     });
+
+        public void OnSaveChanged(State state)
+        {
+            MainViewModel.SetProgression.Execute(state.Progression);
+        }
     }
 }

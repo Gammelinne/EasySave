@@ -14,6 +14,7 @@ namespace EasySaveApp.MVVM.ViewModel
 		public RelayCommand SaveViewModelCommand { get; set; }
         public RelayCommand SettingViewModelCommand { get; set; }
         public static RelayCommand ProgressionViewModelCommand { get; set; }
+        public static RelayCommand SetProgression { get;  set; }
 
         public HomeViewModel HomeVM { get; set; }
         public SaveViewModel SaveVM { get; set; }
@@ -68,6 +69,12 @@ namespace EasySaveApp.MVVM.ViewModel
             ProgressionViewModelCommand = new RelayCommand(o =>
             {
                 CurrentView = ProgressionVM;
+            });
+
+            SetProgression = new RelayCommand(o =>
+            {
+                int progresion = (int)o;
+                ProgressionVM.ProgressionValue = progresion;
             });
         }
     }
