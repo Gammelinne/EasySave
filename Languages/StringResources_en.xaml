@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="HomeTitle">Welcome in EasySave</system:String>
+    <system:String x:Key="Slogan">Easiest backup application</system:String>
+    <system:String x:Key="Description">Welcome in EasySave, the easiest to use backup application.
+        To save data, simply go to the Save section, fill in the different field and select Save. 
+        If you have any problems, please contact us at this mail address: easysupport@lahyra.com</system:String>
+    <system:String x:Key="Home">Home</system:String>
+    <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="Setting">Setting</system:String>
+    <system:String x:Key="Name">Name</system:String>
+    <system:String x:Key="Search">Search</system:String>
+    <system:String x:Key="Source">Source</system:String>
+    <system:String x:Key="Destination">Destination</system:String>
+    <system:String x:Key="TypeOfBackup">Type of BackUp</system:String>
+    <system:String x:Key="Complet">Complet</system:String>
+    <system:String x:Key="Differential">Differential</system:String>
+    <system:String x:Key="Langage">Chose a langage</system:String>
+
+</ResourceDictionary>

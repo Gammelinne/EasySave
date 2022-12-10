@@ -8,36 +8,53 @@
 
     <Border Margin="30">
         <Grid>
-            <StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Choose a language"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="222"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="{DynamicResource Langage}"
                                FontSize="20"
                                Foreground="AliceBlue"
                                Margin="10"/>
-                    <ComboBox x:Name="Language"
-                              Width="200"
-                              Height="30"
-                              Margin="10"
-                              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
-                        <ComboBoxItem Content="English"/>
-                        <ComboBoxItem Content="French"/>
-                    </ComboBox>
+
+                <TextBlock Text="Choose a type of log"
+                               FontSize="20"
+                               Foreground="AliceBlue"
+                               Margin="10"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1"
+                        HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+
+                    <RadioButton x:Name="English"
+                                 Content="English"
+                                 IsChecked="True"
+                                 Margin="10"
+                                 Foreground="AliceBlue"
+                                 FontSize="20"
+                                 GroupName="Language"/>
+
+                    <RadioButton x:Name="French"
+                                 Content="French"
+                                 Margin="10"
+                                 Foreground="AliceBlue"
+                                 FontSize="20"
+                                 GroupName="Language"/>
 
                 </StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Choose a type of log"
-                               FontSize="20"
-                               Foreground="AliceBlue"
-                               Margin="10"/>
-                    <ComboBox x:Name="extension"
+
+
+                <ComboBox x:Name="extension"
                               Width="200"
                               Height="30"
                               Margin="10"
                               SelectedItem="{Binding SelectedExtension, Mode=TwoWay}">
-                        <ComboBoxItem Content="json"/>
-                        <ComboBoxItem Content="xml"/>
-                    </ComboBox>
-                </StackPanel>
+                    <ComboBoxItem Content="json"/>
+                    <ComboBoxItem Content="xml"/>
+                </ComboBox>
             </StackPanel>
         </Grid>
     </Border>

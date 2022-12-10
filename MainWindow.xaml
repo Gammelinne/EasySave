@@ -38,7 +38,7 @@
             <!-- Menu -->
             <StackPanel Grid.Row="1">
 
-                <RadioButton Content="Home"
+                <RadioButton Content="{DynamicResource Home}"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
@@ -46,19 +46,38 @@
                              IsChecked="True"
                              Command="{Binding SaveHomeViewModelCommand}"/>
 
-                <RadioButton Content="Save"
+                <RadioButton Content="{DynamicResource Save}"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding SaveViewModelCommand}"/>
 
-                <RadioButton Content="Settings"
+                <RadioButton Content="{DynamicResource Setting}"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding SettingViewModelCommand}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right">
+                
+                <RadioButton Content ="English"
+                             x:Name="EnglishButton"
+                             Foreground="AliceBlue"
+                             Checked="EnglishButton_Checked"
+                             Command="{Binding SwitchLanguageEN}"/>
+
+                <RadioButton Content ="Français"
+                             x:Name="FrenchButton"
+                             Foreground="AliceBlue"
+                             Checked="FrenchButton_Checked"
+                             Command="{Binding SwitchLanguageFR}"/>
+
             </StackPanel>
 
             <!-- HomeView -->

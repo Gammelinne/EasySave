@@ -15,7 +15,7 @@
                    Margin="20 10 0 0"/>
 
         <!-- Name Text -->
-        <TextBlock Text="Name"
+        <TextBlock Text="{DynamicResource Name}"
                    Foreground="AliceBlue"
                    FontSize="14"
                    HorizontalAlignment="Left"
@@ -33,7 +33,7 @@
         </StackPanel>
 
         <!-- Source Text -->
-        <TextBlock Text="Source"
+        <TextBlock Text="{DynamicResource Source}"
                    Foreground="AliceBlue"
                    FontSize="14"
                    HorizontalAlignment="Left"
@@ -82,7 +82,7 @@
         </StackPanel>
 
         <!-- Destination Text -->
-        <TextBlock Text="Destination"
+        <TextBlock Text="{DynamicResource Destination}"
                        Foreground="AliceBlue"
                        FontSize="14"
                        HorizontalAlignment="Left"
@@ -132,7 +132,7 @@
         </StackPanel>
 
         <!-- Type of Backup Text -->
-        <TextBlock Text="Type of BackUp"
+        <TextBlock Text="{DynamicResource TypeOfBackup}"
                        Foreground="AliceBlue"
                        FontSize="14"
                        HorizontalAlignment="Left"
