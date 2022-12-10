@@ -1,13 +1,17 @@
 ﻿using EasySaveApp.Core;
+using EasySaveApp.Languages;
 using EasySaveApp.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
+        public RelayCommand FrenchCommand { get; set; }
+        public RelayCommand EnglishCommand { get; set; }
         public RelayCommand ShutdownWindowCommand { get; set; }
         public RelayCommand HomeViewCommand { get; set; }
 		public RelayCommand SaveHomeViewModelCommand { get; set; }
@@ -33,8 +37,24 @@ namespace EasySaveApp.MVVM.ViewModel
 			}
 		}
 
+        // CurrentLanguage
+        private object _currentLanguage;
+        public object CurrentLanguage
+        {
+            get { return _currentLanguage; }
+            set
+            {
+                _currentLanguage = value;
+                OnPropertyChanged();
+            }
+        }
 
-		public MainViewModel()
+        private French frenchLanguage;
+        private English englishLanguage;
+
+        
+
+        public MainViewModel()
 		{
             ShutdownWindowCommand = new RelayCommand(o => { App.Current.Shutdown(); });
             HomeVM = new HomeViewModel();
@@ -45,7 +65,7 @@ namespace EasySaveApp.MVVM.ViewModel
 
             CurrentView = SaveHomeVM;
 
-			HomeViewCommand = new RelayCommand(o => 
+            HomeViewCommand = new RelayCommand(o => 
 			{
 				CurrentView= HomeVM;
 			});
@@ -68,6 +88,20 @@ namespace EasySaveApp.MVVM.ViewModel
             ProgressionViewModelCommand = new RelayCommand(o =>
             {
                 CurrentView = ProgressionVM;
+            });
+
+            //Language Command
+
+            CurrentLanguage = new English();
+
+            FrenchCommand = new RelayCommand(o =>
+            {
+                CurrentLanguage = new French();
+            });
+
+            EnglishCommand = new RelayCommand(o =>
+            {
+                CurrentLanguage = new English();
             });
         }
     }

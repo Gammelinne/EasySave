@@ -38,7 +38,7 @@
             <!-- Menu -->
             <StackPanel Grid.Row="1">
 
-                <RadioButton Content="Home"
+                <RadioButton Content="{Binding CurrentLanguage.Home}"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
@@ -46,19 +46,43 @@
                              IsChecked="True"
                              Command="{Binding SaveHomeViewModelCommand}"/>
 
-                <RadioButton Content="Save"
+                <RadioButton Content="{Binding CurrentLanguage.Save}"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding SaveViewModelCommand}"/>
 
-                <RadioButton Content="Settings"
+                <RadioButton Content="{Binding CurrentLanguage.Settings}"
                              Height="50"
                              Foreground="White"
                              FontSize="20"
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding SettingViewModelCommand}"/>
+            </StackPanel>
+
+            <!-- Language -->
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 20 0">
+
+                <RadioButton Content="English"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="20"
+                             Margin="10"
+                             IsChecked="True"
+                             Style="{StaticResource LanguageButtonTheme}"
+                             Command="{Binding EnglishCommand}"/>
+
+                <RadioButton Content="Français"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="20"
+                             Margin="10"
+                             Style="{StaticResource LanguageButtonTheme}"
+                             Command="{Binding FrenchCommand}"/>
             </StackPanel>
 
             <!-- HomeView -->

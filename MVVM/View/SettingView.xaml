@@ -3,28 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel ="clr-namespace:EasySaveApp.MVVM.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:MainViewModel/>
+    </UserControl.DataContext>
 
     <Border Margin="30">
         <Grid>
             <StackPanel>
-                <StackPanel>
-                    <TextBlock Text="Choose a language"
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="{Binding CurrentLanguage.language}"
                                FontSize="20"
                                Foreground="AliceBlue"
                                Margin="10"/>
-                    <ComboBox x:Name="Language"
-                              Width="200"
-                              Height="30"
-                              Margin="10"
-                              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}">
-                        <ComboBoxItem Content="English"/>
-                        <ComboBoxItem Content="French"/>
-                    </ComboBox>
+
+                    <RadioButton x:Name="English"
+                                 Content="English"
+                                 GroupName="Language"
+                                 Margin="10"
+                                 Foreground="AliceBlue"
+                                 Command="{Binding EnglishCommand}"/>
+
+                    <RadioButton x:Name="French"
+                                 Content="Français"
+                                 GroupName="Language"
+                                 Margin="10"
+                                 Foreground="AliceBlue"
+                                 Command="{Binding FrenchCommand}"/>
 
                 </StackPanel>
-                <StackPanel>
+                <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Choose a type of log"
                                FontSize="20"
                                Foreground="AliceBlue"
