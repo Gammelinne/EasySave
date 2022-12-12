@@ -28,13 +28,9 @@ namespace EasySaveApp.MVVM.Model
         
         public Save()
         {
-            //Name = "Save";
-            //PathSource = @"C:\";
-            //PathDestination = @"E:\";
-            //SaveType = "Complete";
-            Name = "SavePriority";
-            PathSource = @"C:\Users\lefra\Documents\Save\In";
-            PathDestination = @"C:\Users\lefra\Documents\Save\Out";
+            Name = "Save";
+            PathSource = @"C:\";
+            PathDestination = @"E:\";
             SaveType = "Complete";
             state = new State();
         }
