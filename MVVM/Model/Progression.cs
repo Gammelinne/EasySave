@@ -9,20 +9,17 @@ namespace EasySaveApp.MVVM.Model
     {
         private int progressionValue;
         private int fileLeftToTransfert;
-        private int fileTransfered;
+        private int fileTotal;
 
         public int ProgressionValue { get => progressionValue; set => progressionValue = value; }
         public int FileLeftToTransfert { get => fileLeftToTransfert; set => fileLeftToTransfert = value; }
-        public int FileTransfered { get => fileTransfered; set => fileTransfered = value; }
+        public int FileTotal { get => fileTotal; set => fileTotal = value; }
 
         public Progression()
         {
-            //int filelefttotransfert = (int)Application.Current.Properties["FileLeft"];
-            //int filetransfered = (int)Application.Current.Properties["TotalFile"];
-            //ProgressionValue = (filetransfered * 100) / filelefttotransfert;
-            //FileLeftToTransfert = filelefttotransfert;
-            //FileTransfered = filetransfered - filelefttotransfert;
+            ProgressionValue = 0;
+            FileLeftToTransfert = 0;
+            FileTotal = 0;
         }
-       
     }
 }
