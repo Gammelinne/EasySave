@@ -10,6 +10,7 @@ namespace EasySaveApp.MVVM.ViewModel
 {
     class SettingViewModel : ObservableObject
     {
+
         public ObservableCollection<string> ProcessList { get; set; }
         public ObservableCollection<string> ProcessListStop { get; set; }
 
@@ -21,6 +22,19 @@ namespace EasySaveApp.MVVM.ViewModel
         public RelayCommand RemoveProcess { get; set; }
         public object ExtensionSelected { get; set; }
         public object ProcessSelected { get; set; }
+
+        public string SelectedExtension
+        {
+            set
+            {
+                string newValue = value.Replace("System.Windows.Controls.ComboBoxItem\u00A0: ", "");
+                Application.Current.Properties["TypeOfLog"] = newValue;
+                string json = File.ReadAllText("../../../Settings.json");
+                Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                setting["TypeOfLog"] = newValue;
+                File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
+            }
+        }
         public SettingViewModel()
         {
             
