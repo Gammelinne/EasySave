@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace EasySaveApp.MVVM.Model
@@ -26,9 +28,13 @@ namespace EasySaveApp.MVVM.Model
         
         public Save()
         {
-            Name = "Save";
-            PathSource = @"C:\";
-            PathDestination = @"E:\";
+            //Name = "Save";
+            //PathSource = @"C:\";
+            //PathDestination = @"E:\";
+            //SaveType = "Complete";
+            Name = "SavePriority";
+            PathSource = @"C:\Users\lefra\Documents\Save\In";
+            PathDestination = @"C:\Users\lefra\Documents\Save\Out";
             SaveType = "Complete";
             state = new State();
         }
@@ -46,7 +52,6 @@ namespace EasySaveApp.MVVM.Model
         {
             SaveChangeEvent += listener;
         }
-            
 
         // Get directory size
         static int GetDirectorySize(string path)
@@ -61,15 +66,30 @@ namespace EasySaveApp.MVVM.Model
             return (int)numberOfFileByte;
         }
 
+        public List<string> CheckPriority(string[] oldList)
+        {
+            List<string> files = new List<string>(oldList);
+            List<string> extensions = Application.Current.Properties["PriorityFiles"].ToString().Split(" ").ToList();
+            List<string> newList = new List<string>();
+            foreach (string extension in extensions)
+            {
+                newList.AddRange(files.Where(f => f.EndsWith(extension)));
+                files = files.Where(f => !f.EndsWith(extension)).ToList();
+            }
+            newList.AddRange(files);
+            return newList;
+        }
+
         public void SaveSave()
         {
             try
             {
                 string status = "ACTIVE";
-                string[] listOfPathFile = { };
+                string[] listOfPathFile = {};
                 int size = GetDirectorySize(PathSource);
                 Directory.CreateDirectory(PathDestination + @"\" + Name);
                 listOfPathFile = Directory.GetFiles(PathSource, "*.*", SearchOption.AllDirectories);
+                listOfPathFile = CheckPriority(listOfPathFile).ToArray();
                 int fileLeft = listOfPathFile.Length;
                 watch.Start();
 
@@ -77,6 +97,7 @@ namespace EasySaveApp.MVVM.Model
                 #region
                 foreach (string oldPath in listOfPathFile)
                 {
+                    MessageBox.Show(oldPath);
                     string newPath = oldPath.Replace(PathSource, PathDestination + @"\" + Name);
 
                     if (!Directory.Exists(Path.GetDirectoryName(newPath)))
