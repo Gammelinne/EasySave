@@ -25,7 +25,7 @@ namespace EasySaveApp.MVVM.ViewModel
         {
             
             // Extensions
-
+            
             MyListOfExetension = new ObservableCollection<string>();
             MyListOfExetension.Add("txt");
             MyListOfExetension.Add("json");
