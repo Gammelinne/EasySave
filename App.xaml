@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="Theme/TextboxTheme.xaml"/>
                 <ResourceDictionary Source="Languages/StringResources_fr.xaml"/>
                 <ResourceDictionary Source="Languages/StringResources_en.xaml"/>
+                <ResourceDictionary Source="Theme/ListBoxTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             <DataTemplate DataType="{x:Type viewModel:SaveHomeViewModel}">

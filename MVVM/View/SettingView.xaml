@@ -3,59 +3,130 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:EasySaveApp.MVVM.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewModel:SettingViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Border Margin="30">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="222"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
-                <TextBlock Text="{DynamicResource Langage}"
-                               FontSize="20"
-                               Foreground="AliceBlue"
-                               Margin="10"/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-                <TextBlock Text="Choose a type of log"
-                               FontSize="20"
-                               Foreground="AliceBlue"
-                               Margin="10"/>
-            </StackPanel>
+            <!-- Column 0 -->
+            <TextBlock Grid.Row="0" 
+                       Grid.Column="0" 
+                       Text="Choose a type of log" 
+                       FontSize="15"
+                       Foreground="AliceBlue"
+                       VerticalAlignment="Center"/>
 
-            <StackPanel Grid.Column="1"
-                        HorizontalAlignment="Left">
-                <StackPanel Orientation="Horizontal">
+            <TextBlock Grid.Row="1" 
+                       Grid.Column="0" 
+                       Text="List of extensions" 
+                       FontSize="15"
+                       Foreground="AliceBlue"
+                       VerticalAlignment="Center"/>
 
-                    <RadioButton x:Name="English"
-                                 Content="English"
-                                 IsChecked="True"
-                                 Margin="10"
-                                 Foreground="AliceBlue"
-                                 FontSize="20"
-                                 GroupName="Language"/>
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Text="Software package"
+                       FontSize="15"
+                       Foreground="AliceBlue"
+                       VerticalAlignment="Center"/>
 
-                    <RadioButton x:Name="French"
-                                 Content="French"
-                                 Margin="10"
-                                 Foreground="AliceBlue"
-                                 FontSize="20"
-                                 GroupName="Language"/>
+            <!-- Column 1 -->
+            <ComboBox x:Name="extension"
+                      Grid.Column="1"
+                      Grid.Row="0"
+                      HorizontalAlignment="Left"
+                      Width="200"
+                      Height="30"
+                      FontSize="15"
+                      SelectedItem="{Binding SelectedExtension, Mode=TwoWay}">
+                <ComboBoxItem Content="json" FontSize="15"/>
+                <ComboBoxItem Content="xml" FontSize="15"/>
+            </ComboBox>
 
+            <!--  -->
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="1"
+                        Grid.Column="1">
+
+                <ListBox Width="180"
+                         Height="90"
+                         x:Name="MyListOfExetension"
+                         SelectedItem="{Binding ExtensionSelected}"
+                         ItemsSource="{Binding MyListOfExetension}"/>
+
+                <StackPanel>
+                    <Button    Content="Add"
+                                Width="70"
+                                Height="30"
+                                Margin="10 15 10 0"
+                                FontSize="15"
+                               Command="{Binding AddExtensionToEncrypt}"/>
+
+                    <Button    Content="Remove"
+                                Width="70"
+                                Height="30"
+                                Margin="10 10 10 0"
+                                FontSize="15"
+                               Command="{Binding RemoveExtensionToEncrypt}"/>
                 </StackPanel>
 
+                <ListBox Width="180"
+                         Height="90"
+                         x:Name="ExtensionToEncrypt"
+                         SelectedItem="{Binding ExtensionSelected}"
+                         ItemsSource="{Binding ExtensionToEncrypt}"/>
 
-                <ComboBox x:Name="extension"
-                              Width="200"
-                              Height="30"
-                              Margin="10"
-                              SelectedItem="{Binding SelectedExtension, Mode=TwoWay}">
-                    <ComboBoxItem Content="json"/>
-                    <ComboBoxItem Content="xml"/>
-                </ComboBox>
             </StackPanel>
+
+            <!--  -->
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="2"
+                        Grid.Column="1">
+
+                <ListBox Width="180"
+                         Height="90"
+                         x:Name="ListOfSoftware"
+                         ItemsSource="{Binding ProcessList}"
+                         SelectedItem="{Binding ProcessSelected}"/>
+
+                <StackPanel>
+                    <Button    Content="Add"
+                                Width="70"
+                                Height="30"
+                                Margin="10 15 10 0"
+                                FontSize="15"
+                               Command="{Binding AddProcess}"/>
+
+                    <Button    Content="Remove"
+                                Width="70"
+                                Height="30"
+                                Margin="10 10 10 0"
+                                FontSize="15"
+                               Command="{Binding RemoveProcess}"/>
+                </StackPanel>
+
+                <ListBox Width="180"
+                         Height="90"
+                         x:Name="SoftwarePackage"
+                         ItemsSource="{Binding ProcessListStop}"
+                         SelectedItem="{Binding ProcessSelected}"/>
+
+            </StackPanel>
+
         </Grid>
     </Border>
 </UserControl>
