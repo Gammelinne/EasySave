@@ -33,15 +33,15 @@
                     VerticalAlignment="Center"
                     Margin="30 0 0 0">
             <!-- Slogan -->
-            <TextBlock Text="Easiest backup application"
-                       FontSize="30"
+            <TextBlock Text="{DynamicResource Slogan}"
+                       FontSize="15"
                        Foreground="AliceBlue"
                        FontWeight="Medium"
                        VerticalAlignment="Center"/>
 
             <!-- Lorum Ispum -->
-            <TextBlock Text="Welcome to EasySave, the easiest to use backup application. To save data, simply go to the Save section, fill in the different boxes and select Save. If you have any problems, please contact us at easysupport@lahyra.com"
-                       FontSize="15"
+            <TextBlock Text="{DynamicResource Description}"
+                       FontSize="12"
                        Foreground="AliceBlue"
                        FontWeight="Medium"
                        VerticalAlignment="Center"

@@ -3,18 +3,22 @@ using EasySaveApp.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
     internal class MainViewModel : ObservableObject
     {
+
+        public RelayCommand SwitchLanguageEN { get; set; }
+        public RelayCommand SwitchLanguageFR { get; set; }
+
         public RelayCommand ShutdownWindowCommand { get; set; }
         public RelayCommand HomeViewCommand { get; set; }
 		public RelayCommand SaveHomeViewModelCommand { get; set; }
 		public RelayCommand SaveViewModelCommand { get; set; }
         public RelayCommand SettingViewModelCommand { get; set; }
         public static RelayCommand ProgressionViewModelCommand { get; set; }
-        public static RelayCommand SetProgressionCommand { get;  set; }
 
         public HomeViewModel HomeVM { get; set; }
         public SaveViewModel SaveVM { get; set; }
@@ -33,7 +37,6 @@ namespace EasySaveApp.MVVM.ViewModel
 			OnPropertyChanged();
 			}
 		}
-
 
 		public MainViewModel()
 		{
@@ -71,10 +74,16 @@ namespace EasySaveApp.MVVM.ViewModel
                 CurrentView = ProgressionVM;
             });
 
-            SetProgressionCommand = new RelayCommand(o =>
+            SwitchLanguageEN = new RelayCommand(o =>
             {
-                int progresion = (int)o;
-                ProgressionVM.ProgressionValue = progresion;
+                ResourceDictionary dict = new ResourceDictionary();
+                dict.Source = new Uri("..\\Languages\\StringResources_en.xaml", UriKind.Relative);
+            });
+
+            SwitchLanguageFR = new RelayCommand(o =>
+            {
+                ResourceDictionary dict = new ResourceDictionary();
+                dict.Source = new Uri("..\\Languages\\StringResources_fr.xaml", UriKind.Relative);
             });
         }
     }
