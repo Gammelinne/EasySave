@@ -116,7 +116,8 @@ namespace EasySaveApp.MVVM.ViewModel
 
         public void OnSaveChanged(State state)
         {
-            MainViewModel.SetProgression.Execute(state.Progression);
+            MainViewModel.SetProgressionCommand.Execute(state.Progression);
+            
         }
     }
 }
