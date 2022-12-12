@@ -97,7 +97,6 @@ namespace EasySaveApp.MVVM.Model
                 #region
                 foreach (string oldPath in listOfPathFile)
                 {
-                    MessageBox.Show(oldPath);
                     string newPath = oldPath.Replace(PathSource, PathDestination + @"\" + Name);
 
                     if (!Directory.Exists(Path.GetDirectoryName(newPath)))
