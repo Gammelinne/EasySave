@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using EasySaveApp.Core;
 using EasySaveApp.MVVM.Model;
@@ -12,7 +11,11 @@ namespace EasySaveApp.MVVM.ViewModel
     {
         private Save _save;
 
-        public SaveViewModel(){ _save = new Save(); }
+        public SaveViewModel(){ 
+            _save = new Save();
+            _save.AddSaveChange(OnSaveChanged);
+
+        }
         public string FileName
         {
             get { return _save.Name; }
@@ -105,29 +108,16 @@ namespace EasySaveApp.MVVM.ViewModel
         private RelayCommand _saveCommand;
 
         public RelayCommand SaveCommand => _saveCommand ??= new RelayCommand(
-                    o =>
+                    async o =>
                     {
-                        string[] sofwtwareList = Application.Current.Properties["Software"].ToString().Split(" ");
-                        bool softwareWorking = false;
-                        foreach (var sofwtware in sofwtwareList)
-                        {
-                            Process[] process = Process.GetProcessesByName(sofwtware);
-                            if (process.Length != 0)
-                            {
-                                softwareWorking = true;
-                                break;
-                            }
-                        }
-
-                        if (softwareWorking)
-                        {
-                            MessageBox.Show("Please close all software before save \n(Software can be set in Settings)");
-                        }
-                        else
-                        {
-                            _save.SaveSave();
-                            //MainViewModel.ProgressionViewModelCommand.Execute(null);
-                        }
+                        MainViewModel.ProgressionViewModelCommand.Execute(null);
+                        await Task.Run(() => _save.SaveSave());
                     });
+
+        public void OnSaveChanged(State state)
+        {
+            MainViewModel.SetProgressionCommand.Execute(state.Progression);
+            
+        }
     }
 }
