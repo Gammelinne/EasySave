@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasySaveApp.MVVM.ViewModel;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -24,6 +25,7 @@ namespace EasySaveApp.MVVM.Model
         public string SaveType { get => saveType; set => saveType = value; }
         public State state { get; set; }
         public static bool pause = false;
+        public static bool is_first_save = true;
         public static ManualResetEvent pauseEvent = new ManualResetEvent(false);
         public static CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -71,11 +73,11 @@ namespace EasySaveApp.MVVM.Model
             }
             return (int)numberOfFileByte;
         }
-        public async static void Stop()
+        public static void Stop()
         {
-            await Task.Run(() => cts.Cancel());
-            await Task.Run(() => Save.Pause());
-            await Task.Run(() => GC.Collect());
+            cts.Cancel();
+            MessageBox.Show("Please wait few second");
+            GC.Collect();
 
         }
         public static void Pause()
@@ -85,12 +87,17 @@ namespace EasySaveApp.MVVM.Model
             {
                 pauseEvent.Set();
                 watch.Stop();
+                if (!is_first_save)
+                {
+                    MessageBox.Show("Save resumed");
+                }
 
             }
             else
             {
                 watch.Start();
                 pauseEvent.Reset();
+                MessageBox.Show("Save paused");
             }
         }
 
@@ -98,7 +105,10 @@ namespace EasySaveApp.MVVM.Model
         {
             try
             {
-                Save.Pause();
+                if (is_first_save)
+                {
+                    Save.Pause();
+                }
                 string status = "ACTIVE";
                 string[] listOfPathFile = { };
                 int size = GetDirectorySize(PathSource);
@@ -113,8 +123,8 @@ namespace EasySaveApp.MVVM.Model
                 {
                     if (cts.IsCancellationRequested)
                     {
-                        cts = new CancellationTokenSource();
-                        GC.Collect();
+                        //reset save
+
                         return;
                     }
                     pauseEvent.WaitOne();
@@ -168,6 +178,7 @@ namespace EasySaveApp.MVVM.Model
                 #endregion
 
                 watch.Stop();
+                MessageBox.Show("Save finished");
 
                 //Create a log
                 #region
@@ -180,10 +191,12 @@ namespace EasySaveApp.MVVM.Model
                     DateTime.Now);
                 log.SaveLog(Application.Current.Properties["TypeOfLog"].ToString());
                 #endregion
+                is_first_save = false;
+                MainViewModel.SaveHomeViewModelCommand.Execute(null);
             }
             catch (Exception e)
             {
-               MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message);
             }
         }
     }
