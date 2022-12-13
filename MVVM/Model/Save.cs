@@ -96,8 +96,8 @@ namespace EasySaveApp.MVVM.Model
 
         public void SaveSave()
         {
-            //try
-            //{
+            try
+            {
                 Save.Pause();
                 string status = "ACTIVE";
                 string[] listOfPathFile = { };
@@ -181,10 +181,10 @@ namespace EasySaveApp.MVVM.Model
                 log.SaveLog(Application.Current.Properties["TypeOfLog"].ToString());
                 #endregion
             }
-            //catch (Exception e)
-            //{
-            //    MessageBox.Show(e.Message);
-            //}
-        //}
+            catch (Exception e)
+            {
+               MessageBox.Show(e.Message);
+            }
+        }
     }
 }
