@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net.Sockets;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
@@ -17,6 +18,12 @@ namespace EasySaveApp.MVVM.ViewModel
         public ProgressionViewModel()
         {
             _progression = new Progression();
+            Socket socket = Progression.Connect();
+            Socket client = Progression.AllowConnection(socket);
+            Progression.SendMessage(client, "Salut1");
+            Thread.Sleep(40);
+            Progression.SendMessage(client, "<END>");
+            Progression.Disconnect(client);
         }
 
         public int ProgressionValue

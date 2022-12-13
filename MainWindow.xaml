@@ -71,14 +71,14 @@
                 <RadioButton Content ="English"
                              x:Name="EnglishButton"
                              Foreground="AliceBlue"
-                             Checked="EnglishButton_Checked"
+                             
                              
                              Command="{Binding SwitchLanguageEN}" IsChecked="True"/>
 
                 <RadioButton Content ="Français"
                              x:Name="FrenchButton"
                              Foreground="AliceBlue"
-                             Checked="FrenchButton_Checked"
+                          
                              Command="{Binding SwitchLanguageFR}"/>
 
             </StackPanel>
