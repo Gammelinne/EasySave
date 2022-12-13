@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ namespace EasySaveApp.MVVM.ViewModel
     {
         private Save _save;
 
-        public SaveViewModel(){ 
+        public SaveViewModel()
+        {
             _save = new Save();
             _save.AddSaveChange(OnSaveChanged);
 
@@ -20,8 +22,8 @@ namespace EasySaveApp.MVVM.ViewModel
         public string FileName
         {
             get { return _save.Name; }
-            set 
-            { 
+            set
+            {
                 _save.Name = value;
                 OnPropertyChanged("FileName");
             }
@@ -112,7 +114,15 @@ namespace EasySaveApp.MVVM.ViewModel
                     async o =>
                     {
                         MainViewModel.ProgressionViewModelCommand.Execute(null);
+
+                        Socket socket = Progression.Connect();
+                        Socket client = Progression.AllowConnection(socket);
                         await Task.Run(() => _save.SaveSave());
+                        if (socket != null)
+                        {
+                            Progression.Disconnect(client);
+                        }
+
                     });
 
         public void OnSaveChanged(State state)

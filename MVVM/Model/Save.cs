@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -34,8 +35,8 @@ namespace EasySaveApp.MVVM.Model
         public Save()
         {
             Name = "Save";
-            PathSource = @"C:\";
-            PathDestination = @"E:\";
+            PathSource = @"C:\Users\kylia\Documents\iso";
+            PathDestination = @"C:\ProjetCsFT\save";
             SaveType = "Complete";
             state = new State();
         }
@@ -227,6 +228,12 @@ namespace EasySaveApp.MVVM.Model
 
                     state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
                     SaveChangeEvent(state);
+                    if (Application.Current.Properties["Socket"] != null)
+                    {
+                        string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
+                        Progression.SendMessage((Socket)Application.Current.Properties["Socket"], StatetoSend);
+
+                    }
                 }
                 #endregion
 
@@ -247,6 +254,11 @@ namespace EasySaveApp.MVVM.Model
 
                 is_first_save = false;
                 MainViewModel.SaveHomeViewModelCommand.Execute(null);
+                if (Application.Current.Properties["Socket"] != null)
+                {
+                    Progression.SendMessage((Socket)Application.Current.Properties["Socket"], "<END>");
+
+                }
             }
             catch (Exception e)
             {

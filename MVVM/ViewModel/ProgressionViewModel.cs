@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net.Sockets;
+using System.Net;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
@@ -51,7 +53,10 @@ namespace EasySaveApp.MVVM.ViewModel
                 OnPropertyChanged("FileTotal");
             }
         }
+        public void Socket()
+        {
 
+        }
         private RelayCommand _stopCommand;
 
         public RelayCommand StopCommand => _stopCommand ??= new RelayCommand(
