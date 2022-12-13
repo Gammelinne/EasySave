@@ -2,6 +2,8 @@
 using EasySaveApp.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Windows;
 
@@ -38,7 +40,9 @@ namespace EasySaveApp.MVVM.ViewModel
 			}
 		}
 
-		public MainViewModel()
+        public object Resources { get; private set; }
+
+        public MainViewModel()
 		{
             ShutdownWindowCommand = new RelayCommand(o => { App.Current.Shutdown(); });
             HomeVM = new HomeViewModel();
@@ -78,12 +82,32 @@ namespace EasySaveApp.MVVM.ViewModel
             {
                 ResourceDictionary dict = new ResourceDictionary();
                 dict.Source = new Uri("..\\Languages\\StringResources_en.xaml", UriKind.Relative);
+                var current = Application.Current.Resources.MergedDictionaries.FirstOrDefault(
+                    m => m.Source.OriginalString.EndsWith("Strings.xaml"));
+
+
+                if (current != null)
+                {
+                    Application.Current.Resources.MergedDictionaries.Remove(current);
+                }
+
+                Application.Current.Resources.MergedDictionaries.Add(dict);
             });
 
             SwitchLanguageFR = new RelayCommand(o =>
             {
                 ResourceDictionary dict = new ResourceDictionary();
                 dict.Source = new Uri("..\\Languages\\StringResources_fr.xaml", UriKind.Relative);
+                var current = Application.Current.Resources.MergedDictionaries.FirstOrDefault(
+                 m => m.Source.OriginalString.EndsWith("Strings.xaml"));
+
+
+                if (current != null)
+                {
+                    Application.Current.Resources.MergedDictionaries.Remove(current);
+                }
+
+                Application.Current.Resources.MergedDictionaries.Add(dict);
             });
         }
     }
