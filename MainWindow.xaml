@@ -72,7 +72,8 @@
                              x:Name="EnglishButton"
                              Foreground="AliceBlue"
                              Checked="EnglishButton_Checked"
-                             Command="{Binding SwitchLanguageEN}"/>
+                             
+                             Command="{Binding SwitchLanguageEN}" IsChecked="True"/>
 
                 <RadioButton Content ="Français"
                              x:Name="FrenchButton"
