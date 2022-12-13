@@ -64,9 +64,9 @@
 
                 <ListBox Width="180"
                          Height="90"
-                         x:Name="MyListOfExetension"
+                         x:Name="MyListOfExtension"
                          SelectedItem="{Binding ExtensionSelected}"
-                         ItemsSource="{Binding MyListOfExetension}"/>
+                         ItemsSource="{Binding MyListOfExtension}"/>
 
                 <StackPanel>
                     <Button    Content="Add"
