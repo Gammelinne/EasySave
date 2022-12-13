@@ -7,8 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ProgressBar Margin="234,207,234,225" Value="{Binding ProgressionValue , UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Content="{Binding FileTransfered , UpdateSourceTrigger=PropertyChanged}" Margin="234,230,427,191"/>
+        <ProgressBar Margin="350,126,75,287" Value="{Binding ProgressionValue , UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox HorizontalAlignment="Left" Margin="350,186,0,0" TextWrapping="Wrap" Text="{Binding FileLeftToTransfert, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="263" Height="31" IsEnabled="False"/>
+        <Button Content="Pause / Resume" Command="{Binding PauseCommand}" Margin="350,252,75,165"/>
+        <Button Content="Stop the backup" Command="{Binding StopCommand}" Margin="350,301,75,116"/>
 
     </Grid>
 </UserControl>

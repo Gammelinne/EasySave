@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using EasySaveApp.Core;
@@ -117,7 +118,8 @@ namespace EasySaveApp.MVVM.ViewModel
         public void OnSaveChanged(State state)
         {
             MainViewModel.SetProgressionCommand.Execute(state.Progression);
-            //test
+            MainViewModel.SetFileLeftCommand.Execute(state.FileLeftToTransfer);
+            MainViewModel.SetFileTotalCommand.Execute(state.TotalFileToTransfer);
         }
     }
 }
