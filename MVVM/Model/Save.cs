@@ -293,6 +293,7 @@ namespace EasySaveApp.MVVM.Model
                 if (System.Windows.Application.Current.Properties["Socket"] != null)
                 {
                     Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], "<END>");
+                    System.Windows.Application.Current.Properties["Socket"] = null;
 
                 }
             }
