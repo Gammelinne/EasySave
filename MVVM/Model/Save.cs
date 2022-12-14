@@ -37,9 +37,8 @@ namespace EasySaveApp.MVVM.Model
         public Save()
         {
             Name = "Save";
-            //PathSource = @"C:\ProjetCsFT\test";
-            PathSource = @"C:\Users\kylia\Documents\iso";
-            PathDestination = @"C:\ProjetCsFT\save";
+            PathSource = @"C:\";
+            PathDestination = @"E:\";
             SaveType = "Complete";
             state = new State();
         }
