@@ -44,6 +44,13 @@
                        Foreground="AliceBlue"
                        VerticalAlignment="Center"/>
 
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Priority extensions"
+                       FontSize="15"
+                       Foreground="AliceBlue"
+                       VerticalAlignment="Center"/>
+
             <!-- Column 1 -->
             <ComboBox x:Name="extension"
                       Grid.Column="1"
@@ -127,6 +134,39 @@
 
             </StackPanel>
 
+            <!--  -->
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="3"
+                        Grid.Column="1">
+
+                <ListBox Width="180"
+                         Height="90"
+                         x:Name="ListPriorityExetensions"
+                         ItemsSource="{Binding ListPriorityExetensions}"
+                         SelectedItem="{Binding PriorityExetensionsSelected}"/>
+
+                <StackPanel>
+                    <Button    Content="Add"
+                                Width="70"
+                                Height="30"
+                                Margin="10 15 10 0"
+                                FontSize="15"
+                               Command="{Binding AddPriorityExetensions}"/>
+
+                    <Button    Content="Remove"
+                                Width="70"
+                                Height="30"
+                                Margin="10 10 10 0"
+                                FontSize="15"
+                               Command="{Binding RemovePriorityExetensions}"/>
+                </StackPanel>
+
+                <ListBox Width="180"
+                         Height="90"
+                         x:Name="PriorityExetensions"
+                         ItemsSource="{Binding PriorityExetensions}"
+                         SelectedItem="{Binding PriorityExetensionsSelected}"/>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

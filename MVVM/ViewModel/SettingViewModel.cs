@@ -18,12 +18,20 @@ namespace EasySaveApp.MVVM.ViewModel
 
         public ObservableCollection<string> MyListOfExtension { get; set; }
         public ObservableCollection<string> ExtensionToEncrypt { get; set; }
+
+        public ObservableCollection<string> ListPriorityExetensions { get; set; }
+        public ObservableCollection<string> PriorityExetensions { get; set; }
+
+        public RelayCommand AddPriorityExetensions { get; set; }
+        public RelayCommand RemovePriorityExetensions { get; set; }
+
         public RelayCommand AddExtensionToEncrypt { get; set; }
         public RelayCommand RemoveExtensionToEncrypt { get; set; }
         public RelayCommand AddProcess { get; set; }
         public RelayCommand RemoveProcess { get; set; }
         public object ExtensionSelected { get; set; }
         public object ProcessSelected { get; set; }
+        public object PriorityExetensionsSelected { get; set; }
 
         public string SelectedExtension
         {
@@ -204,6 +212,27 @@ namespace EasySaveApp.MVVM.ViewModel
                     File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
                     Application.Current.Properties["ProcessToStop"] = Application.Current.Properties["ProcessToStop"].ToString().Replace(processSelected + " ", "");
                 }
+            });
+
+            //Priority Exetensions
+
+            ListPriorityExetensions = new ObservableCollection<string>(listOfExtension);
+            PriorityExetensions = new ObservableCollection<string>();
+
+
+            AddPriorityExetensions = new RelayCommand(o =>
+            {
+                if (PriorityExetensionsSelected != null)
+                {
+                    PriorityExetensions.Add(PriorityExetensionsSelected.ToString());
+                    ListPriorityExetensions.Remove(PriorityExetensionsSelected.ToString());
+                }
+            });
+
+            RemovePriorityExetensions = new RelayCommand(o =>
+            {
+                ListPriorityExetensions.Add(PriorityExetensionsSelected.ToString());
+                PriorityExetensions.Remove(PriorityExetensionsSelected.ToString());
             });
         }
     }
