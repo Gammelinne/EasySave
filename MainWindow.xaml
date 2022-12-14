@@ -7,9 +7,7 @@
         xmlns:local="clr-namespace:EasySaveApp"
         mc:Ignorable="d"
         Height="600" Width="920"
-        Background="Transparent"
-        ResizeMode="NoResize"
-        >
+        Background="Transparent">
 
     <Window.DataContext>
         <viewModel:MainViewModel/>
@@ -72,8 +70,8 @@
                              x:Name="EnglishButton"
                              Foreground="AliceBlue"
                              Checked="EnglishButton_Checked"
-                             
-                             Command="{Binding SwitchLanguageEN}" IsChecked="True"/>
+                             IsChecked="True"
+                             Command="{Binding SwitchLanguageEN}"/>
 
                 <RadioButton Content ="Français"
                              x:Name="FrenchButton"
