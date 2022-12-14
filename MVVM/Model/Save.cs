@@ -245,54 +245,31 @@ namespace EasySaveApp.MVVM.Model
                             }
                         }
 
-                        if (fileLeft == 0)
-                        {
-                            status = "END";
-                        }
-                        fileLeft--;
 
-                        state.PathSource = PathSource;
-                        state.PathDestination = PathDestination;
-                        state.StateType = SaveType;
-                        state.TotalFileToTransfer = listOfPathFile.Length;
-                        state.FileLeftToTransfer = fileLeft;
-                        state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
-                        state.Status = status;
-                        state.TotalFilesSize = size;
-
-                        state.SaveState(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
-                        SaveChangeEvent(state);
-                        if (System.Windows.Application.Current.Properties["Socket"] != null)
-                        {
-                            string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
-                            Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], StatetoSend);
-
-                        }
                     }
-                    else
+                    if (fileLeft == 0)
                     {
-                        fileLeft--;
-                        if (fileLeft == 0)
-                        {
-                            status = "END";
-                        }
-                        state.PathSource = PathSource;
-                        state.PathDestination = PathDestination;
-                        state.StateType = SaveType;
-                        state.TotalFileToTransfer = listOfPathFile.Length;
-                        state.FileLeftToTransfer = fileLeft;
-                        state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
-                        state.Status = status;
-                        state.TotalFilesSize = size;
-
-                        state.SaveState(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
-                        SaveChangeEvent(state);
-                        if (System.Windows.Application.Current.Properties["Socket"] != null)
-                        {
-                            string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
-                            Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], StatetoSend);
-                        }
+                        status = "END";
                     }
+                    fileLeft--;
+
+                    state.PathSource = PathSource;
+                    state.PathDestination = PathDestination;
+                    state.StateType = SaveType;
+                    state.TotalFileToTransfer = listOfPathFile.Length;
+                    state.FileLeftToTransfer = fileLeft;
+                    state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
+                    state.Status = status;
+                    state.TotalFilesSize = size;
+
+                    state.SaveState(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
+                    SaveChangeEvent(state);
+                    if (System.Windows.Application.Current.Properties["Socket"] != null)
+                    {
+                        string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
+                        Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], StatetoSend);
+                    }
+
                 }
                 #endregion
 
