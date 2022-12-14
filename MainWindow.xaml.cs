@@ -19,6 +19,7 @@ namespace EasySaveApp
             Application.Current.Properties["CryptKey"] = "100";
             Application.Current.Properties["Software"] = "vlc notepad";
             Application.Current.Properties["PriorityFiles"] = ".ben .txt ";
+            Application.Current.Properties["FileSizeMax"] = "10";
         }
 
         private void FrenchButton_Checked(object sender, RoutedEventArgs e)

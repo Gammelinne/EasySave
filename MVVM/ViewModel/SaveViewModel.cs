@@ -118,7 +118,7 @@ namespace EasySaveApp.MVVM.ViewModel
                         Socket socket = Progression.Connect();
                         Socket client = Progression.AllowConnection(socket);
                         await Task.Run(() => _save.SaveSave());
-                        if (socket != null)
+                        if (client != null)
                         {
                             Progression.Disconnect(client);
                         }

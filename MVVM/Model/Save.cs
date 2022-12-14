@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace EasySaveApp.MVVM.Model
 {
@@ -35,8 +37,9 @@ namespace EasySaveApp.MVVM.Model
         public Save()
         {
             Name = "Save";
-            PathSource = @"C:\";
-            PathDestination = @"E:\";
+            //PathSource = @"C:\ProjetCsFT\test";
+            PathSource = @"C:\Users\kylia\Documents\iso";
+            PathDestination = @"C:\ProjetCsFT\save";
             SaveType = "Complete";
             state = new State();
         }
@@ -73,7 +76,7 @@ namespace EasySaveApp.MVVM.Model
         public static void Stop()
         {
             cts.Cancel();
-            MessageBox.Show("Please wait few second");
+            System.Windows.MessageBox.Show("Please wait few second");
             GC.Collect();
         }
 
@@ -86,21 +89,25 @@ namespace EasySaveApp.MVVM.Model
                 watch.Stop();
                 if (!is_first_save)
                 {
-                    MessageBox.Show("Save resumed");
+                    System.Windows.MessageBox.Show("Save resumed");
                 }
             }
             else
             {
                 watch.Start();
                 pauseEvent.Reset();
-                MessageBox.Show("Save paused");
+                System.Windows.MessageBox.Show("Save paused");
             }
+        }
+        public void ChangeProgression()
+        {
+
         }
 
         public List<string> CheckPriority(string[] oldList)
         {
             List<string> files = new List<string>(oldList);
-            List<string> extensions = Application.Current.Properties["PriorityFiles"].ToString().Split(" ").ToList();
+            List<string> extensions = System.Windows.Application.Current.Properties["PriorityFiles"].ToString().Split(" ").ToList();
             List<string> newList = new List<string>();
             foreach (string extension in extensions)
             {
@@ -121,10 +128,10 @@ namespace EasySaveApp.MVVM.Model
             {
                 pathDestination += ".crypt";
             }
-            MessageBox.Show(pathDestination);
+            System.Windows.MessageBox.Show(pathDestination);
 
 
-            string key = Application.Current.Properties["CryptKey"].ToString();
+            string key = System.Windows.Application.Current.Properties["CryptKey"].ToString();
             Process cryptosoft;
             cryptosoft = new Process();
             cryptosoft.StartInfo.FileName = @"../../../CryptoSoft/Cryptosoft.exe";
@@ -133,6 +140,28 @@ namespace EasySaveApp.MVVM.Model
             cryptosoft.Start();
             cryptosoft.WaitForExit();
             cryptosoft.Kill();
+        }
+
+        public bool CheckSize(int Size, string Name)
+        {
+            int SizeMax = Convert.ToInt32(System.Windows.Application.Current.Properties["FileSizeMax"]) * 1000000;
+            if (SizeMax > Size)
+            {
+                return true;
+            }
+            else
+            {
+                if (System.Windows.Forms.MessageBox.Show("The file " + Name + " is heavier than the limit. Do you still want to back it up? ", "Save", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
         }
 
         public void SaveSave()
@@ -153,39 +182,58 @@ namespace EasySaveApp.MVVM.Model
                 #region
                 foreach (string oldPath in listOfPathFile)
                 {
-                    FileInfo fileInfo = new FileInfo(oldPath);
-                    string extension = fileInfo.Extension;
-                    string[] extensionToCrypt = Application.Current.Properties["ExtensionToCrypt"].ToString().Split(" ");
-
-                    if (cts.IsCancellationRequested) { return; }
-
-                    pauseEvent.WaitOne();
-
-                    string newPath = oldPath.Replace(PathSource, PathDestination + @"\" + Name);
-
-                    if (!Directory.Exists(Path.GetDirectoryName(newPath)))
+                    //get size of the file
+                    FileInfo info = new FileInfo(oldPath);
+                    int sizeFile = (int)info.Length;
+                    string Name = info.Name;
+                    bool is_save = CheckSize(sizeFile, Name);
+                    if (is_save)
                     {
-                        Directory.CreateDirectory(Path.GetDirectoryName(newPath));
-                    }
+                        FileInfo fileInfo = new FileInfo(oldPath);
+                        string extension = fileInfo.Extension;
+                        string[] extensionToCrypt = System.Windows.Application.Current.Properties["ExtensionToCrypt"].ToString().Split(" ");
 
-                    if (SaveType == "Complete")
-                    {
-                        if (extensionToCrypt.Contains(extension) || extension == ".crypt")
+                        if (cts.IsCancellationRequested) { return; }
+
+                        pauseEvent.WaitOne();
+
+                        string newPath = oldPath.Replace(PathSource, PathDestination + @"\" + Name);
+
+                        if (!Directory.Exists(Path.GetDirectoryName(newPath)))
                         {
-                            Crypt(oldPath, newPath);
+                            Directory.CreateDirectory(Path.GetDirectoryName(newPath));
                         }
-                        else
+
+                        if (SaveType == "Complete")
                         {
-                            File.Copy(oldPath, newPath, true);
+                            if (extensionToCrypt.Contains(extension) || extension == ".crypt")
+                            {
+                                Crypt(oldPath, newPath);
+                            }
+                            else
+                            {
+                                File.Copy(oldPath, newPath, true);
+                            }
                         }
-                    }
-                    else if (SaveType == "Differential")
-                    {
-                        if (File.Exists(newPath))
+                        else if (SaveType == "Differential")
                         {
-                            FileInfo fileSource = new FileInfo(oldPath);
-                            FileInfo fileDestination = new FileInfo(newPath);
-                            if (fileSource.GetHashCode() != fileDestination.GetHashCode())
+                            if (File.Exists(newPath))
+                            {
+                                FileInfo fileSource = new FileInfo(oldPath);
+                                FileInfo fileDestination = new FileInfo(newPath);
+                                if (fileSource.GetHashCode() != fileDestination.GetHashCode())
+                                {
+                                    if (extensionToCrypt.Contains(extension))
+                                    {
+                                        Crypt(oldPath, newPath);
+                                    }
+                                    else
+                                    {
+                                        File.Copy(oldPath, newPath, true);
+                                    }
+                                }
+                            }
+                            else
                             {
                                 if (extensionToCrypt.Contains(extension))
                                 {
@@ -197,48 +245,60 @@ namespace EasySaveApp.MVVM.Model
                                 }
                             }
                         }
-                        else
+
+                        if (fileLeft == 0)
                         {
-                            if (extensionToCrypt.Contains(extension))
-                            {
-                                Crypt(oldPath, newPath);
-                            }
-                            else
-                            {
-                                File.Copy(oldPath, newPath, true);
-                            }
+                            status = "END";
+                        }
+                        fileLeft--;
+
+                        state.PathSource = PathSource;
+                        state.PathDestination = PathDestination;
+                        state.StateType = SaveType;
+                        state.TotalFileToTransfer = listOfPathFile.Length;
+                        state.FileLeftToTransfer = fileLeft;
+                        state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
+                        state.Status = status;
+                        state.TotalFilesSize = size;
+
+                        state.SaveState(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
+                        SaveChangeEvent(state);
+                        if (System.Windows.Application.Current.Properties["Socket"] != null)
+                        {
+                            string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
+                            Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], StatetoSend);
+
                         }
                     }
-
-                    fileLeft--;
-
-                    if (fileLeft == 0)
+                    else
                     {
-                        status = "END";
-                    }
+                        fileLeft--;
+                        if (fileLeft == 0)
+                        {
+                            status = "END";
+                        }
+                        state.PathSource = PathSource;
+                        state.PathDestination = PathDestination;
+                        state.StateType = SaveType;
+                        state.TotalFileToTransfer = listOfPathFile.Length;
+                        state.FileLeftToTransfer = fileLeft;
+                        state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
+                        state.Status = status;
+                        state.TotalFilesSize = size;
 
-                    state.PathSource = PathSource;
-                    state.PathDestination = PathDestination;
-                    state.StateType = SaveType;
-                    state.TotalFileToTransfer = listOfPathFile.Length;
-                    state.FileLeftToTransfer = fileLeft;
-                    state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
-                    state.Status = status;
-                    state.TotalFilesSize = size;
-
-                    state.SaveState(Application.Current.Properties["TypeOfLog"].ToString());
-                    SaveChangeEvent(state);
-                    if (Application.Current.Properties["Socket"] != null)
-                    {
-                        string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
-                        Progression.SendMessage((Socket)Application.Current.Properties["Socket"], StatetoSend);
-
+                        state.SaveState(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
+                        SaveChangeEvent(state);
+                        if (System.Windows.Application.Current.Properties["Socket"] != null)
+                        {
+                            string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
+                            Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], StatetoSend);
+                        }
                     }
                 }
                 #endregion
 
                 watch.Stop();
-                MessageBox.Show("Save finished");
+                System.Windows.MessageBox.Show("Save finished");
 
                 //Create a log
                 #region
@@ -249,20 +309,20 @@ namespace EasySaveApp.MVVM.Model
                     (int)size,
                     watch.ElapsedMilliseconds,
                     DateTime.Now);
-                log.SaveLog(Application.Current.Properties["TypeOfLog"].ToString());
+                log.SaveLog(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
                 #endregion
 
                 is_first_save = false;
                 MainViewModel.SaveHomeViewModelCommand.Execute(null);
-                if (Application.Current.Properties["Socket"] != null)
+                if (System.Windows.Application.Current.Properties["Socket"] != null)
                 {
-                    Progression.SendMessage((Socket)Application.Current.Properties["Socket"], "<END>");
+                    Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], "<END>");
 
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                System.Windows.MessageBox.Show(e.Message);
             }
         }
     }
