@@ -10,15 +10,16 @@ namespace EasySaveApp
     {
         public MainWindow()
         {
-            InitializeComponent();
-            SwitchLanguage("en");
             string json = File.ReadAllText("../../../Settings.json");
             Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
             Application.Current.Properties["TypeOfLog"] = setting["TypeOfLog"];
             Application.Current.Properties["ExtensionToCrypt"] = setting["ExtensionToCrypt"];
             Application.Current.Properties["CryptKey"] = "100";
-            Application.Current.Properties["Software"] = "vlc notepad";
+            Application.Current.Properties["ProcessToStop"] = setting["ProcessToStop"];
             Application.Current.Properties["PriorityFiles"] = ".ben .txt ";
+
+            InitializeComponent();
+            SwitchLanguage("en");
         }
 
         private void FrenchButton_Checked(object sender, RoutedEventArgs e)

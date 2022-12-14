@@ -41,8 +41,7 @@ namespace EasySaveApp.MVVM.ViewModel
         {
 
             // Extensions
-            MyListOfExtension = new ObservableCollection<string>
-            {
+            List<string> listOfExtension = new List<string>{
                 "txt",
                 "json",
                 "xml",
@@ -126,8 +125,13 @@ namespace EasySaveApp.MVVM.ViewModel
                 "odg",
                 "otg"
             };
-
-            ExtensionToEncrypt = new ObservableCollection<string>();
+            List<string> extensionToCryp = new List<string>(Application.Current.Properties["ExtensionToCrypt"].ToString().Split(" "));
+            foreach(string extension in extensionToCryp)
+            {
+                listOfExtension.Remove(extension);
+            }
+            MyListOfExtension = new ObservableCollection<string>(listOfExtension);
+            ExtensionToEncrypt = new ObservableCollection<string>(extensionToCryp);
 
             AddExtensionToEncrypt = new RelayCommand(o =>
             {
@@ -138,44 +142,52 @@ namespace EasySaveApp.MVVM.ViewModel
                     MyListOfExtension.Remove(extensionSelected);
                     string json = File.ReadAllText("../../../Settings.json");
                     Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-                    setting["PriorityFiles"] += "." + extensionSelected + " ";
+                    setting["ExtensionToCrypt"] += extensionSelected + " ";
                     File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
-                    Application.Current.Properties["PriorityFiles"] += "." + extensionSelected + " ";
+                    Application.Current.Properties["ExtensionToCrypt"] += extensionSelected + " ";
                 }
             });
 
             RemoveExtensionToEncrypt = new RelayCommand(o =>
             {
                 if (ExtensionSelected != null)
-                {
+                { 
                     string extensionSelected = ExtensionSelected.ToString();
                     MyListOfExtension.Add(extensionSelected);
                     ExtensionToEncrypt.Remove(extensionSelected);
                     string json = File.ReadAllText("../../../Settings.json");
                     Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
-                    setting["PriorityFiles"] = setting["PriorityFiles"].Replace("." + extensionSelected + " ", "");
+                    setting["ExtensionToCrypt"] = setting["ExtensionToCrypt"].Replace(extensionSelected + " ", "");
                     File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
-                    Application.Current.Properties["PriorityFiles"] = Application.Current.Properties["PriorityFiles"].ToString().Replace("." + extensionSelected + " ", "");
-                    MessageBox.Show(Application.Current.Properties["PriorityFiles"].ToString());
+                    Application.Current.Properties["ExtensionToCrypt"] = Application.Current.Properties["ExtensionToCrypt"].ToString().Replace(extensionSelected + " ", "");
                 }
             });
 
             // Process
             ProcessList = new ObservableCollection<string>();
-            
+            List<string> processToStop = new List<string>(Application.Current.Properties["ProcessToStop"].ToString().Split(" "));
             foreach (var process in Process.GetProcesses())
             {
-                ProcessList.Add(process.ProcessName);
+                if (!processToStop.Contains(process.ProcessName))
+                {
+                    ProcessList.Add(process.ProcessName);
+                }
             }
 
-            ProcessListStop = new ObservableCollection<string>();
+            ProcessListStop = new ObservableCollection<string>(processToStop);
             
             AddProcess = new RelayCommand(o =>
             {
                 if (ProcessSelected != null)
                 {
-                    ProcessListStop.Add(ProcessSelected.ToString());
-                    ProcessList.Remove(ProcessSelected.ToString());
+                    string processSelected = ProcessSelected.ToString();
+                    ProcessListStop.Add(processSelected);
+                    ProcessList.Remove(processSelected);
+                    string json = File.ReadAllText("../../../Settings.json");
+                    Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    setting["ProcessToStop"] += processSelected + " ";
+                    File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
+                    Application.Current.Properties["ProcessToStop"] += processSelected + " ";
                 }
             });
 
@@ -183,8 +195,14 @@ namespace EasySaveApp.MVVM.ViewModel
             {
                 if (ProcessSelected != null)
                 {
-                    ProcessList.Add(ProcessSelected.ToString());
-                    ProcessListStop.Remove(ProcessSelected.ToString());
+                    string processSelected = ProcessSelected.ToString();
+                    ProcessList.Add(processSelected);
+                    ProcessListStop.Remove(processSelected);
+                    string json = File.ReadAllText("../../../Settings.json");
+                    Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    setting["ProcessToStop"] = setting["ProcessToStop"].Replace(processSelected + " ", "");
+                    File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
+                    Application.Current.Properties["ProcessToStop"] = Application.Current.Properties["ProcessToStop"].ToString().Replace(processSelected + " ", "");
                 }
             });
         }
