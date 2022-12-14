@@ -1,4 +1,5 @@
 ﻿using EasySaveApp.Core;
+using EasySaveApp.MVVM.Model;
 using EasySaveApp.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,14 @@ namespace EasySaveApp.MVVM.ViewModel
         public RelayCommand AddExtensionToEncrypt { get; set; }
 
         public RelayCommand ShutdownWindowCommand { get; set; }
-        public RelayCommand HomeViewCommand { get; set; }
-		public RelayCommand SaveHomeViewModelCommand { get; set; }
+        public static RelayCommand HomeViewCommand { get; set; }
+        public static RelayCommand SaveHomeViewModelCommand { get; set; }
 		public RelayCommand SaveViewModelCommand { get; set; }
         public RelayCommand SettingViewModelCommand { get; set; }
         public static RelayCommand ProgressionViewModelCommand { get; set; }
         public static RelayCommand SetProgressionCommand { get; set; }
+        public static RelayCommand SetFileLeftCommand { get; set; }
+        public static RelayCommand SetFileTotalCommand { get; set; }
 
 
         public HomeViewModel HomeVM { get; set; }
@@ -52,7 +55,8 @@ namespace EasySaveApp.MVVM.ViewModel
 
             CurrentView = SaveHomeVM;
 
-			HomeViewCommand = new RelayCommand(o => 
+            
+            HomeViewCommand = new RelayCommand(o => 
 			{
 				CurrentView= HomeVM;
 			});
@@ -74,6 +78,7 @@ namespace EasySaveApp.MVVM.ViewModel
 
             ProgressionViewModelCommand = new RelayCommand(o =>
             {
+                
                 CurrentView = ProgressionVM;
             });
 
@@ -91,8 +96,17 @@ namespace EasySaveApp.MVVM.ViewModel
 
             SetProgressionCommand = new RelayCommand(o =>
             {
-                int progresion = (int)o;
-                ProgressionVM.ProgressionValue = progresion;
+                ProgressionVM.ProgressionValue = (int)o;
+            });
+
+            SetFileLeftCommand = new RelayCommand(o =>
+            {
+                ProgressionVM.FileLeftToTransfert = o.ToString();
+            });
+
+            SetFileTotalCommand = new RelayCommand(o =>
+            {
+                ProgressionVM.FileTotal = (int)o;
             });
            
         }

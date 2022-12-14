@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Windows;
-using System.IO;
-using System;
 
 namespace EasySaveApp
 {
@@ -33,22 +33,16 @@ namespace EasySaveApp
 
         private void SwitchLanguage(string languageCode)
         {
-            ResourceDictionary dict = new ResourceDictionary();
-            switch (languageCode)
+            ResourceDictionary dict = new ResourceDictionary
             {
-                case "en":
-                    dict.Source = new Uri("..\\Languages\\StringResources_en.xaml", UriKind.Relative);
-                    break;
-
-                case "fr":
-                    dict.Source = new Uri("..\\Languages\\StringResources_fr.xaml", UriKind.Relative);
-                    break;
-
-                default:
-                    dict.Source = new Uri("..\\Languages\\StringResources_en.xaml", UriKind.Relative);
-                    break;
+                Source = languageCode switch
+                {
+                    "en" => new Uri(@"..\Languages\StringResources_en.xaml", UriKind.Relative),
+                    "fr" => new Uri(@"..\Languages\StringResources_fr.xaml", UriKind.Relative),
+                    _ => new Uri(@"..\Languages\StringResources_en.xaml", UriKind.Relative),
+                }
             };
-            this.Resources.MergedDictionaries.Add(dict);
+            Resources.MergedDictionaries.Add(dict);
         }
     }
 }

@@ -5,6 +5,10 @@ using EasySaveApp.Core;
 using EasySaveApp.MVVM.View;
 using System.Text;
 using System.Windows;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Net.Sockets;
+using System.Net;
 
 namespace EasySaveApp.MVVM.ViewModel
 {
@@ -26,5 +30,52 @@ namespace EasySaveApp.MVVM.ViewModel
                 OnPropertyChanged("ProgressionValue");
             }
         }
+
+        public string FileLeftToTransfert
+        {
+            get
+            {
+                return _progression.FileLeftToTransfert + " files left to transfert of " + _progression.FileTotal.ToString() + " files ( " + _progression.ProgressionValue.ToString() + "% )";
+            }
+            set
+            {
+                _progression.FileLeftToTransfert = Convert.ToInt32(value);
+                OnPropertyChanged("FileLeftToTransfert");
+            }
+        }
+
+        public int FileTotal
+        {
+            get { return _progression.FileTotal; }
+            set
+            {
+                _progression.FileTotal = value;
+                OnPropertyChanged("FileTotal");
+            }
+        }
+        public void Socket()
+        {
+
+        }
+        private RelayCommand _stopCommand;
+
+        public RelayCommand StopCommand => _stopCommand ??= new RelayCommand(
+                    async o =>
+                    {
+                        await Task.Run(() => Save.Stop());
+                        ProgressionValue = 0;
+                        FileLeftToTransfert = "0";
+                        FileTotal = 0;
+                        MainViewModel.SaveHomeViewModelCommand.Execute(null);
+                    });
+
+        private RelayCommand _pauseCommand;
+
+        public RelayCommand PauseCommand => _pauseCommand ??= new RelayCommand(
+                    async o =>
+                    {
+                        await Task.Run(() => Save.Pause());
+                    });
+
     }
 }
