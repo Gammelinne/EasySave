@@ -175,7 +175,7 @@ namespace EasySaveApp.MVVM.Model
                     FileInfo info = new FileInfo(oldPath);
                     int sizeFile = (int)info.Length;
                     string name = info.Name;
-                    bool is_save = CheckSize(sizeFile, Name);
+                    bool is_save = CheckSize(sizeFile, name);
                     if (is_save)
                     {
                         FileInfo fileInfo = new FileInfo(oldPath);
