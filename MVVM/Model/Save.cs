@@ -166,7 +166,11 @@ namespace EasySaveApp.MVVM.Model
         {
             try
             {
-                Pause();
+                if (is_first_save)
+                {
+                    Pause();
+                    is_first_save = false;
+                }
                 string status = "ACTIVE";
                 string[] listOfPathFile = { };
                 int size = GetDirectorySize(PathSource);
