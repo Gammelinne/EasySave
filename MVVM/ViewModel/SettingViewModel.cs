@@ -221,6 +221,7 @@ namespace EasySaveApp.MVVM.ViewModel
             #endregion
 
             //Priority Extensions
+            #region
             List<string> listOfExtensionPriority = new List<string>{
                 "txt",
                 "json",
@@ -340,7 +341,7 @@ namespace EasySaveApp.MVVM.ViewModel
                 File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
                 Application.Current.Properties["PriorityFiles"] = Application.Current.Properties["PriorityFiles"].ToString().Replace(PriorityExtensionsSelected + " ", "");
             });
+            #endregion
         }
-        
     }
 }
