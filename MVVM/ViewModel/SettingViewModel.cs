@@ -12,6 +12,19 @@ namespace EasySaveApp.MVVM.ViewModel
 {
     class SettingViewModel : ObservableObject
     {
+        private string fileSize;
+
+        public string FileSize
+        {
+            get { return fileSize; }
+            set
+            {
+                fileSize = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public RelayCommand AddSize { get; set; }
 
         public ObservableCollection<string> ProcessList { get; set; }
         public ObservableCollection<string> ProcessListStop { get; set; }
@@ -342,6 +355,13 @@ namespace EasySaveApp.MVVM.ViewModel
                 Application.Current.Properties["PriorityFiles"] = Application.Current.Properties["PriorityFiles"].ToString().Replace(PriorityExtensionsSelected + " ", "");
             });
             #endregion
+
+            //FileSize
+
+            AddSize = new RelayCommand(o => 
+            {
+                MessageBox.Show(FileSize);
+            });
         }
     }
 }

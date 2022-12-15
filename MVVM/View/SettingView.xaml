@@ -28,7 +28,16 @@
                        Text="Choose a type of log" 
                        FontSize="15"
                        Foreground="AliceBlue"
-                       VerticalAlignment="Center"/>
+                       VerticalAlignment="Top"
+                       Margin="0 20 0 0"/>
+
+            <TextBlock Grid.Row="0" 
+                       Grid.Column="0" 
+                       Text="Maximum file size" 
+                       FontSize="15"
+                       Foreground="AliceBlue"
+                       VerticalAlignment="Bottom"
+                       Margin="0 0 0 20"/>
 
             <TextBlock Grid.Row="1" 
                        Grid.Column="0" 
@@ -56,13 +65,34 @@
                       Grid.Column="1"
                       Grid.Row="0"
                       HorizontalAlignment="Left"
-                      Width="200"
+                      VerticalAlignment="Top"
+                      Margin="0 15 0 0"
+                      Width="180"
                       Height="30"
                       FontSize="15"
                       SelectedItem="{Binding SelectedExtension, Mode=TwoWay}">
                 <ComboBoxItem Content="json" FontSize="15"/>
                 <ComboBoxItem Content="xml" FontSize="15"/>
             </ComboBox>
+
+            <TextBox Grid.Row="0"
+                       Grid.Column="1"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Bottom"
+                       Width="180"
+                       Height="30"
+                       Margin="0 0 0 15"
+                       Text="{Binding FileSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Grid.Column="1"
+                    Grid.Row="0"
+                    Content="Add"
+                    Width="70"
+                    Height="30"
+                    VerticalAlignment="Bottom"
+                    Margin="0 0 140 15"
+                    FontSize="15"
+                    Command="{Binding AddSize}"/>
 
             <!--  -->
             <StackPanel Orientation="Horizontal"
@@ -74,6 +104,7 @@
                          x:Name="MyListOfExtension"
                          SelectedItem="{Binding ExtensionSelected}"
                          ItemsSource="{Binding MyListOfExtension}"/>
+
 
                 <StackPanel>
                     <Button    Content="Add"
