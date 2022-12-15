@@ -9,7 +9,7 @@
         If you have any problems, please contact us at this mail address: easysupport@lahyra.com</system:String>
     <system:String x:Key="Home">Home</system:String>
     <system:String x:Key="Save">Save</system:String>
-    <system:String x:Key="Setting">Setting</system:String>
+    <system:String x:Key="Setting">Settings</system:String>
     <system:String x:Key="Name">Name</system:String>
     <system:String x:Key="Search">Search</system:String>
     <system:String x:Key="Source">Source</system:String>

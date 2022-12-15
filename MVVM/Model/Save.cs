@@ -55,7 +55,6 @@ namespace EasySaveApp.MVVM.Model
 
         public void AddSaveChange(SaveChange listener)
         {
-
             SaveChangeEvent += listener;
         }
 

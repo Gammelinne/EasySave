@@ -15,6 +15,7 @@ namespace EasySaveApp.MVVM.ViewModel
 
         public RelayCommand SwitchLanguageEN { get; set; }
         public RelayCommand SwitchLanguageFR { get; set; }
+        public RelayCommand AddExtensionToEncrypt { get; set; }
 
         public RelayCommand ShutdownWindowCommand { get; set; }
         public static RelayCommand HomeViewCommand { get; set; }
@@ -131,6 +132,7 @@ namespace EasySaveApp.MVVM.ViewModel
             {
                 ProgressionVM.FileTotal = (int)o;
             });
+           
         }
     }
 }
