@@ -169,7 +169,6 @@ namespace EasySaveApp.MVVM.Model
                 if (is_first_save)
                 {
                     Pause();
-                    is_first_save = false;
                 }
                 string status = "ACTIVE";
                 string[] listOfPathFile = { };
