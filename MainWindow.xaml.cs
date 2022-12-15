@@ -14,9 +14,10 @@ namespace EasySaveApp
             Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
             Application.Current.Properties["TypeOfLog"] = setting["TypeOfLog"];
             Application.Current.Properties["ExtensionToCrypt"] = setting["ExtensionToCrypt"];
-            Application.Current.Properties["CryptKey"] = "100";
             Application.Current.Properties["ProcessToStop"] = setting["ProcessToStop"];
-            Application.Current.Properties["PriorityFiles"] = ".ben .txt ";
+            Application.Current.Properties["PriorityFiles"] = setting["PriorityFiles"];
+            Application.Current.Properties["CryptKey"] = "100";
+
 
             InitializeComponent();
             SwitchLanguage("en");

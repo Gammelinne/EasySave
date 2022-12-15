@@ -142,8 +142,8 @@
                 <ListBox Width="180"
                          Height="90"
                          x:Name="ListPriorityExetensions"
-                         ItemsSource="{Binding ListPriorityExetensions}"
-                         SelectedItem="{Binding PriorityExetensionsSelected}"/>
+                         ItemsSource="{Binding ListPriorityExtensions}"
+                         SelectedItem="{Binding PriorityExtensionsSelected}"/>
 
                 <StackPanel>
                     <Button    Content="Add"
@@ -151,21 +151,21 @@
                                 Height="30"
                                 Margin="10 15 10 0"
                                 FontSize="15"
-                               Command="{Binding AddPriorityExetensions}"/>
+                               Command="{Binding AddPriorityExtensions}"/>
 
                     <Button    Content="Remove"
                                 Width="70"
                                 Height="30"
                                 Margin="10 10 10 0"
                                 FontSize="15"
-                               Command="{Binding RemovePriorityExetensions}"/>
+                               Command="{Binding RemovePriorityExtensions}"/>
                 </StackPanel>
 
                 <ListBox Width="180"
                          Height="90"
                          x:Name="PriorityExetensions"
-                         ItemsSource="{Binding PriorityExetensions}"
-                         SelectedItem="{Binding PriorityExetensionsSelected}"/>
+                         ItemsSource="{Binding PriorityExtensions}"
+                         SelectedItem="{Binding PriorityExtensionsSelected}"/>
             </StackPanel>
         </Grid>
     </Border>
