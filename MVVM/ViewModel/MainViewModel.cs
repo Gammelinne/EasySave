@@ -60,55 +60,36 @@ namespace EasySaveApp.MVVM.ViewModel
             CurrentView = SaveHomeVM;
 
             
-            HomeViewCommand = new RelayCommand(o => 
-			{
-				CurrentView= HomeVM;
-			});
+            HomeViewCommand = new RelayCommand(o => { CurrentView= HomeVM; });
 
-            SaveHomeViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SaveHomeVM;
-            });
+            SaveHomeViewModelCommand = new RelayCommand(o => { CurrentView = SaveHomeVM; });
 
-            SaveViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SaveVM;
-            });
+            SaveViewModelCommand = new RelayCommand(o => { CurrentView = SaveVM; });
 
-            SettingViewModelCommand = new RelayCommand(o =>
-            {
-                CurrentView = SettingVM;
-            });
+            SettingViewModelCommand = new RelayCommand(o => { CurrentView = SettingVM; });
 
-            ProgressionViewModelCommand = new RelayCommand(o =>
-            {
-                
-                CurrentView = ProgressionVM;
-            });
+            ProgressionViewModelCommand = new RelayCommand(o => { CurrentView = ProgressionVM; });
 
             SwitchLanguageEN = new RelayCommand(o =>
             {
                 ResourceDictionary dict = new ResourceDictionary();
-                dict.Source = new Uri("..\\Languages\\StringResources_en.xaml", UriKind.Relative);
+                dict.Source = new Uri(@"..\Languages\StringResources_en.xaml", UriKind.Relative);
                 var current = Application.Current.Resources.MergedDictionaries.FirstOrDefault(
                     m => m.Source.OriginalString.EndsWith("Strings.xaml"));
-
 
                 if (current != null)
                 {
                     Application.Current.Resources.MergedDictionaries.Remove(current);
                 }
-
                 Application.Current.Resources.MergedDictionaries.Add(dict);
             });
 
             SwitchLanguageFR = new RelayCommand(o =>
             {
                 ResourceDictionary dict = new ResourceDictionary();
-                dict.Source = new Uri("..\\Languages\\StringResources_fr.xaml", UriKind.Relative);
+                dict.Source = new Uri(@"..\Languages\StringResources_fr.xaml", UriKind.Relative);
                 var current = Application.Current.Resources.MergedDictionaries.FirstOrDefault(
                  m => m.Source.OriginalString.EndsWith("Strings.xaml"));
-
 
                 if (current != null)
                 {
@@ -118,21 +99,11 @@ namespace EasySaveApp.MVVM.ViewModel
                 Application.Current.Resources.MergedDictionaries.Add(dict);
             });
 
-            SetProgressionCommand = new RelayCommand(o =>
-            {
-                ProgressionVM.ProgressionValue = (int)o;
-            });
+            SetProgressionCommand = new RelayCommand(o => { ProgressionVM.ProgressionValue = (int)o; });
 
-            SetFileLeftCommand = new RelayCommand(o =>
-            {
-                ProgressionVM.FileLeftToTransfert = o.ToString();
-            });
+            SetFileLeftCommand = new RelayCommand(o => { ProgressionVM.FileLeftToTransfert = o.ToString(); });
 
-            SetFileTotalCommand = new RelayCommand(o =>
-            {
-                ProgressionVM.FileTotal = (int)o;
-            });
-           
+            SetFileTotalCommand = new RelayCommand(o => { ProgressionVM.FileTotal = (int)o; });
         }
     }
 }

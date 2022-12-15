@@ -39,10 +39,9 @@ namespace EasySaveApp.MVVM.Model
             Status = status;
             TotalFilesSize = totalFilesSize;
         }
-        public State()
-        {
-            
-        }
+
+        public State() {}
+
         public void SaveState(string extension)
         {
             string PathState = Directory.GetCurrentDirectory() + @"\State\" + DateTime.Now.ToString("dd-MM-yyyy") + "." + extension;

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Windows;
-using System.Timers;
 using System.Diagnostics;
 
 namespace EasySaveApp.MVVM.Model
@@ -25,6 +22,7 @@ namespace EasySaveApp.MVVM.Model
             FileLeftToTransfert = 0;
             FileTotal = 0;
         }
+
         public static Socket Connect()
         {
             IPHostEntry host = Dns.GetHostEntry("localhost");
@@ -41,7 +39,7 @@ namespace EasySaveApp.MVVM.Model
             Stopwatch timer = new Stopwatch();
             timer.Start();
             MessageBox.Show("Please waiting for connection");
-            while (timer.ElapsedMilliseconds < 3000) //test during 3 second if there is distant console.
+            while (timer.ElapsedMilliseconds < 3000) //Test during 3 second if there is distant console.
             {
                 if (socket.Poll(0, SelectMode.SelectRead))
                 {
@@ -53,7 +51,6 @@ namespace EasySaveApp.MVVM.Model
             }
             MessageBox.Show("Any distant console connected");
             return null;
-
         }
 
         public static void SendMessage(Socket client, string message)

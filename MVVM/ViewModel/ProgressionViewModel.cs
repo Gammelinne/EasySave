@@ -76,6 +76,5 @@ namespace EasySaveApp.MVVM.ViewModel
                     {
                         await Task.Run(() => Save.Pause());
                     });
-
     }
 }

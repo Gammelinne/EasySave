@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Windows;
 
@@ -12,7 +11,7 @@ namespace EasySaveApp.MVVM.ViewModel
 {
     class SettingViewModel : ObservableObject
     {
-        private int fileSize;
+        private static int fileSize = Convert.ToInt32(Application.Current.Properties["FileSizeMax"]);
 
         public int FileSize
         {

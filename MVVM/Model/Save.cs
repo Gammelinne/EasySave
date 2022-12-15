@@ -28,7 +28,7 @@ namespace EasySaveApp.MVVM.Model
         public string PathSource { get => pathSource; set => pathSource = value; }
         public string PathDestination { get => pathDestination; set => pathDestination = value; }
         public string SaveType { get => saveType; set => saveType = value; }
-        public State state { get; set; }
+        public State State { get; set; }
         public static bool pause = false;
         public static ManualResetEvent pauseEvent = new ManualResetEvent(false);
         public static CancellationTokenSource cts = new CancellationTokenSource();
@@ -40,17 +40,16 @@ namespace EasySaveApp.MVVM.Model
             PathSource = @"C:\";
             PathDestination = @"E:\";
             SaveType = "Complete";
-            state = new State();
+            State = new State();
         }
 
         public Save(string name, string pathSource, string pathDestination, string saveType)
         {
-
             Name = name;
             PathSource = pathSource;
             PathDestination = pathDestination;
             SaveType = saveType;
-            state = new State(name, pathSource, pathDestination, saveType, 0, 0, 0, "END", 0);
+            State = new State(name, pathSource, pathDestination, saveType, 0, 0, 0, "END", 0);
         }
 
         public void AddSaveChange(SaveChange listener)
@@ -97,11 +96,9 @@ namespace EasySaveApp.MVVM.Model
                 System.Windows.MessageBox.Show("Save paused");
             }
         }
-        public void ChangeProgression()
-        {
 
-        }
 
+        //Rearrange the path list to put priority files at the beginning
         public List<string> CheckPriority(string[] oldList)
         {
             List<string> files = new List<string>(oldList);
@@ -149,16 +146,7 @@ namespace EasySaveApp.MVVM.Model
             }
             else
             {
-                if (System.Windows.Forms.MessageBox.Show("The file " + Name + " is heavier than the limit. Do you still want to back it up? ", "Save", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
+                return System.Windows.Forms.MessageBox.Show("The file " + Name + " is heavier than the limit. Do you still want to back it up? ", "Save", MessageBoxButtons.YesNo) == DialogResult.Yes;
             }
         }
 
@@ -186,7 +174,7 @@ namespace EasySaveApp.MVVM.Model
                     //get size of the file
                     FileInfo info = new FileInfo(oldPath);
                     int sizeFile = (int)info.Length;
-                    string Name = info.Name;
+                    string name = info.Name;
                     bool is_save = CheckSize(sizeFile, Name);
                     if (is_save)
                     {
@@ -255,20 +243,20 @@ namespace EasySaveApp.MVVM.Model
                     }
                     fileLeft--;
 
-                    state.PathSource = PathSource;
-                    state.PathDestination = PathDestination;
-                    state.StateType = SaveType;
-                    state.TotalFileToTransfer = listOfPathFile.Length;
-                    state.FileLeftToTransfer = fileLeft;
-                    state.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
-                    state.Status = status;
-                    state.TotalFilesSize = size;
+                    State.PathSource = PathSource;
+                    State.PathDestination = PathDestination;
+                    State.StateType = SaveType;
+                    State.TotalFileToTransfer = listOfPathFile.Length;
+                    State.FileLeftToTransfer = fileLeft;
+                    State.Progression = (int)((1.0 - ((double)fileLeft / (double)listOfPathFile.Length)) * 100);
+                    State.Status = status;
+                    State.TotalFilesSize = size;
 
-                    state.SaveState(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
-                    SaveChangeEvent(state);
+                    State.SaveState(System.Windows.Application.Current.Properties["TypeOfLog"].ToString());
+                    SaveChangeEvent(State);
                     if (System.Windows.Application.Current.Properties["Socket"] != null)
                     {
-                        string StatetoSend = "SaveName:" + state.Name + "\n PathSource:" + state.PathSource + "\n PathDestination:" + state.PathDestination + "\n StateType:" + state.StateType + "\n TotalFileToTransfer:" + state.TotalFileToTransfer + "\n FileLeftToTransfer:" + state.FileLeftToTransfer + "\n Progression:" + state.Progression + "\n Status:" + state.Status + "\n TotalFilesSize:" + state.TotalFilesSize;
+                        string StatetoSend = "SaveName:" + State.Name + "\n PathSource:" + State.PathSource + "\n PathDestination:" + State.PathDestination + "\n StateType:" + State.StateType + "\n TotalFileToTransfer:" + State.TotalFileToTransfer + "\n FileLeftToTransfer:" + State.FileLeftToTransfer + "\n Progression:" + State.Progression + "\n Status:" + State.Status + "\n TotalFilesSize:" + State.TotalFilesSize;
                         Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], StatetoSend);
                     }
 
@@ -296,7 +284,6 @@ namespace EasySaveApp.MVVM.Model
                 {
                     Progression.SendMessage((Socket)System.Windows.Application.Current.Properties["Socket"], "<END>");
                     System.Windows.Application.Current.Properties["Socket"] = null;
-
                 }
             }
             catch (Exception e)

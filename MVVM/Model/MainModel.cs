@@ -7,7 +7,6 @@
         public string MenuImage { get; set; }
     }
 
-
     // Home Page
     public class HomeItems
     {
