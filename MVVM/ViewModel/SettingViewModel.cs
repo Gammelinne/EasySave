@@ -12,9 +12,9 @@ namespace EasySaveApp.MVVM.ViewModel
 {
     class SettingViewModel : ObservableObject
     {
-        private string fileSize;
+        private int fileSize;
 
-        public string FileSize
+        public int FileSize
         {
             get { return fileSize; }
             set
@@ -360,7 +360,11 @@ namespace EasySaveApp.MVVM.ViewModel
 
             AddSize = new RelayCommand(o => 
             {
-                MessageBox.Show(FileSize);
+                string json = File.ReadAllText("../../../Settings.json");
+                Dictionary<string, string> setting = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                setting["FileSizeMax"] = FileSize.ToString();
+                File.WriteAllText("../../../Settings.json", JsonSerializer.Serialize(setting));
+                Application.Current.Properties["FileSizeMax"] = FileSize;
             });
         }
     }

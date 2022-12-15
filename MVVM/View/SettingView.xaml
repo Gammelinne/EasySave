@@ -86,13 +86,13 @@
 
             <Button Grid.Column="1"
                     Grid.Row="0"
-                    Content="Add"
+                    Content="Save"
                     Width="70"
                     Height="30"
                     VerticalAlignment="Bottom"
-                    Margin="0 0 140 15"
+                    Margin="200,0,140,15"
                     FontSize="15"
-                    Command="{Binding AddSize}"/>
+                    Command="{Binding AddSize}" HorizontalAlignment="Left"/>
 
             <!--  -->
             <StackPanel Orientation="Horizontal"

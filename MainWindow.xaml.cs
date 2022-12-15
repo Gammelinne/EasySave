@@ -16,6 +16,7 @@ namespace EasySaveApp
             Application.Current.Properties["ExtensionToCrypt"] = setting["ExtensionToCrypt"];
             Application.Current.Properties["ProcessToStop"] = setting["ProcessToStop"];
             Application.Current.Properties["PriorityFiles"] = setting["PriorityFiles"];
+            Application.Current.Properties["FileSizeMax"] = setting["FileSizeMax"];
             Application.Current.Properties["CryptKey"] = "100";
 
 
